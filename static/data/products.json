@@ -1,0 +1,106 @@
+[
+  {
+    "id": 1,
+    "name": "Teddy Bear",
+    "price": 24.99,
+    "image": "http://127.0.0.1:5001/static/images/dino.png",
+    "images": [
+      "http://127.0.0.1:5001/static/images/dino.png",
+      "http://127.0.0.1:5001/static/images/exo.png"
+    ],
+    "color": 9127187,
+    "description": "A cuddly teddy bear with soft fur. Perfect for bedtime hugs and festive snuggles.",
+    "details": { "Age": "3+", "Material": "Plush", "Size": "30cm" }
+  },
+  {
+    "id": 2,
+    "name": "Wooden Train",
+    "price": 34.99,
+    "image": "http://127.0.0.1:5001/static/images/dino.png",
+    "images": [
+      "http://127.0.0.1:5001/static/images/dino.png",
+      "http://127.0.0.1:5001/static/images/exo.png"
+    ],
+    "color": 13184556,
+    "description": "Classic wooden train set with smooth edges and bright paint. Encourages imaginative play.",
+    "details": { "Age": "4+", "Material": "Wood", "Pieces": "6" }
+  },
+  {
+    "id": 3,
+    "name": "Snowman",
+    "price": 19.99,
+    "image": "http://127.0.0.1:5001/static/images/exo.png",
+    "images": [
+      "http://127.0.0.1:5001/static/images/exo.png",
+      "http://127.0.0.1:5001/static/images/dino.png"
+    ],
+    "color": 16777215,
+    "description": "A jolly snowman figure with carrot nose and hat. Adds winter charm to any shelf.",
+    "details": { "Age": "2+", "Material": "Resin", "Height": "12cm" }
+  },
+  {
+    "id": 4,
+    "name": "Rocket Ship",
+    "price": 29.99,
+    "image": "http://127.0.0.1:5001/static/images/noro.png",
+    "images": [
+      "http://127.0.0.1:5001/static/images/noro.png",
+      "http://127.0.0.1:5001/static/images/exo.png"
+    ],
+    "color": 6324406,
+    "description": "Launch into space with this colorful rocket. Durable and perfect for adventure play.",
+    "details": { "Age": "5+", "Material": "Plastic", "Battery": "No" }
+  },
+  {
+    "id": 5,
+    "name": "Doll",
+    "price": 27.99,
+    "image": "http://127.0.0.1:5001/static/images/dino.png",
+    "images": [
+      "http://127.0.0.1:5001/static/images/dino.png",
+      "http://127.0.0.1:5001/static/images/exo.png"
+    ],
+    "color": 16738740,
+    "description": "A sweet doll with moveable limbs and a smiling face. Comes with a tiny outfit.",
+    "details": { "Age": "3+", "Material": "Cloth/Plastic", "Includes outfit": "Yes" }
+  },
+  {
+    "id": 6,
+    "name": "Drum",
+    "price": 22.99,
+    "image": "http://127.0.0.1:5001/static/images/noro.png",
+    "images": [
+      "http://127.0.0.1:5001/static/images/noro.png",
+      "http://127.0.0.1:5001/static/images/exo.png"
+    ],
+    "color": 13938487,
+    "description": "A bright drum for little musicians. Lightweight and easy to hold.",
+    "details": { "Age": "2+", "Material": "Metal/Plastic", "Diameter": "12cm" }
+  },
+  {
+    "id": 7,
+    "name": "Spinning Top",
+    "price": 15.99,
+    "image": "http://127.0.0.1:5001/static/images/noro.png",
+    "images": [
+      "http://127.0.0.1:5001/static/images/noro.png",
+      "http://127.0.0.1:5001/static/images/exo.png"
+    ],
+    "color": 4620980,
+    "description": "A classic spinning top that blooms with colors while spinning.",
+    "details": { "Age": "3+", "Material": "Wood/Plastic", "Made in": "Toyland" }
+  },
+  {
+    "id": 8,
+    "name": "Reindeer",
+    "price": 32.99,
+    "image": "http://127.0.0.1:5001/static/images/dino.png",
+    "images": [
+      "http://127.0.0.1:5001/static/images/dino.png",
+      "http://127.0.0.1:5001/static/images/exo.png"
+    ],
+    "color": 13789470,
+    "description": "A festive reindeer figurine fit for the mantle. Hand-painted details.",
+    "details": { "Age": "6+", "Material": "Resin", "Height": "14cm" }
+  }
+]
