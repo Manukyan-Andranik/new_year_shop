@@ -1085,9 +1085,6 @@
       background: linear-gradient(180deg, #fffdf5 0%, #fff9e9 100%);
       border: 2px solid #e5c08d;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
-      background-image: 
-        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.6), transparent 40%),
-        url("https://www.transparenttextures.com/patterns/paper-fibers.png");
     }
   
     /* Scrollbar styling for mobile */
