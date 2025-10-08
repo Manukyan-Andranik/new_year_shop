@@ -1632,8 +1632,8 @@ canvas {
   .close-btn,
   #checkout-btn,
   .nav-btn {
-    min-height: 44px;
-    min-width: 44px;
+    min-height: 50px;
+    min-width: 50px;
   }
 
   .product-card {
