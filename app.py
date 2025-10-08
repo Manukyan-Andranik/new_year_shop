@@ -81,6 +81,16 @@ def send_email(to_address: str, subject: str, body: str):
         return False
 
 
+from sqlalchemy import event
+from sqlalchemy.engine import Engine
+
+@event.listens_for(Engine, "connect")
+def set_search_path(dbapi_connection, connection_record):
+    cursor = dbapi_connection.cursor()
+    cursor.execute("SET search_path TO newyear_shop;")
+    cursor.close()
+
+
 @app.route('/')
 def index():
     """
