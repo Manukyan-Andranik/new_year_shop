@@ -207,7 +207,8 @@ function initCategoryFilter() {
     }
 }
 
-
+const grid = document.querySelector('.product-grid');
+grid.innerHTML = ''; // clear before filling
 // --- Product Rendering & Cart Logic ---
 
 function renderProducts() {
@@ -217,35 +218,40 @@ function renderProducts() {
         ? products
         : products.filter(p => p.category === activeCategory);
 
-    filteredProducts.forEach(product => {
-        const card = document.createElement('div');
-        card.className = 'product-card';
-        card.setAttribute('data-product-id', product.id);
-        card.setAttribute('draggable', 'true');
-        card.innerHTML = `
-            <div class="card-top">
-                <img src="${product.images_url_list[0]}" alt="${product.name}" class="product-image" draggable="false">
-                <div class="product-info">
-                    <div class="product-name">${product.name}</div>
-                    <div class="product-price">$${product.price.toFixed(2)}</div>
-                    <div class="product-short">${product.description || ''}</div>
-                </div>
-            </div>
-            <div class="card-bottom">
-                <button class="add-btn" aria-label="Add ${product.name} to cart"><span class="icon">🎁</span>Add to Tree</button>
-            </div>`;
-
-        card.querySelector('.add-btn').addEventListener('click', (e) => { e.stopPropagation(); handleAdd(product, card); });
-        card.querySelector('.product-image').addEventListener('click', (e) => { e.stopPropagation(); openProductModal(product); });
-
-        card.addEventListener('dragstart', (e) => {
-            e.dataTransfer.setData('application/json', JSON.stringify(product));
-            card.classList.add('dragging');
-        });
-        card.addEventListener('dragend', () => card.classList.remove('dragging'));
-
-        dom.productGrid.appendChild(card);
-    });
+        filteredProducts.forEach(product => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.dataset.productId = product.id;
+            card.draggable = true;
+          
+            card.innerHTML = `
+              <img src="${product.images_url_list[0]}" alt="${product.name}" class="product-image" draggable="false">
+              <div class="product-info">
+                <div class="product-name">${product.name}</div>
+                <div class="product-price">$${product.price.toFixed(2)}</div>
+              </div>
+              <button class="add-btn" aria-label="Add ${product.name} to cart">
+                🎁 Add
+              </button>`;
+          
+            card.querySelector('.add-btn').addEventListener('click', e => {
+              e.stopPropagation();
+              handleAdd(product, card);
+            });
+          
+            card.querySelector('.product-image').addEventListener('click', e => {
+              e.stopPropagation();
+              openProductModal(product);
+            });
+          
+            card.addEventListener('dragstart', e => {
+              e.dataTransfer.setData('application/json', JSON.stringify(product));
+              card.classList.add('dragging');
+            });
+            card.addEventListener('dragend', () => card.classList.remove('dragging'));
+          
+            grid.appendChild(card);
+          });
 }
 
 function handleAdd(product, cardElement) {

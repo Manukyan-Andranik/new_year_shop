@@ -15,21 +15,32 @@
   <div class="app-container">
     <aside id="catalog-panel" role="complementary" aria-label="Product catalog">
       <h2>🎁 Toy Catalog</h2>
-      <div class="category-menu" role="navigation" aria-label="Product categories">
-        <button class="category-btn active" data-category="all">All Toys</button>
-        <button class="category-btn" data-category="small">Small</button>
-        <button class="category-btn" data-category="big">Big</button>
-        <button class="category-btn" data-category="for_business">For Business</button>
+  
+      <!-- Category header with buttons and tree badge side by side -->
+      <div class="category-header">
+        <div class="category-menu" role="navigation" aria-label="Product categories">
+          <button class="category-btn active" data-category="all">All Toys</button>
+          <button class="category-btn" data-category="small">Small</button>
+          <button class="category-btn" data-category="big">Big</button>
+          <button class="category-btn" data-category="for_business">For Business</button>
+        </div>
+  
+        <!-- Tree badge now positioned to the right of category buttons -->
+        <div class="tree-badge" role="status" aria-live="polite" aria-atomic="true">
+          <span id="cart-count">0</span>
+          <span>toys on tree</span>
+        </div>
       </div>
+  
       <div class="product-grid" role="list"></div>
     </aside>
-
+  
     <main id="canvas-container" role="main">
-      <div class="tree-badge" role="status" aria-live="polite" aria-atomic="true">
-        <span>🎄</span><span id="cart-count">0</span><span>toys on tree</span>
-      </div>
+      <!-- your canvas or tree rendering here -->
     </main>
   </div>
+  
+  
 
   <button id="checkout-btn" disabled aria-label="Proceed to checkout">
     <span class="emoji">🎅</span><span id="checkout-text">Send to Santa</span>

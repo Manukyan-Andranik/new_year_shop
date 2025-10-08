@@ -6,7 +6,7 @@
 const CONFIG = {
   colors: { treeGreen: 0x1a4d2e, lightGold: 0xffd700 },
   pixelRatio: Math.min(window.devicePixelRatio, 2),
-  snowParticleCount: 800
+  snowParticleCount: 500
 };
 
 let scene, camera, renderer, treeGroup, snowGeometry, speeds, starLight, treeStar;
