@@ -67,38 +67,53 @@
   </div>
 
   <div id="order-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="paper-title">
-    <div class="order-paper-card" role="document"
-      style="background:#fffdf5; border:2px solid #e0c497; border-radius:18px; padding:24px; box-shadow:0 0 25px rgba(255, 215, 160, 0.4); max-width:540px; margin:auto; color:#5a3d1a; font-family:'Georgia', serif;">
+    <div class="order-paper-card" role="document">
+      <!-- Fixed Header Section -->
       <div class="paper-header">
         <div>
-          <div class="paper-title" style="font-family:'Great Vibes', cursive; font-size:30px; color:#b83232;">✉️ Letter
-            to Santa — Your Christmas Wishes</div>
-          <div class="paper-sub" style="font-size:15px; color:#7a5a3a;">Let’s make sure Santa gets your favorite toys
-            right!</div>
+          <div class="paper-title" style="font-family:'Great Vibes', cursive; font-size:30px; color:#b83232;">
+            ✉️ Letter to Santa — Your Christmas Wishes
+          </div>
+          <div class="paper-sub" style="font-size:15px; color:#7a5a3a;">
+            Let's make sure Santa gets your favorite toys right!
+          </div>
         </div>
         <div style="text-align:right;">
           <div style="font-size:13px;color:#7a5a3a;">Order Preview</div>
           <div style="font-weight:700;color:var(--festive-green);font-size:18px" id="modal-items-count">0 items</div>
         </div>
       </div>
-      <div class="order-list" id="order-list" style="margin-top:16px;"></div>
-      <div class="paper-footer" style="border-top:1px dashed #e0c497;padding-top:12px;margin-top:18px;">
-        <div class="paper-total" style="font-weight:bold;font-size:17px;">Total: <span id="paper-total"
-            style="color:#b83232;">$0.00</span></div>
-        <form id="order-form" style="width:100%; display:flex; flex-direction:column; gap:10px;">
-          <input type="text" id="customer-name" placeholder="Your Name" required>
-          <input type="email" id="customer-email" placeholder="Your Email" required>
-          <input type="text" id="customer-phone" placeholder="Your Phone" required>
-          <textarea id="santa-message" placeholder="Your Message to Santa" required></textarea>
-          <div class="paper-actions" style="display:flex; justify-content:flex-end; gap:12px; margin-top:8px;">
-            <button type="button" class="btn-secondary" id="paper-cancel"
-              style="background:#e4d4b7;color:#5a3d1a;border:none;border-radius:20px;padding:8px 16px;font-size:14px;cursor:pointer;transition:0.3s;">Back
-              to Shop 🛒</button>
-            <button type="submit" class="btn-primary" id="paper-confirm"
-              style="background:#b83232;color:white;border:none;border-radius:20px;padding:8px 16px;font-size:14px;cursor:pointer;transition:0.3s;">Send
-              to Santa ✨</button>
+  
+      <!-- Scrollable Content Area -->
+      <div class="scrollable-content" style="flex: 1; overflow-y: auto; min-height: 0;">
+        
+        <!-- Order List with Horizontal Scrolling -->
+        <div class="order-list-container" style="margin-bottom: 16px;">
+          <div class="order-list" id="order-list"></div>
+        </div>
+  
+        <!-- Customer Form -->
+        <div class="paper-footer" style="border-top:1px dashed #e0c497;padding-top:12px;">
+          <div class="paper-total" style="font-weight:bold;font-size:17px; margin-bottom: 12px;">
+            Total: <span id="paper-total" style="color:#b83232;">$0.00</span>
           </div>
-        </form>
+          <form id="order-form" style="width:100%; display:flex; flex-direction:column; gap:10px;">
+            <input type="text" id="customer-name" placeholder="Your Name" required>
+            <input type="email" id="customer-email" placeholder="Your Email" required>
+            <input type="text" id="customer-phone" placeholder="Your Phone" required>
+            <textarea id="santa-message" placeholder="Your Message to Santa" required></textarea>
+            <div class="paper-actions" style="display:flex; justify-content:flex-end; gap:12px; margin-top:8px;">
+              <button type="button" class="btn-secondary" id="paper-cancel"
+                style="background:#e4d4b7;color:#5a3d1a;border:none;border-radius:20px;padding:8px 16px;font-size:14px;cursor:pointer;transition:0.3s;">
+                Back to Shop 🛒
+              </button>
+              <button type="submit" class="btn-primary" id="paper-confirm"
+                style="background:#b83232;color:white;border:none;border-radius:20px;padding:8px 16px;font-size:14px;cursor:pointer;transition:0.3s;">
+                Send to Santa ✨
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>

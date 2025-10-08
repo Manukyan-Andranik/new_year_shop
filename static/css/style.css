@@ -724,7 +724,11 @@
     50% { opacity: 1; transform: scale(1.3); }
   }
   
-  /* Order Paper Card - Optimized for Mobile */
+  /* ============================================
+     ORDER PAPER CARD WITH VERTICAL SCROLLING
+     ============================================ */
+  
+  /* Order Paper Card - Mobile Vertical Scrolling */
   .order-paper-card {
     background: linear-gradient(180deg, #fffdf5 0%, #fff9e9 100%);
     border: 2px solid #e5c08d;
@@ -743,6 +747,10 @@
     background-size: cover;
     position: relative;
     animation: fadeIn 0.5s ease-out;
+    /* Enable vertical scrolling for mobile */
+    display: flex;
+    flex-direction: column;
+    max-height: 85vh;
   }
   
   .order-paper-card h3,
@@ -1022,6 +1030,8 @@
   
     .modal-overlay {
       padding: 12px;
+      align-items: flex-start;
+      padding-top: 40px;
     }
   
     .paper-card {
@@ -1062,12 +1072,30 @@
       padding: 8px 10px;
     }
   
-    /* Optimized Order Paper Card for Mobile with HORIZONTAL SCROLLING */
+    /* Optimized Order Paper Card for Mobile with VERTICAL SCROLLING */
     .order-paper-card {
       padding: 16px;
       border-radius: 16px;
       margin: 8px;
       max-width: calc(100% - 16px);
+      max-height: 82vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+  
+    /* Scrollbar styling for mobile */
+    .order-paper-card::-webkit-scrollbar {
+      width: 4px;
+    }
+  
+    .order-paper-card::-webkit-scrollbar-thumb {
+      background-color: rgba(184, 50, 50, 0.4);
+      border-radius: 2px;
+    }
+  
+    .order-paper-card::-webkit-scrollbar-track {
+      background: rgba(229, 192, 141, 0.1);
+      border-radius: 2px;
     }
   
     .order-paper-card h3,
@@ -1372,12 +1400,13 @@
       gap: 10px;
     }
   
-    /* Extra Small Order Paper Card with HORIZONTAL SCROLLING */
+    /* Extra Small Order Paper Card with VERTICAL SCROLLING */
     .order-paper-card {
       padding: 12px;
       border-radius: 14px;
       margin: 6px;
       max-width: calc(100% - 12px);
+      max-height: 78vh;
     }
   
     .order-paper-card h3,
@@ -1526,12 +1555,13 @@
       font-size: 14px;
     }
   
-    /* Ultra Compact Order Paper Card with HORIZONTAL SCROLLING */
+    /* Ultra Compact Order Paper Card with VERTICAL SCROLLING */
     .order-paper-card {
       padding: 10px;
       border-radius: 12px;
       margin: 4px;
       max-width: calc(100% - 8px);
+      max-height: 75vh;
     }
   
     .order-paper-card h3,
@@ -1659,8 +1689,7 @@
     }
   
     .order-paper-card {
-      max-height: 85vh;
-      overflow-y: auto;
+      max-height: 88vh;
     }
     
     #order-list {
@@ -1677,8 +1706,7 @@
     .close-btn,
     #checkout-btn,
     .nav-btn {
-      min-height: 50px;
-      min-width: 50px;
+      min-width: 70px;
     }
   
     .product-card {
@@ -1728,17 +1756,17 @@
       min-height: 44px;
     }
   
-    /* Better touch scrolling for horizontal list */
+    /* Better touch scrolling for both lists */
     #order-list {
       -webkit-overflow-scrolling: touch;
       scroll-snap-type: x mandatory;
     }
-  #order-paper-card
-  {
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: y mandatory;
-  }
-
+  
+    .order-paper-card {
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+  
     .order-row {
       scroll-snap-align: start;
     }
@@ -1780,6 +1808,8 @@
       width: 20px;
       pointer-events: none;
       z-index: 1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
   
     #order-list::before {
@@ -1790,6 +1820,12 @@
     #order-list::after {
       right: 0;
       background: linear-gradient(to left, rgba(255, 253, 245, 0.9), transparent);
+    }
+  
+    /* Show indicators when scrollable */
+    #order-list.scrollable::before,
+    #order-list.scrollable::after {
+      opacity: 1;
     }
   }
   
@@ -1862,5 +1898,9 @@
     .paper-card {
       margin-top: 10vh;
       max-height: 80vh;
+    }
+    
+    .order-paper-card {
+      max-height: 72vh;
     }
   }
