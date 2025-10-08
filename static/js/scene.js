@@ -248,7 +248,7 @@ function animate() {
 
   // Update objects
   animateSnow();
-  treeGroup.rotation.y += 0.004;
+  treeGroup.rotation.y += 0.01;
   
   const shimmer = Math.sin(t * 3) * 0.5 + 0.8;
   starLight.intensity = shimmer;
