@@ -724,7 +724,7 @@
     50% { opacity: 1; transform: scale(1.3); }
   }
   
-  /* Order Paper Card */
+  /* Order Paper Card - Optimized for Mobile */
   .order-paper-card {
     background: linear-gradient(180deg, #fffdf5 0%, #fff9e9 100%);
     border: 2px solid #e5c08d;
@@ -964,6 +964,8 @@
     .tree-badge {
       font-size: 12px;
       padding: 6px 10px;
+      width: fit-content;
+      margin: 0 auto 8px auto;
     }
   
     /* FIXED: Ensure 2 columns for mobile */
@@ -1060,19 +1062,110 @@
       padding: 8px 10px;
     }
   
+    /* Optimized Order Paper Card for Mobile */
     .order-paper-card {
-      padding: 20px;
-      max-width: 100%;
+      padding: 16px;
       border-radius: 16px;
+      margin: 8px;
+      max-width: calc(100% - 16px);
     }
   
     .order-paper-card h3,
     .order-paper-card .paper-title {
-      font-size: 26px;
+      font-size: 22px;
+      margin-bottom: 8px;
+      line-height: 1.3;
     }
   
     .order-paper-card p {
+      font-size: 13px;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+  
+    .paper-footer {
+      padding-top: 12px;
+      margin-top: 16px;
+    }
+  
+    .paper-total {
+      font-size: 16px;
+    }
+  
+    /* Order list optimization */
+    #order-list {
+      max-height: 180px;
+      gap: 8px;
+      margin-top: 12px;
+    }
+  
+    .order-row {
+      padding: 8px;
+      gap: 8px;
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .qty-controls {
+      width: 100%;
+      justify-content: space-between;
+      gap: 6px;
+    }
+  
+    .qty-controls button {
+      padding: 6px 10px;
+      font-size: 13px;
+      min-width: 36px;
+    }
+  
+    .qty-controls input {
+      width: 45px;
+      padding: 6px;
+      font-size: 13px;
+    }
+  
+    /* Form fields optimization */
+    #customer-name,
+    #customer-email,
+    #customer-phone,
+    #santa-message {
+      padding: 8px 12px;
       font-size: 14px;
+      margin-top: 2px;
+      border-radius: 10px;
+    }
+  
+    #customer-name::placeholder,
+    #customer-email::placeholder,
+    #customer-phone::placeholder,
+    #santa-message::placeholder {
+      font-size: 14px;
+    }
+  
+    #santa-message {
+      height: 70px;
+      min-height: 70px;
+    }
+  
+    /* Buttons optimization */
+    .btn-primary,
+    .btn-secondary,
+    .close-btn {
+      padding: 10px 14px;
+      font-size: 13px;
+      border-radius: 18px;
+      min-height: 44px;
+    }
+  
+    .paper-actions {
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+  
+    .paper-actions button {
+      width: 100%;
+      margin: 0;
     }
   
     .paper-header {
@@ -1089,80 +1182,11 @@
       font-size: 12px;
     }
   
-    .order-row {
-      flex-direction: column;
-      gap: 8px;
-      padding: 10px;
-      align-items: flex-start;
-    }
-  
-    .qty-controls {
-      width: 100%;
-      justify-content: space-between;
-    }
-  
-    .qty-controls button {
-      padding: 8px 12px;
-      font-size: 14px;
-    }
-  
-    .qty-controls input {
-      width: 60px;
-      padding: 8px;
-      font-size: 14px;
-    }
-    
-    #customer-name,
-    #customer-email,
-    #customer-phone,
-    #santa-message {
-      padding: 10px 12px;
-      font-size: 14px;
-    }
-    
-    #customer-name::placeholder,
-    #customer-email::placeholder,
-    #customer-phone::placeholder,
-    #santa-message::placeholder {
-      font-size: 16px;
-    }
-    
-    #santa-message {
-      height: 90px;
-    }
-    
-    .btn-primary,
-    .btn-secondary,
-    .close-btn {
-      padding: 10px 16px;
-      font-size: 14px;
-      border-radius: 20px;
-    }
-    
-    .paper-footer {
-      padding-top: 12px;
-      margin-top: 16px;
-    }
-    
-    .paper-total {
-      font-size: 16px;
-    }
-    
-    #order-list {
-      max-height: 220px;
-    }
-    
-    .paper-card::before {
-      font-size: 18px;
-      top: -10px;
-      right: 12px;
-    }
-    
     #canvas-container {
       min-height: 40vh;
       max-height: 45vh;
     }
-    
+  
     canvas {
       border-radius: 8px;
       max-width: 100%;
@@ -1170,7 +1194,7 @@
     }
   }
   
-  /* Extra small mobile devices (480px) - FIXED: Keep 2 columns */
+  /* Extra small mobile devices (480px) */
   @media (max-width: 480px) {
     .product-grid {
       grid-template-columns: repeat(2, 1fr);
@@ -1277,10 +1301,6 @@
       font-size: 14px;
     }
   
-    .gallery-thumbs {
-      gap: 6px;
-    }
-  
     .gallery-thumbs img {
       width: 45px;
       height: 45px;
@@ -1307,99 +1327,92 @@
       gap: 10px;
     }
   
+    /* Extra Small Order Paper Card */
     .order-paper-card {
-      padding: 16px;
+      padding: 12px;
       border-radius: 14px;
+      margin: 6px;
+      max-width: calc(100% - 12px);
     }
   
     .order-paper-card h3,
     .order-paper-card .paper-title {
-      font-size: 22px;
-      margin-bottom: 8px;
+      font-size: 20px;
+      margin-bottom: 6px;
     }
   
     .order-paper-card p {
-      font-size: 13px;
-      line-height: 1.5;
+      font-size: 12px;
+      margin-top: 4px;
+      line-height: 1.3;
     }
   
-    .paper-sub {
-      font-size: 11px;
+    .paper-footer {
+      padding-top: 10px;
+      margin-top: 14px;
     }
   
+    .paper-total {
+      font-size: 15px;
+    }
+  
+    /* Compact order list */
     #order-list {
-      max-height: 200px;
+      max-height: 160px;
+      gap: 6px;
     }
   
     .order-row {
-      padding: 8px;
+      padding: 6px;
       gap: 6px;
     }
   
     .qty-controls {
-      flex-wrap: wrap;
+      gap: 4px;
     }
   
     .qty-controls button {
-      padding: 6px 10px;
-      font-size: 13px;
+      padding: 5px 8px;
+      font-size: 12px;
+      min-width: 32px;
     }
   
     .qty-controls input {
-      width: 50px;
-      padding: 6px;
-      font-size: 13px;
+      width: 40px;
+      padding: 5px;
+      font-size: 12px;
     }
   
+    /* Smaller form fields */
     #customer-name,
     #customer-email,
     #customer-phone,
     #santa-message {
-      padding: 10px;
+      padding: 7px 10px;
       font-size: 13px;
-      border-radius: 10px;
+      border-radius: 8px;
     }
   
     #customer-name::placeholder,
     #customer-email::placeholder,
     #customer-phone::placeholder,
     #santa-message::placeholder {
-      font-size: 14px;
+      font-size: 13px;
     }
   
     #santa-message {
-      height: 80px;
+      height: 60px;
+      min-height: 60px;
     }
   
+    /* Compact buttons */
     .btn-primary,
-    .btn-secondary {
-      padding: 10px 14px;
-      font-size: 13px;
-      border-radius: 18px;
-      width: 100%;
-      margin-left: 0;
-      margin-top: 6px;
-    }
-  
+    .btn-secondary,
     .close-btn {
-      padding: 10px 18px;
-      font-size: 13px;
-      border-radius: 18px;
-    }
-  
-    .paper-actions {
-      flex-direction: column;
-      gap: 8px;
-    }
-  
-    .paper-footer {
-      padding-top: 10px;
-      margin-top: 12px;
-    }
-  
-    .paper-total {
-      font-size: 15px;
-      text-align: center;
+      padding: 8px 12px;
+      font-size: 12px;
+      border-radius: 16px;
+      min-height: 40px;
     }
   
     .modal-overlay {
@@ -1418,7 +1431,7 @@
     }
   }
   
-  /* Very small devices (360px) - FIXED: Keep 2 columns */
+  /* Very small devices (360px) */
   @media (max-width: 360px) {
     .product-grid {
       grid-template-columns: repeat(2, 1fr);
@@ -1466,13 +1479,92 @@
       font-size: 14px;
     }
   
-    .order-paper-card h3,
-    .order-paper-card .paper-title {
-      font-size: 20px;
+    /* Ultra Compact Order Paper Card */
+    .order-paper-card {
+      padding: 10px;
+      border-radius: 12px;
+      margin: 4px;
+      max-width: calc(100% - 8px);
     }
   
-    .order-paper-card {
-      padding: 14px;
+    .order-paper-card h3,
+    .order-paper-card .paper-title {
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+  
+    .order-paper-card p {
+      font-size: 11px;
+      margin-top: 3px;
+      line-height: 1.2;
+    }
+  
+    .paper-footer {
+      padding-top: 8px;
+      margin-top: 12px;
+    }
+  
+    .paper-total {
+      font-size: 14px;
+    }
+  
+    /* Ultra compact order list */
+    #order-list {
+      max-height: 140px;
+      gap: 4px;
+    }
+  
+    .order-row {
+      padding: 5px;
+      gap: 4px;
+    }
+  
+    .qty-controls {
+      gap: 3px;
+    }
+  
+    .qty-controls button {
+      padding: 4px 6px;
+      font-size: 11px;
+      min-width: 28px;
+    }
+  
+    .qty-controls input {
+      width: 35px;
+      padding: 4px;
+      font-size: 11px;
+    }
+  
+    /* Minimal form fields */
+    #customer-name,
+    #customer-email,
+    #customer-phone,
+    #santa-message {
+      padding: 6px 8px;
+      font-size: 12px;
+      border-radius: 6px;
+    }
+  
+    #customer-name::placeholder,
+    #customer-email::placeholder,
+    #customer-phone::placeholder,
+    #santa-message::placeholder {
+      font-size: 12px;
+    }
+  
+    #santa-message {
+      height: 50px;
+      min-height: 50px;
+    }
+  
+    /* Minimal buttons */
+    .btn-primary,
+    .btn-secondary,
+    .close-btn {
+      padding: 7px 10px;
+      font-size: 11px;
+      border-radius: 14px;
+      min-height: 36px;
     }
   
     .gallery-main {
@@ -1520,6 +1612,15 @@
     .product-grid {
       grid-template-columns: repeat(2, 1fr);
     }
+  
+    .order-paper-card {
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+    
+    #order-list {
+      max-height: 120px;
+    }
   }
   
   /* Touch-specific improvements */
@@ -1562,6 +1663,25 @@
     .add-btn:active {
       opacity: 0.8;
     }
+  
+    .order-paper-card .qty-controls button,
+    .order-paper-card .btn-primary,
+    .order-paper-card .btn-secondary,
+    .order-paper-card .close-btn {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    
+    .qty-controls input {
+      min-height: 44px;
+    }
+    
+    #customer-name,
+    #customer-email,
+    #customer-phone,
+    #santa-message {
+      min-height: 44px;
+    }
   }
   
   /* High DPI screens optimization */
@@ -1571,6 +1691,17 @@
     .gallery-thumbs img {
       image-rendering: -webkit-optimize-contrast;
       image-rendering: crisp-edges;
+    }
+  }
+  
+  /* High DPI optimization for small screens */
+  @media (max-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+    .order-paper-card {
+      border-width: 1.5px;
+    }
+    
+    .paper-footer {
+      border-top-width: 1px;
     }
   }
   
@@ -1616,30 +1747,33 @@
     }
   }
   
-/* ================================
-   RESPONSIVE FIXES FOR TREE BADGE
-   ================================ */
-   @media (max-width: 900px) {
+  /* ================================
+     RESPONSIVE FIXES FOR TREE BADGE
+     ================================ */
+  @media (max-width: 900px) {
     .category-header {
       flex-direction: column;
-      align-items: center; /* Changed from flex-start to center */
+      align-items: center;
       gap: 10px;
     }
   
     .tree-badge {
       margin-left: 0;
-      align-self: center; /* Changed from flex-end to center */
-      order: -1; /* Move to top */
+      align-self: center;
+      order: -1;
       margin-bottom: 8px;
     }
   }
   
-  @media (max-width: 650px) {
-    .tree-badge {
-      align-self: center; /* Changed from flex-end to center */
-      font-size: 12px;
-      padding: 6px 10px;
-      width: fit-content; /* Ensure it only takes needed space */
-      margin: 0 auto 8px auto; /* Center with auto margins */
+  /* Ensure proper scrolling on very small screens */
+  @media (max-width: 360px) {
+    .modal-overlay {
+      padding: 4px;
+      align-items: flex-start;
+    }
+    
+    .paper-card {
+      margin-top: 10vh;
+      max-height: 80vh;
     }
   }
