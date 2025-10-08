@@ -168,7 +168,7 @@ function addTreeStar() {
     starLight.position.set(0, 3.5, 0);
     treeGroup.add(starLight);
 
-    gsap.to(treeStar.rotation, { y: Math.PI * 2, duration: 10, repeat: -1, ease: "none" });
+    gsap.to(treeStar.rotation, { y: Math.PI * 2, duration: 5, repeat: -1, ease: "none" });
 }
 
 function addTreeLights(count) {

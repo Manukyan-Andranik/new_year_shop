@@ -1,1778 +1,1861 @@
 /* ================================
    ROOT VARIABLES
    ================================ */
-:root {
-  --festive-red: #d9534f;
-  --festive-red-deep: #c9302c;
-  --festive-green: #2d8a43;
-  --festive-green-deep: #1e7e34;
-  --festive-gold: #f0ad4e;
-  --sky-blue: #87CEEB;
-  --snow-white: #f8f9fa;
-  --deep-brown: #4a2c1e;
-  --glass: rgba(255, 255, 255, 0.85);
-  --card-bg: linear-gradient(180deg, #fffdf6, #f7f2e7);
-  --btn-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-  --btn-press: 0 3px 8px rgba(0, 0, 0, 0.18);
-}
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html,
-body {
-  height: 100%;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, sans-serif;
-  background: radial-gradient(1200px 600px at 10% 10%, rgba(255, 255, 255, 0.6), transparent),
-    linear-gradient(180deg, #e9f6ff 0%, #cfeffd 50%, #eaf7ff 100%);
-  color: #222;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* ================================
-   CART SUMMARY (fixed top-right)
-   ================================ */
-.cart-summary {
-  position: fixed;
-  top: 16px;
-  right: 20px;
-  background: var(--glass);
-  backdrop-filter: blur(6px) saturate(1.2);
-  border-radius: 50px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  z-index: 100;
-  font-weight: 700;
-  color: var(--festive-green-deep);
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
-}
-
-.cart-summary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.2);
-}
-
-.cart-icon {
-  font-size: 22px;
-}
-
-#cart-count {
-  background: linear-gradient(145deg, var(--festive-red), var(--festive-red-deep));
-  color: white;
-  border-radius: 50%;
-  padding: 5px 9px;
-  font-size: 14px;
-  font-weight: 800;
-  line-height: 1;
-}
-
-.cart-label {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--festive-green);
-}
-
-/* ================================
-   MAIN LAYOUT
-   ================================ */
-.app-container {
-  display: flex;
-  height: 100vh;
-  position: relative;
-  gap: 12px;
-}
-
-#canvas-container {
-  flex: 1;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 60vh;
-}
-
-canvas {
-  display: block;
-  touch-action: none;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(14, 44, 86, 0.08);
-}
-
-/* ================================
-   CATALOG PANEL
-   ================================ */
-#catalog-panel {
-  width: 40%;
-  background: var(--glass);
-  backdrop-filter: blur(8px) saturate(1.05);
-  padding: 22px;
-  overflow-y: auto;
-  box-shadow: 4px 0 30px rgba(0, 20, 40, 0.1);
-  z-index: 10;
-  border-right: 1px solid rgba(255, 255, 255, 0.4);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-/* ================================
-   CATEGORY HEADER + TREE BADGE
-   ================================ */
-.category-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-}
-
-.category-menu {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  flex: 1;
-}
-
-/* Tree badge on the right */
-.tree-badge {
-  margin-left: auto;
-  background: var(--festive-green-deep);
-  color: white;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-weight: 700;
-  font-size: 14px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  white-space: nowrap;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
-}
-
-.tree-badge:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-}
-
-/* Category Buttons */
-.category-btn {
-  padding: 10px 18px;
-  background: linear-gradient(145deg, var(--festive-red), var(--festive-red-deep));
-  color: white;
-  border: none;
-  border-radius: 20px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(217, 83, 79, 0.3);
-  font-size: 14px;
-}
-
-.category-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(217, 83, 79, 0.4);
-}
-
-.category-btn.active {
-  background: linear-gradient(145deg, var(--festive-green), var(--festive-green-deep));
-  box-shadow: 0 4px 12px rgba(45, 138, 67, 0.5);
-}
-
-/* ================================
-   PRODUCT GRID
-   ================================ */
-#tree-area {
-  width: 60%;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background: transparent;
-  overflow: hidden;
-}
-
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  width: 100%;
-}
-
-.product-card {
-  background: rgba(255, 255, 255, 0.65);
-  border-radius: 12px;
-  padding: 10px;
-  cursor: pointer;
-  transition: transform .22s cubic-bezier(.2, .9, .3, 1), box-shadow .22s, border-color .22s;
-  position: relative;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 4px 12px rgba(10, 20, 40, 0.06);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-/* Simplified vertical layout */
-.card-top {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-/* Product Image - scaled for small column width */
-.product-image {
-  width: 100px;
-  height: 100px;
-  object-fit: contain;
-  border-radius: 10px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 1));
-  padding: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.03);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-}
-
-/* Product Info */
-.product-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  width: 100%;
-}
-
-.product-name {
-  font-weight: 800;
-  font-size: 15px;
-  color: #222;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.product-price {
-  color: var(--festive-green-deep);
-  font-weight: 900;
-  font-size: 14px;
-}
-
-.product-short {
-  color: #555;
-  font-size: 12px;
-  line-height: 1.2;
-  -webkit-box-orient: vertical;
-  display: -webkit-box;
-  overflow: hidden;
-  min-height: 30px;
-}
-
-/* Button - fits nicely inside small card */
-.add-btn {
-  width: 100%;
-  padding: 8px;
-  font-size: 13px;
-  border-radius: 10px;
-  margin-top: 6px;
-  background: linear-gradient(145deg, var(--festive-red), #c9302c);
-  box-shadow: 0 2px 6px rgba(217, 83, 79, 0.35);
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-weight: 700;
-  transition: all 0.2s ease;
-}
-
-.add-btn:hover {
-  transform: translateY(-2px);
-}
-
-#checkout-btn {
-  position: fixed;
-  bottom: 22px;
-  right: 22px;
-  background: linear-gradient(145deg, var(--festive-green), var(--festive-green-deep));
-  color: white;
-  border: none;
-  padding: 14px 26px;
-  border-radius: 40px;
-  font-size: 16px;
-  font-weight: 900;
-  cursor: pointer;
-  z-index: 30;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  box-shadow: 0 12px 36px rgba(30, 126, 52, 0.18);
-  transition: transform .16s ease, box-shadow .16s ease;
-}
-
-#checkout-btn span.emoji {
-  background: rgba(255, 255, 255, 0.12);
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-}
-
-#checkout-btn:not(:disabled) {
-  animation: pulse-glow 2.4s infinite ease-in-out;
-}
-
-#checkout-btn:hover:not(:disabled) {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 18px 46px rgba(30, 126, 52, 0.22);
-}
-
-#checkout-btn:active:not(:disabled) {
-  transform: translateY(0) scale(0.99);
-  box-shadow: 0 6px 18px rgba(30, 126, 52, 0.16);
-}
-
-#checkout-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  background: #999;
-  box-shadow: none;
-}
-
-@keyframes pulse-glow {
-  0% {
-    box-shadow: 0 10px 30px rgba(30, 126, 52, 0.12);
-    transform: translateY(0);
+   :root {
+    --festive-red: #d9534f;
+    --festive-red-deep: #c9302c;
+    --festive-green: #2d8a43;
+    --festive-green-deep: #1e7e34;
+    --festive-gold: #f0ad4e;
+    --sky-blue: #87CEEB;
+    --snow-white: #f8f9fa;
+    --deep-brown: #4a2c1e;
+    --glass: rgba(255, 255, 255, 0.85);
+    --card-bg: linear-gradient(180deg, #fffdf6, #f7f2e7);
+    --btn-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    --btn-press: 0 3px 8px rgba(0, 0, 0, 0.18);
   }
-
-  50% {
-    box-shadow: 0 22px 44px rgba(30, 126, 52, 0.22);
-    transform: translateY(-2px);
-  }
-
-  100% {
-    box-shadow: 0 10px 30px rgba(30, 126, 52, 0.12);
-    transform: translateY(0);
-  }
-}
-
-.elf-container {
-  position: fixed;
-  bottom: -200px;
-  left: -200px;
-  width: 150px;
-  height: 150px;
-  z-index: 30;
-  pointer-events: none;
-}
-
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 90;
-  padding: 20px;
-}
-
-.paper-card {
-  width: min(900px, 96%);
-  max-height: 92vh;
-  overflow: hidden;
-  background: #fffefc;
-  border-radius: 18px;
-  padding: 26px;
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.35);
-  color: #222;
-  position: relative;
-  font-family: "Inter", "Georgia", serif;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  display: flex;
-  gap: 22px;
-  backdrop-filter: blur(6px);
-  animation: fadeIn 0.4s ease-out;
-}
-
-.paper-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 12px;
-}
-
-.paper-title {
-  font-size: 20px;
-  color: var(--festive-green);
-  font-weight: 800;
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.paper-sub {
-  color: #666;
-  font-size: 13px;
-}
-
-.order-list {
-  margin-top: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.order-row {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px;
-  background: rgba(0, 0, 0, 0.02);
-  border-radius: 10px;
-}
-
-.qty-controls {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.qty-controls button {
-  background: #eee;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 700;
-}
-
-.qty-controls input {
-  width: 52px;
-  padding: 6px 8px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  text-align: center;
-  font-weight: 700;
-}
-
-.btn-primary {
-  background: linear-gradient(145deg, #ffd86b, #f0ad4e);
-  border: none;
-  padding: 10px 14px;
-  border-radius: 12px;
-  font-weight: 900;
-  cursor: pointer;
-  box-shadow: 0 8px 22px rgba(240, 173, 78, 0.18);
-  margin-left: 8px;
-  transition: all 0.25s ease;
-}
-
-.btn-secondary {
-  background: transparent;
-  border: 2px solid rgba(0, 0, 0, 0.06);
-  padding: 8px 12px;
-  border-radius: 12px;
-  font-weight: 800;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.close-btn {
-  background: var(--festive-red);
-  color: white;
-  padding: 10px 14px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  font-weight: 800;
-}
-
-/* Gallery and info columns */
-.gallery {
-  flex: 1.2;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  position: relative;
-}
-
-.gallery-main {
-  position: relative;
-  background: #fafafa;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-  height: 380px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.gallery-main img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-.nav-btn {
-  width: 50px;
-  height: 50px;
-  border: none;
-  border-radius: 50%;
-  background: linear-gradient(145deg, var(--festive-green), var(--festive-green-deep));
-  color: var(--snow-white);
-  font-size: 20px;
-  cursor: pointer;
-  box-shadow: var(--btn-shadow);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.22s cubic-bezier(.2, .9, .3, 1),
-    box-shadow 0.22s ease,
-    background 0.3s ease;
-  position: relative;
-  z-index: 5;
-}
-
-.nav-btn:hover,
-.nav-btn:focus {
-  transform: translateY(-2px) scale(1.1);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
-  background: linear-gradient(145deg, var(--festive-green-deep), var(--festive-green));
-  outline: none;
-}
-
-.nav-btn:active {
-  transform: translateY(0) scale(0.98);
-  box-shadow: var(--btn-press);
-}
-
-.nav-btn::after {
-  content: '';
-  position: absolute;
-  top: -6px;
-  left: -6px;
-  width: calc(100% + 12px);
-  height: calc(100% + 12px);
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--festive-gold), transparent 60%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: -1;
-}
-
-.nav-btn:hover::after {
-  opacity: 1;
-}
-
-.gallery-thumbs {
-  display: flex;
-  gap: 8px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.gallery-thumbs img {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 10px;
-  border: 2px solid transparent;
-  cursor: pointer;
-  transition: transform 0.2s, border-color 0.2s;
-}
-
-.gallery-thumbs img:hover,
-.gallery-thumbs img.active {
-  border-color: var(--festive-red);
-  transform: scale(1.05);
-}
-
-/* Right section (details) */
-.gallery-right {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 12px;
-  padding: 6px 4px;
-}
-
-.product-details h3 {
-  font-size: 24px;
-  font-weight: 800;
-  color: var(--festive-green-deep);
-  margin: 0;
-}
-
-#product-modal-description {
-  font-size: 14px;
-  color: #444;
-  line-height: 1.5;
-  margin-top: 6px;
-}
-
-/* Specs section */
-.product-specs {
-  margin-top: 8px;
-  padding: 10px 12px;
-  background: rgba(250, 250, 250, 0.7);
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  font-size: 13px;
-  color: #333;
-  line-height: 1.4;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-.drop-zone-active {
-  outline: 3px dashed var(--festive-gold);
-  outline-offset: 10px;
-}
-
-/* Form Styles */
-#customer-name,
-#customer-email,
-#customer-phone,
-#santa-message {
-  width: 100%;
-  margin-top: 4px;
-  padding: 10px 14px;
-  border: 2px solid #e0c497;
-  border-radius: 12px;
-  background: #fffaf0;
-  font-family: 'Roboto Serif', serif;
-  font-size: 15px;
-  color: #5a3d1a;
-  outline: none;
-  box-shadow: inset 0 1px 4px rgba(255, 215, 160, 0.3);
-  transition: all 0.3s ease;
-}
-
-#customer-name::placeholder,
-#customer-email::placeholder,
-#customer-phone::placeholder,
-#santa-message::placeholder {
-  color: #b69d7e;
-  font-style: italic;
-  font-family: 'Great Vibes', cursive;
-  font-size: 18px;
-  letter-spacing: 0.3px;
-}
-
-#customer-name:hover,
-#customer-email:hover,
-#customer-phone:hover,
-#santa-message:hover,
-#customer-name:focus,
-#customer-email:focus,
-#customer-phone:focus,
-#santa-message:focus {
-  background: #fffdf5;
-  border-color: #d3b16d;
-  box-shadow: 0 0 8px rgba(255, 215, 160, 0.6);
-}
-
-#santa-message {
-  height: 100px;
-  resize: vertical;
-  background-image: linear-gradient(to bottom, #fffaf0 0%, #fff7e1 100%);
-  border-style: dashed;
-}
-
-.paper-card::before {
-  content: "🎄";
-  position: absolute;
-  top: -14px;
-  right: 16px;
-  font-size: 22px;
-  color: #b83232;
-  animation: sparkle 2s infinite ease-in-out;
-}
-
-@keyframes sparkle {
-  0%, 100% { opacity: 0.7; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.3); }
-}
-
-/* Order Paper Card - Optimized for Mobile */
-.order-paper-card {
-  background: linear-gradient(180deg, #fffdf5 0%, #fff9e9 100%);
-  border: 2px solid #e5c08d;
-  border-radius: 20px;
-  padding: 32px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
-  max-width: 560px;
-  margin: auto;
-  font-family: "Merriweather", "Georgia", serif;
-  color: #4a2c1e;
-  text-align: left;
-  line-height: 1.7;
-  background-image: 
-    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.6), transparent 40%),
-    url("https://www.transparenttextures.com/patterns/paper-fibers.png");
-  background-size: cover;
-  position: relative;
-  animation: fadeIn 0.5s ease-out;
-}
-
-.order-paper-card h3,
-.order-paper-card .paper-title {
-  font-family: "Great Vibes", cursive;
-  color: #b83232;
-  font-size: 34px;
-  text-align: center;
-  margin-bottom: 12px;
-}
-
-.order-paper-card p {
-  font-family: "Merriweather", serif;
-  font-size: 16px;
-  color: #4a2c1e;
-  margin-top: 10px;
-}
-
-.paper-footer {
-  border-top: 1px dashed #e0c497;
-  padding-top: 16px;
-  margin-top: 22px;
-}
-
-.paper-total {
-  font-size: 18px;
-  font-weight: 700;
-  color: #5a3d1a;
-}
-
-.paper-total span {
-  color: #b83232;
-  font-weight: 800;
-}
-
-/* Scrollable Order Preview */
-#order-list {
-  margin-top: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-height: 280px;
-  overflow-y: auto;
-  padding-right: 4px;
-}
-
-#order-list::-webkit-scrollbar {
-  width: 6px;
-}
-
-#order-list::-webkit-scrollbar-thumb {
-  background-color: rgba(184, 50, 50, 0.5);
-  border-radius: 3px;
-}
-
-#order-list::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.96); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-/* ============================================
-   MOBILE OPTIMIZATIONS (RESPONSIVE DESIGN)
-   ============================================ */
-
-/* Tablets and below (1200px) */
-@media (max-width: 1200px) {
-  .product-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-
-  #catalog-panel {
-    width: 45%;
-    padding: 18px;
-  }
-
-  #tree-area {
-    width: 55%;
-  }
-
-  .tree-badge {
-    font-size: 14px;
-    padding: 6px 12px;
-  }
-
-  #checkout-btn {
-    padding: 12px 20px;
-    font-size: 14px;
-  }
-
-  #checkout-btn span.emoji {
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
-  }
-}
-
-/* Small tablets (900px) */
-@media (max-width: 900px) {
-  .app-container {
-    flex-direction: column;
-    gap: 0;
-    height: auto;
-  }
-
-  #catalog-panel {
-    width: 100%;
-    order: 2;
-    max-height: none;
-    padding: 16px;
-    border-right: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.4);
-  }
-
-  #tree-area,
-  #canvas-container {
-    width: 100%;
-    order: 1;
-    min-height: 50vh;
-    max-height: 50vh;
-  }
-
-  .tree-badge {
-    font-size: 13px;
-    padding: 6px 12px;
-  }
-
-  #checkout-btn {
-    bottom: 16px;
-    right: 16px;
-    padding: 12px 18px;
-    font-size: 14px;
-  }
-
-  .product-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-
-  .paper-card {
-    flex-direction: column;
-    padding: 20px;
-    gap: 16px;
-    max-height: 85vh;
-    overflow-y: auto;
-  }
-
-  .gallery {
-    width: 100%;
-  }
-
-  .gallery-main {
-    height: 280px;
-  }
-
-  .gallery-right {
-    width: 100%;
+  
+  * {
+    box-sizing: border-box;
+    margin: 0;
     padding: 0;
   }
-
-  .category-header {
+  
+  html,
+  body {
+    height: 100%;
+  }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, sans-serif;
+    background: radial-gradient(1200px 600px at 10% 10%, rgba(255, 255, 255, 0.6), transparent),
+      linear-gradient(180deg, #e9f6ff 0%, #cfeffd 50%, #eaf7ff 100%);
+    color: #222;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* ================================
+     CART SUMMARY (fixed top-right)
+     ================================ */
+  .cart-summary {
+    position: fixed;
+    top: 16px;
+    right: 20px;
+    background: var(--glass);
+    backdrop-filter: blur(6px) saturate(1.2);
+    border-radius: 50px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    z-index: 100;
+    font-weight: 700;
+    color: var(--festive-green-deep);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  
+  .cart-summary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.2);
+  }
+  
+  .cart-icon {
+    font-size: 22px;
+  }
+  
+  #cart-count {
+    background: linear-gradient(145deg, var(--festive-red), var(--festive-red-deep));
+    color: white;
+    border-radius: 50%;
+    padding: 5px 9px;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  
+  .cart-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--festive-green);
+  }
+  
+  /* ================================
+     MAIN LAYOUT
+     ================================ */
+  .app-container {
+    display: flex;
+    height: 100vh;
+    position: relative;
     gap: 12px;
   }
-
-  .category-menu {
-    gap: 6px;
-  }
-
-  .category-btn {
-    padding: 8px 14px;
-    font-size: 13px;
-  }
-
-  #catalog-panel h2 {
-    font-size: 20px;
-  }
-}
-
-/* Mobile devices (650px) */
-@media (max-width: 650px) {
-  body {
-    font-size: 14px;
-  }
-
-  .app-container {
-    gap: 0;
-  }
-
-  #catalog-panel {
-    padding: 12px;
-    gap: 10px;
-  }
-
-  #catalog-panel h2 {
-    font-size: 18px;
-    margin-bottom: 8px;
-  }
-
-  .category-header {
-    gap: 10px;
-    margin-bottom: 12px;
-  }
-
-  .category-menu {
-    gap: 6px;
-    margin-bottom: 0;
-  }
-
-  .category-btn {
-    padding: 8px 12px;
-    font-size: 12px;
-    border-radius: 16px;
-  }
-
-  .tree-badge {
-    font-size: 12px;
-    padding: 6px 10px;
-    width: fit-content;
-    margin: 0 auto 8px auto;
-  }
-
-  /* FIXED: Ensure 2 columns for mobile */
-  .product-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-  }
-
-  .product-card {
-    padding: 8px;
-    border-radius: 10px;
-  }
-
-  .product-image {
-    width: 80px;
-    height: 80px;
-  }
-
-  .product-name {
-    font-size: 13px;
-  }
-
-  .product-price {
-    font-size: 13px;
-  }
-
-  .product-short {
-    font-size: 11px;
-    min-height: 24px;
-  }
-
-  .add-btn {
-    padding: 7px;
-    font-size: 12px;
-    margin-top: 4px;
-  }
-
-  #checkout-btn {
-    bottom: 12px;
-    right: 12px;
-    left: 12px;
-    width: calc(100% - 24px);
-    justify-content: center;
-    padding: 12px 16px;
-    font-size: 14px;
-    border-radius: 30px;
-  }
-
-  #checkout-btn span.emoji {
-    width: 28px;
-    height: 28px;
-    font-size: 14px;
-  }
-
-  .modal-overlay {
-    padding: 12px;
-  }
-
-  .paper-card {
-    padding: 16px;
-    border-radius: 14px;
-    max-height: 90vh;
-  }
-
-  .gallery-main {
-    height: 220px;
-  }
-
-  .nav-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
-  }
-
-  .gallery-thumbs img {
-    width: 50px;
-    height: 50px;
-  }
-
-  .product-details h3 {
-    font-size: 20px;
-  }
-
-  .product-price {
-    font-size: 18px;
-  }
-
-  #product-modal-description {
-    font-size: 13px;
-  }
-
-  .product-specs {
-    font-size: 12px;
-    padding: 8px 10px;
-  }
-
-  /* Optimized Order Paper Card for Mobile */
-  .order-paper-card {
-    padding: 16px;
-    border-radius: 16px;
-    margin: 8px;
-    max-width: calc(100% - 16px);
-  }
-
-  .order-paper-card h3,
-  .order-paper-card .paper-title {
-    font-size: 22px;
-    margin-bottom: 8px;
-    line-height: 1.3;
-  }
-
-  .order-paper-card p {
-    font-size: 13px;
-    margin-top: 6px;
-    line-height: 1.4;
-  }
-
-  .paper-footer {
-    padding-top: 12px;
-    margin-top: 16px;
-  }
-
-  .paper-total {
-    font-size: 16px;
-  }
-
-  /* Order list optimization */
-  #order-list {
-    max-height: 180px;
-    gap: 8px;
-    margin-top: 12px;
-  }
-
-  .order-row {
-    padding: 8px;
-    gap: 8px;
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .qty-controls {
-    width: 100%;
-    justify-content: space-between;
-    gap: 6px;
-  }
-
-  .qty-controls button {
-    padding: 6px 10px;
-    font-size: 13px;
-    min-width: 36px;
-  }
-
-  .qty-controls input {
-    width: 45px;
-    padding: 6px;
-    font-size: 13px;
-  }
-
-  /* Form fields optimization */
-  #customer-name,
-  #customer-email,
-  #customer-phone,
-  #santa-message {
-    padding: 8px 12px;
-    font-size: 14px;
-    margin-top: 2px;
-    border-radius: 10px;
-  }
-
-  #customer-name::placeholder,
-  #customer-email::placeholder,
-  #customer-phone::placeholder,
-  #santa-message::placeholder {
-    font-size: 14px;
-  }
-
-  #santa-message {
-    height: 70px;
-    min-height: 70px;
-  }
-
-  /* Buttons optimization */
-  .btn-primary,
-  .btn-secondary,
-  .close-btn {
-    padding: 10px 14px;
-    font-size: 13px;
-    border-radius: 18px;
-    min-height: 44px;
-  }
-
-  .paper-actions {
-    flex-direction: column;
-    gap: 8px;
-    width: 100%;
-  }
-
-  .paper-actions button {
-    width: 100%;
-    margin: 0;
-  }
-
-  .paper-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-
-  .paper-title {
-    font-size: 18px;
-  }
-
-  .paper-sub {
-    font-size: 12px;
-  }
-
+  
   #canvas-container {
-    min-height: 40vh;
-    max-height: 45vh;
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
   }
-
+  
   canvas {
-    border-radius: 8px;
-    max-width: 100%;
-    height: auto;
+    display: block;
+    touch-action: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(14, 44, 86, 0.08);
   }
-}
-
-/* Extra small mobile devices (480px) */
-@media (max-width: 480px) {
-  .product-grid {
-    grid-template-columns: repeat(2, 1fr);
+  
+  /* ================================
+     CATALOG PANEL
+     ================================ */
+  #catalog-panel {
+    width: 40%;
+    background: var(--glass);
+    backdrop-filter: blur(8px) saturate(1.05);
+    padding: 22px;
+    overflow-y: auto;
+    box-shadow: 4px 0 30px rgba(0, 20, 40, 0.1);
+    z-index: 10;
+    border-right: 1px solid rgba(255, 255, 255, 0.4);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  
+  /* ================================
+     CATEGORY HEADER + TREE BADGE
+     ================================ */
+  .category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  
+  .category-menu {
+    display: flex;
+    flex-wrap: wrap;
     gap: 8px;
+    flex: 1;
   }
-
+  
+  /* Tree badge on the right */
+  .tree-badge {
+    margin-left: auto;
+    background: var(--festive-green-deep);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    white-space: nowrap;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  
+  .tree-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Category Buttons */
+  .category-btn {
+    padding: 10px 18px;
+    background: linear-gradient(145deg, var(--festive-red), var(--festive-red-deep));
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(217, 83, 79, 0.3);
+    font-size: 14px;
+  }
+  
+  .category-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(217, 83, 79, 0.4);
+  }
+  
+  .category-btn.active {
+    background: linear-gradient(145deg, var(--festive-green), var(--festive-green-deep));
+    box-shadow: 0 4px 12px rgba(45, 138, 67, 0.5);
+  }
+  
+  /* ================================
+     PRODUCT GRID
+     ================================ */
+  #tree-area {
+    width: 60%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: transparent;
+    overflow: hidden;
+  }
+  
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    width: 100%;
+  }
+  
   .product-card {
-    max-width: 100%;
-  }
-
-  .card-top {
+    background: rgba(255, 255, 255, 0.65);
+    border-radius: 12px;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform .22s cubic-bezier(.2, .9, .3, 1), box-shadow .22s, border-color .22s;
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(10, 20, 40, 0.06);
+    display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
   }
-
+  
+  /* Simplified vertical layout */
+  .card-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  /* Product Image - scaled for small column width */
   .product-image {
     width: 100px;
     height: 100px;
+    object-fit: contain;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 1));
+    padding: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   }
-
+  
+  /* Product Info */
+  .product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+  }
+  
   .product-name {
-    text-align: center;
-    white-space: normal;
-    overflow: visible;
-    font-size: 14px;
+    font-weight: 800;
+    font-size: 15px;
+    color: #222;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
-
+  
   .product-price {
-    text-align: center;
+    color: var(--festive-green-deep);
+    font-weight: 900;
     font-size: 14px;
   }
-
+  
   .product-short {
-    text-align: center;
+    color: #555;
     font-size: 12px;
-    min-height: auto;
-    -webkit-line-clamp: 2;
+    line-height: 1.2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
+    min-height: 30px;
   }
-
+  
+  /* Button - fits nicely inside small card */
   .add-btn {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     font-size: 13px;
+    border-radius: 10px;
+    margin-top: 6px;
+    background: linear-gradient(145deg, var(--festive-red), #c9302c);
+    box-shadow: 0 2px 6px rgba(217, 83, 79, 0.35);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.2s ease;
   }
-
-  .category-header {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
+  
+  .add-btn:hover {
+    transform: translateY(-2px);
   }
-
-  .tree-badge {
-    align-self: center;
-    order: -1;
-    margin-bottom: 8px;
-  }
-
+  
   #checkout-btn {
-    bottom: 10px;
-    right: 10px;
-    left: 10px;
-    width: calc(100% - 20px);
-    padding: 14px;
-    font-size: 15px;
-    gap: 8px;
-  }
-
-  #checkout-btn span.emoji {
-    width: 30px;
-    height: 30px;
+    position: fixed;
+    bottom: 22px;
+    right: 22px;
+    background: linear-gradient(145deg, var(--festive-green), var(--festive-green-deep));
+    color: white;
+    border: none;
+    padding: 14px 26px;
+    border-radius: 40px;
     font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+    z-index: 30;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    box-shadow: 0 12px 36px rgba(30, 126, 52, 0.18);
+    transition: transform .16s ease, box-shadow .16s ease;
   }
-
-  .category-menu {
-    justify-content: center;
-  }
-
-  .category-btn {
-    flex: 1;
-    min-width: calc(50% - 3px);
-    padding: 10px 8px;
-    font-size: 12px;
-    text-align: center;
-  }
-
-  #catalog-panel h2 {
-    font-size: 18px;
-    justify-content: center;
-    text-align: center;
-  }
-
-  .paper-card {
-    padding: 14px;
-    border-radius: 12px;
-  }
-
-  .gallery-main {
-    height: 200px;
-  }
-
-  .nav-btn {
+  
+  #checkout-btn span.emoji {
+    background: rgba(255, 255, 255, 0.12);
     width: 36px;
     height: 36px;
-    font-size: 14px;
-  }
-
-  .gallery-thumbs img {
-    width: 45px;
-    height: 45px;
-  }
-
-  .product-details h3 {
-    font-size: 18px;
-  }
-
-  .product-price {
-    font-size: 16px;
-  }
-
-  #product-modal-description {
-    font-size: 12px;
-  }
-
-  .product-specs {
-    font-size: 11px;
-    padding: 8px;
-  }
-
-  .gallery-right {
-    gap: 10px;
-  }
-
-  /* Extra Small Order Paper Card */
-  .order-paper-card {
-    padding: 12px;
-    border-radius: 14px;
-    margin: 6px;
-    max-width: calc(100% - 12px);
-  }
-
-  .order-paper-card h3,
-  .order-paper-card .paper-title {
-    font-size: 20px;
-    margin-bottom: 6px;
-  }
-
-  .order-paper-card p {
-    font-size: 12px;
-    margin-top: 4px;
-    line-height: 1.3;
-  }
-
-  .paper-footer {
-    padding-top: 10px;
-    margin-top: 14px;
-  }
-
-  .paper-total {
-    font-size: 15px;
-  }
-
-  /* Compact order list */
-  #order-list {
-    max-height: 160px;
-    gap: 6px;
-  }
-
-  .order-row {
-    padding: 6px;
-    gap: 6px;
-  }
-
-  .qty-controls {
-    gap: 4px;
-  }
-
-  .qty-controls button {
-    padding: 5px 8px;
-    font-size: 12px;
-    min-width: 32px;
-  }
-
-  .qty-controls input {
-    width: 40px;
-    padding: 5px;
-    font-size: 12px;
-  }
-
-  /* Smaller form fields */
-  #customer-name,
-  #customer-email,
-  #customer-phone,
-  #santa-message {
-    padding: 7px 10px;
-    font-size: 13px;
-    border-radius: 8px;
-  }
-
-  #customer-name::placeholder,
-  #customer-email::placeholder,
-  #customer-phone::placeholder,
-  #santa-message::placeholder {
-    font-size: 13px;
-  }
-
-  #santa-message {
-    height: 60px;
-    min-height: 60px;
-  }
-
-  /* Compact buttons */
-  .btn-primary,
-  .btn-secondary,
-  .close-btn {
-    padding: 8px 12px;
-    font-size: 12px;
-    border-radius: 16px;
-    min-height: 40px;
-  }
-
-  .modal-overlay {
-    padding: 8px;
-  }
-
-  #canvas-container {
-    min-height: 35vh;
-    max-height: 40vh;
-  }
-
-  .paper-card::before {
-    font-size: 16px;
-    top: -8px;
-    right: 10px;
-  }
-}
-
-/* Very small devices (360px) */
-@media (max-width: 360px) {
-  .product-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
-  }
-
-  #catalog-panel {
-    padding: 10px;
-  }
-
-  .category-btn {
-    padding: 8px 6px;
-    font-size: 11px;
-  }
-
-  .tree-badge {
-    font-size: 11px;
-    padding: 5px 8px;
-  }
-
-  .product-image {
-    width: 90px;
-    height: 90px;
-  }
-
-  .product-name {
-    font-size: 12px;
-  }
-
-  .product-price {
-    font-size: 12px;
-  }
-
-  .product-short {
-    font-size: 10px;
-  }
-
-  .add-btn {
-    padding: 8px;
-    font-size: 11px;
-  }
-
-  #checkout-btn {
-    padding: 12px;
-    font-size: 14px;
-  }
-
-  /* Ultra Compact Order Paper Card */
-  .order-paper-card {
-    padding: 10px;
-    border-radius: 12px;
-    margin: 4px;
-    max-width: calc(100% - 8px);
-  }
-
-  .order-paper-card h3,
-  .order-paper-card .paper-title {
-    font-size: 18px;
-    margin-bottom: 4px;
-  }
-
-  .order-paper-card p {
-    font-size: 11px;
-    margin-top: 3px;
-    line-height: 1.2;
-  }
-
-  .paper-footer {
-    padding-top: 8px;
-    margin-top: 12px;
-  }
-
-  .paper-total {
-    font-size: 14px;
-  }
-
-  /* Ultra compact order list */
-  #order-list {
-    max-height: 140px;
-    gap: 4px;
-  }
-
-  .order-row {
-    padding: 5px;
-    gap: 4px;
-  }
-
-  .qty-controls {
-    gap: 3px;
-  }
-
-  .qty-controls button {
-    padding: 4px 6px;
-    font-size: 11px;
-    min-width: 28px;
-  }
-
-  .qty-controls input {
-    width: 35px;
-    padding: 4px;
-    font-size: 11px;
-  }
-
-  /* Minimal form fields */
-  #customer-name,
-  #customer-email,
-  #customer-phone,
-  #santa-message {
-    padding: 6px 8px;
-    font-size: 12px;
-    border-radius: 6px;
-  }
-
-  #customer-name::placeholder,
-  #customer-email::placeholder,
-  #customer-phone::placeholder,
-  #santa-message::placeholder {
-    font-size: 12px;
-  }
-
-  #santa-message {
-    height: 50px;
-    min-height: 50px;
-  }
-
-  /* Minimal buttons */
-  .btn-primary,
-  .btn-secondary,
-  .close-btn {
-    padding: 7px 10px;
-    font-size: 11px;
-    border-radius: 14px;
-    min-height: 36px;
-  }
-
-  .gallery-main {
-    height: 180px;
-  }
-
-  .product-details h3 {
-    font-size: 16px;
-  }
-
-  #order-list {
-    max-height: 180px;
-  }
-}
-
-/* Landscape mobile orientation */
-@media (max-width: 900px) and (orientation: landscape) {
-  .app-container {
-    flex-direction: row;
-  }
-
-  #catalog-panel {
-    width: 50%;
-    order: 1;
-    border-right: 1px solid rgba(255, 255, 255, 0.4);
-    border-top: none;
-    max-height: 100vh;
-    overflow-y: auto;
-  }
-
-  #tree-area,
-  #canvas-container {
-    width: 50%;
-    order: 2;
-    min-height: 100vh;
-    max-height: 100vh;
-  }
-
-  #checkout-btn {
-    right: 12px;
-    left: auto;
-    width: auto;
-  }
-
-  .product-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .order-paper-card {
-    max-height: 85vh;
-    overflow-y: auto;
-  }
-  
-  #order-list {
-    max-height: 120px;
-  }
-}
-
-/* Touch-specific improvements */
-@media (hover: none) and (pointer: coarse) {
-  .category-btn,
-  .add-btn,
-  .btn-primary,
-  .btn-secondary,
-  .close-btn,
-  #checkout-btn,
-  .nav-btn {
-    min-height: 50px;
-    min-width: 50px;
-  }
-
-  .product-card {
-    cursor: default;
-  }
-
-  .product-card:active {
-    transform: scale(0.98);
-  }
-
-  .add-btn:active,
-  .category-btn:active,
-  .btn-primary:active,
-  .btn-secondary:active {
-    transform: scale(0.95);
-  }
-
-  .category-btn:hover,
-  .add-btn:hover,
-  .nav-btn:hover,
-  .btn-primary:hover,
-  .btn-secondary:hover {
-    transform: none;
-  }
-
-  .category-btn:active,
-  .add-btn:active {
-    opacity: 0.8;
-  }
-
-  .order-paper-card .qty-controls button,
-  .order-paper-card .btn-primary,
-  .order-paper-card .btn-secondary,
-  .order-paper-card .close-btn {
-    min-height: 44px;
-    min-width: 44px;
-  }
-  
-  .qty-controls input {
-    min-height: 44px;
-  }
-  
-  #customer-name,
-  #customer-email,
-  #customer-phone,
-  #santa-message {
-    min-height: 44px;
-  }
-}
-
-/* High DPI screens optimization */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .product-image,
-  .gallery-main img,
-  .gallery-thumbs img {
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-  }
-}
-
-/* High DPI optimization for small screens */
-@media (max-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
-  .order-paper-card {
-    border-width: 1.5px;
-  }
-  
-  .paper-footer {
-    border-top-width: 1px;
-  }
-}
-
-/* Reduced motion for accessibility */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-
-  .tree-badge,
-  #checkout-btn,
-  .paper-card::before {
-    animation: none !important;
-  }
-}
-
-/* Dark mode support (if needed in future) */
-@media (prefers-color-scheme: dark) {
-  /* Optionally add dark mode styles here */
-}
-
-/* Print styles */
-@media print {
-  .app-container {
-    display: block;
-  }
-
-  #catalog-panel,
-  #checkout-btn,
-  .tree-badge,
-  .nav-btn,
-  .modal-overlay {
-    display: none !important;
-  }
-
-  .paper-card {
-    box-shadow: none;
-    border: 1px solid #000;
-  }
-}
-
-/* ================================
-   RESPONSIVE FIXES FOR TREE BADGE
-   ================================ */
-@media (max-width: 900px) {
-  .category-header {
-    flex-direction: column;
+    border-radius: 10px;
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    font-size: 18px;
   }
-
-  .tree-badge {
-    align-self: center;
-    order: -1;
-    margin-bottom: 8px;
+  
+  #checkout-btn:not(:disabled) {
+    animation: pulse-glow 2.4s infinite ease-in-out;
   }
-}
-
-/* Ensure proper scrolling on very small screens */
-@media (max-width: 360px) {
+  
+  #checkout-btn:hover:not(:disabled) {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 18px 46px rgba(30, 126, 52, 0.22);
+  }
+  
+  #checkout-btn:active:not(:disabled) {
+    transform: translateY(0) scale(0.99);
+    box-shadow: 0 6px 18px rgba(30, 126, 52, 0.16);
+  }
+  
+  #checkout-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: #999;
+    box-shadow: none;
+  }
+  
+  @keyframes pulse-glow {
+    0% {
+      box-shadow: 0 10px 30px rgba(30, 126, 52, 0.12);
+      transform: translateY(0);
+    }
+  
+    50% {
+      box-shadow: 0 22px 44px rgba(30, 126, 52, 0.22);
+      transform: translateY(-2px);
+    }
+  
+    100% {
+      box-shadow: 0 10px 30px rgba(30, 126, 52, 0.12);
+      transform: translateY(0);
+    }
+  }
+  
+  .elf-container {
+    position: fixed;
+    bottom: -200px;
+    left: -200px;
+    width: 150px;
+    height: 150px;
+    z-index: 30;
+    pointer-events: none;
+  }
+  
   .modal-overlay {
-    padding: 4px;
-    align-items: flex-start;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 90;
+    padding: 20px;
   }
   
   .paper-card {
-    margin-top: 10vh;
-    max-height: 80vh;
+    width: min(900px, 96%);
+    max-height: 92vh;
+    overflow: hidden;
+    background: #fffefc;
+    border-radius: 18px;
+    padding: 26px;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.35);
+    color: #222;
+    position: relative;
+    font-family: "Inter", "Georgia", serif;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    display: flex;
+    gap: 22px;
+    backdrop-filter: blur(6px);
+    animation: fadeIn 0.4s ease-out;
   }
-}
+  
+  .paper-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  
+  .paper-title {
+    font-size: 20px;
+    color: var(--festive-green);
+    font-weight: 800;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  
+  .paper-sub {
+    color: #666;
+    font-size: 13px;
+  }
+  
+  .order-list {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .order-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.02);
+    border-radius: 10px;
+  }
+  
+  .qty-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  
+  .qty-controls button {
+    background: #eee;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  
+  .qty-controls input {
+    width: 52px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+    font-weight: 700;
+  }
+  
+  .btn-primary {
+    background: linear-gradient(145deg, #ffd86b, #f0ad4e);
+    border: none;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 8px 22px rgba(240, 173, 78, 0.18);
+    margin-left: 8px;
+    transition: all 0.25s ease;
+  }
+  
+  .btn-secondary {
+    background: transparent;
+    border: 2px solid rgba(0, 0, 0, 0.06);
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .close-btn {
+    background: var(--festive-red);
+    color: white;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: 800;
+  }
+  
+  /* Gallery and info columns */
+  .gallery {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+  }
+  
+  .gallery-main {
+    position: relative;
+    background: #fafafa;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    height: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .gallery-main img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  
+  .nav-btn {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(145deg, var(--festive-green), var(--festive-green-deep));
+    color: var(--snow-white);
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: var(--btn-shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.22s cubic-bezier(.2, .9, .3, 1),
+      box-shadow 0.22s ease,
+      background 0.3s ease;
+    position: relative;
+    z-index: 5;
+  }
+  
+  .nav-btn:hover,
+  .nav-btn:focus {
+    transform: translateY(-2px) scale(1.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+    background: linear-gradient(145deg, var(--festive-green-deep), var(--festive-green));
+    outline: none;
+  }
+  
+  .nav-btn:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: var(--btn-press);
+  }
+  
+  .nav-btn::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    width: calc(100% + 12px);
+    height: calc(100% + 12px);
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--festive-gold), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+  
+  .nav-btn:hover::after {
+    opacity: 1;
+  }
+  
+  .gallery-thumbs {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .gallery-thumbs img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  
+  .gallery-thumbs img:hover,
+  .gallery-thumbs img.active {
+    border-color: var(--festive-red);
+    transform: scale(1.05);
+  }
+  
+  /* Right section (details) */
+  .gallery-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 6px 4px;
+  }
+  
+  .product-details h3 {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--festive-green-deep);
+    margin: 0;
+  }
+  
+  #product-modal-description {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.5;
+    margin-top: 6px;
+  }
+  
+  /* Specs section */
+  .product-specs {
+    margin-top: 8px;
+    padding: 10px 12px;
+    background: rgba(250, 250, 250, 0.7);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    font-size: 13px;
+    color: #333;
+    line-height: 1.4;
+  }
+  
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  
+  .drop-zone-active {
+    outline: 3px dashed var(--festive-gold);
+    outline-offset: 10px;
+  }
+  
+  /* Form Styles */
+  #customer-name,
+  #customer-email,
+  #customer-phone,
+  #santa-message {
+    width: 100%;
+    margin-top: 4px;
+    padding: 10px 14px;
+    border: 2px solid #e0c497;
+    border-radius: 12px;
+    background: #fffaf0;
+    font-family: 'Roboto Serif', serif;
+    font-size: 15px;
+    color: #5a3d1a;
+    outline: none;
+    box-shadow: inset 0 1px 4px rgba(255, 215, 160, 0.3);
+    transition: all 0.3s ease;
+  }
+  
+  #customer-name::placeholder,
+  #customer-email::placeholder,
+  #customer-phone::placeholder,
+  #santa-message::placeholder {
+    color: #b69d7e;
+    font-style: italic;
+    font-family: 'Great Vibes', cursive;
+    font-size: 18px;
+    letter-spacing: 0.3px;
+  }
+  
+  #customer-name:hover,
+  #customer-email:hover,
+  #customer-phone:hover,
+  #santa-message:hover,
+  #customer-name:focus,
+  #customer-email:focus,
+  #customer-phone:focus,
+  #santa-message:focus {
+    background: #fffdf5;
+    border-color: #d3b16d;
+    box-shadow: 0 0 8px rgba(255, 215, 160, 0.6);
+  }
+  
+  #santa-message {
+    height: 100px;
+    resize: vertical;
+    background-image: linear-gradient(to bottom, #fffaf0 0%, #fff7e1 100%);
+    border-style: dashed;
+  }
+  
+  .paper-card::before {
+    content: "🎄";
+    position: absolute;
+    top: -14px;
+    right: 16px;
+    font-size: 22px;
+    color: #b83232;
+    animation: sparkle 2s infinite ease-in-out;
+  }
+  
+  @keyframes sparkle {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3); }
+  }
+  
+  /* Order Paper Card - Optimized for Mobile */
+  .order-paper-card {
+    background: linear-gradient(180deg, #fffdf5 0%, #fff9e9 100%);
+    border: 2px solid #e5c08d;
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+    max-width: 560px;
+    margin: auto;
+    font-family: "Merriweather", "Georgia", serif;
+    color: #4a2c1e;
+    text-align: left;
+    line-height: 1.7;
+    background-image: 
+      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.6), transparent 40%),
+      url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+    background-size: cover;
+    position: relative;
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  .order-paper-card h3,
+  .order-paper-card .paper-title {
+    font-family: "Great Vibes", cursive;
+    color: #b83232;
+    font-size: 34px;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  
+  .order-paper-card p {
+    font-family: "Merriweather", serif;
+    font-size: 16px;
+    color: #4a2c1e;
+    margin-top: 10px;
+  }
+  
+  .paper-footer {
+    border-top: 1px dashed #e0c497;
+    padding-top: 16px;
+    margin-top: 22px;
+  }
+  
+  .paper-total {
+    font-size: 18px;
+    font-weight: 700;
+    color: #5a3d1a;
+  }
+  
+  .paper-total span {
+    color: #b83232;
+    font-weight: 800;
+  }
+  
+  /* Scrollable Order Preview - Horizontal for Mobile */
+  #order-list {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 280px;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+  
+  #order-list::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  #order-list::-webkit-scrollbar-thumb {
+    background-color: rgba(184, 50, 50, 0.5);
+    border-radius: 3px;
+  }
+  
+  #order-list::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  
+  /* ============================================
+     MOBILE OPTIMIZATIONS (RESPONSIVE DESIGN)
+     ============================================ */
+  
+  /* Tablets and below (1200px) */
+  @media (max-width: 1200px) {
+    .product-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+  
+    #catalog-panel {
+      width: 45%;
+      padding: 18px;
+    }
+  
+    #tree-area {
+      width: 55%;
+    }
+  
+    .tree-badge {
+      font-size: 14px;
+      padding: 6px 12px;
+    }
+  
+    #checkout-btn {
+      padding: 12px 20px;
+      font-size: 14px;
+    }
+  
+    #checkout-btn span.emoji {
+      width: 32px;
+      height: 32px;
+      font-size: 16px;
+    }
+  }
+  
+  /* Small tablets (900px) */
+  @media (max-width: 900px) {
+    .app-container {
+      flex-direction: column;
+      gap: 0;
+      height: auto;
+    }
+  
+    #catalog-panel {
+      width: 100%;
+      order: 2;
+      max-height: none;
+      padding: 16px;
+      border-right: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.4);
+    }
+  
+    #tree-area,
+    #canvas-container {
+      width: 100%;
+      order: 1;
+      min-height: 50vh;
+      max-height: 50vh;
+    }
+  
+    .tree-badge {
+      font-size: 13px;
+      padding: 6px 12px;
+    }
+  
+    #checkout-btn {
+      bottom: 16px;
+      right: 16px;
+      padding: 12px 18px;
+      font-size: 14px;
+    }
+  
+    .product-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+  
+    .paper-card {
+      flex-direction: column;
+      padding: 20px;
+      gap: 16px;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+  
+    .gallery {
+      width: 100%;
+    }
+  
+    .gallery-main {
+      height: 280px;
+    }
+  
+    .gallery-right {
+      width: 100%;
+      padding: 0;
+    }
+  
+    .category-header {
+      gap: 12px;
+    }
+  
+    .category-menu {
+      gap: 6px;
+    }
+  
+    .category-btn {
+      padding: 8px 14px;
+      font-size: 13px;
+    }
+  
+    #catalog-panel h2 {
+      font-size: 20px;
+    }
+  }
+  
+  /* Mobile devices (650px) */
+  @media (max-width: 650px) {
+    body {
+      font-size: 14px;
+    }
+  
+    .app-container {
+      gap: 0;
+    }
+  
+    #catalog-panel {
+      padding: 12px;
+      gap: 10px;
+    }
+  
+    #catalog-panel h2 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+  
+    .category-header {
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+  
+    .category-menu {
+      gap: 6px;
+      margin-bottom: 0;
+    }
+  
+    .category-btn {
+      padding: 8px 12px;
+      font-size: 12px;
+      border-radius: 16px;
+    }
+  
+    .tree-badge {
+      font-size: 12px;
+      padding: 6px 10px;
+      width: fit-content;
+      margin: 0 auto 8px auto;
+    }
+  
+    /* FIXED: Ensure 2 columns for mobile */
+    .product-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+  
+    .product-card {
+      padding: 8px;
+      border-radius: 10px;
+    }
+  
+    .product-image {
+      width: 80px;
+      height: 80px;
+    }
+  
+    .product-name {
+      font-size: 13px;
+    }
+  
+    .product-price {
+      font-size: 13px;
+    }
+  
+    .product-short {
+      font-size: 11px;
+      min-height: 24px;
+    }
+  
+    .add-btn {
+      padding: 7px;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+  
+    #checkout-btn {
+      bottom: 12px;
+      right: 12px;
+      left: 12px;
+      width: calc(100% - 24px);
+      justify-content: center;
+      padding: 12px 16px;
+      font-size: 14px;
+      border-radius: 30px;
+    }
+  
+    #checkout-btn span.emoji {
+      width: 28px;
+      height: 28px;
+      font-size: 14px;
+    }
+  
+    .modal-overlay {
+      padding: 12px;
+    }
+  
+    .paper-card {
+      padding: 16px;
+      border-radius: 14px;
+      max-height: 90vh;
+    }
+  
+    .gallery-main {
+      height: 220px;
+    }
+  
+    .nav-btn {
+      width: 40px;
+      height: 40px;
+      font-size: 16px;
+    }
+  
+    .gallery-thumbs img {
+      width: 50px;
+      height: 50px;
+    }
+  
+    .product-details h3 {
+      font-size: 20px;
+    }
+  
+    .product-price {
+      font-size: 18px;
+    }
+  
+    #product-modal-description {
+      font-size: 13px;
+    }
+  
+    .product-specs {
+      font-size: 12px;
+      padding: 8px 10px;
+    }
+  
+    /* Optimized Order Paper Card for Mobile with HORIZONTAL SCROLLING */
+    .order-paper-card {
+      padding: 16px;
+      border-radius: 16px;
+      margin: 8px;
+      max-width: calc(100% - 16px);
+    }
+  
+    .order-paper-card h3,
+    .order-paper-card .paper-title {
+      font-size: 22px;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+  
+    .order-paper-card p {
+      font-size: 13px;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+  
+    .paper-footer {
+      padding-top: 12px;
+      margin-top: 16px;
+    }
+  
+    .paper-total {
+      font-size: 16px;
+    }
+  
+    /* Order list optimization - HORIZONTAL SCROLLING */
+    #order-list {
+      flex-direction: row;
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-height: none;
+      gap: 10px;
+      margin-top: 12px;
+      padding-bottom: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(184, 50, 50, 0.5) transparent;
+      -webkit-overflow-scrolling: touch;
+    }
+  
+    #order-list::-webkit-scrollbar {
+      height: 6px;
+    }
+  
+    #order-list::-webkit-scrollbar-thumb {
+      background-color: rgba(184, 50, 50, 0.5);
+      border-radius: 3px;
+    }
+  
+    #order-list::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 3px;
+      margin: 0 4px;
+    }
+  
+    .order-row {
+      min-width: 280px;
+      padding: 12px;
+      gap: 10px;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.02);
+      border-radius: 12px;
+      border: 1px solid rgba(229, 192, 141, 0.3);
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+  
+    .qty-controls {
+      width: 100%;
+      justify-content: space-between;
+      gap: 8px;
+    }
+  
+    .qty-controls button {
+      padding: 8px 12px;
+      font-size: 14px;
+      min-width: 40px;
+      background: var(--festive-green);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+  
+    .qty-controls button:hover {
+      background: var(--festive-green-deep);
+      transform: translateY(-1px);
+    }
+  
+    .qty-controls input {
+      width: 50px;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #e5c08d;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 700;
+      background: #fffaf0;
+    }
+  
+    /* Form fields optimization */
+    #customer-name,
+    #customer-email,
+    #customer-phone,
+    #santa-message {
+      padding: 8px 12px;
+      font-size: 14px;
+      margin-top: 2px;
+      border-radius: 10px;
+    }
+  
+    #customer-name::placeholder,
+    #customer-email::placeholder,
+    #customer-phone::placeholder,
+    #santa-message::placeholder {
+      font-size: 14px;
+    }
+  
+    #santa-message {
+      height: 70px;
+      min-height: 70px;
+    }
+  
+    /* Buttons optimization */
+    .btn-primary,
+    .btn-secondary,
+    .close-btn {
+      padding: 10px 14px;
+      font-size: 13px;
+      border-radius: 18px;
+      min-height: 44px;
+    }
+  
+    .paper-actions {
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+  
+    .paper-actions button {
+      width: 100%;
+      margin: 0;
+    }
+  
+    .paper-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+  
+    .paper-title {
+      font-size: 18px;
+    }
+  
+    .paper-sub {
+      font-size: 12px;
+    }
+  
+    #canvas-container {
+      min-height: 40vh;
+      max-height: 45vh;
+    }
+  
+    canvas {
+      border-radius: 8px;
+      max-width: 100%;
+      height: auto;
+    }
+  }
+  
+  /* Extra small mobile devices (480px) */
+  @media (max-width: 480px) {
+    .product-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+  
+    .product-card {
+      max-width: 100%;
+    }
+  
+    .card-top {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .product-image {
+      width: 100px;
+      height: 100px;
+    }
+  
+    .product-name {
+      text-align: center;
+      white-space: normal;
+      overflow: visible;
+      font-size: 14px;
+    }
+  
+    .product-price {
+      text-align: center;
+      font-size: 14px;
+    }
+  
+    .product-short {
+      text-align: center;
+      font-size: 12px;
+      min-height: auto;
+      -webkit-line-clamp: 2;
+    }
+  
+    .add-btn {
+      width: 100%;
+      padding: 10px;
+      font-size: 13px;
+    }
+  
+    .category-header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+    }
+  
+    .tree-badge {
+      align-self: center;
+      order: -1;
+      margin-bottom: 8px;
+    }
+  
+    #checkout-btn {
+      bottom: 10px;
+      right: 10px;
+      left: 10px;
+      width: calc(100% - 20px);
+      padding: 14px;
+      font-size: 15px;
+      gap: 8px;
+    }
+  
+    #checkout-btn span.emoji {
+      width: 30px;
+      height: 30px;
+      font-size: 16px;
+    }
+  
+    .category-menu {
+      justify-content: center;
+    }
+  
+    .category-btn {
+      flex: 1;
+      min-width: calc(50% - 3px);
+      padding: 10px 8px;
+      font-size: 12px;
+      text-align: center;
+    }
+  
+    #catalog-panel h2 {
+      font-size: 18px;
+      justify-content: center;
+      text-align: center;
+    }
+  
+    .paper-card {
+      padding: 14px;
+      border-radius: 12px;
+    }
+  
+    .gallery-main {
+      height: 200px;
+    }
+  
+    .nav-btn {
+      width: 36px;
+      height: 36px;
+      font-size: 14px;
+    }
+  
+    .gallery-thumbs img {
+      width: 45px;
+      height: 45px;
+    }
+  
+    .product-details h3 {
+      font-size: 18px;
+    }
+  
+    .product-price {
+      font-size: 16px;
+    }
+  
+    #product-modal-description {
+      font-size: 12px;
+    }
+  
+    .product-specs {
+      font-size: 11px;
+      padding: 8px;
+    }
+  
+    .gallery-right {
+      gap: 10px;
+    }
+  
+    /* Extra Small Order Paper Card with HORIZONTAL SCROLLING */
+    .order-paper-card {
+      padding: 12px;
+      border-radius: 14px;
+      margin: 6px;
+      max-width: calc(100% - 12px);
+    }
+  
+    .order-paper-card h3,
+    .order-paper-card .paper-title {
+      font-size: 20px;
+      margin-bottom: 6px;
+    }
+  
+    .order-paper-card p {
+      font-size: 12px;
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+  
+    .paper-footer {
+      padding-top: 10px;
+      margin-top: 14px;
+    }
+  
+    .paper-total {
+      font-size: 15px;
+    }
+  
+    /* Compact horizontal order list */
+    #order-list {
+      gap: 8px;
+      padding-bottom: 6px;
+    }
+  
+    .order-row {
+      min-width: 250px;
+      padding: 10px;
+      gap: 8px;
+      border-radius: 10px;
+    }
+  
+    .qty-controls {
+      gap: 6px;
+    }
+  
+    .qty-controls button {
+      padding: 6px 10px;
+      font-size: 13px;
+      min-width: 36px;
+    }
+  
+    .qty-controls input {
+      width: 45px;
+      padding: 6px;
+      font-size: 13px;
+    }
+  
+    /* Smaller form fields */
+    #customer-name,
+    #customer-email,
+    #customer-phone,
+    #santa-message {
+      padding: 7px 10px;
+      font-size: 13px;
+      border-radius: 8px;
+    }
+  
+    #customer-name::placeholder,
+    #customer-email::placeholder,
+    #customer-phone::placeholder,
+    #santa-message::placeholder {
+      font-size: 13px;
+    }
+  
+    #santa-message {
+      height: 60px;
+      min-height: 60px;
+    }
+  
+    /* Compact buttons */
+    .btn-primary,
+    .btn-secondary,
+    .close-btn {
+      padding: 8px 12px;
+      font-size: 12px;
+      border-radius: 16px;
+      min-height: 40px;
+    }
+  
+    .modal-overlay {
+      padding: 8px;
+    }
+  
+    #canvas-container {
+      min-height: 35vh;
+      max-height: 40vh;
+    }
+  
+    .paper-card::before {
+      font-size: 16px;
+      top: -8px;
+      right: 10px;
+    }
+  }
+  
+  /* Very small devices (360px) */
+  @media (max-width: 360px) {
+    .product-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+    }
+  
+    #catalog-panel {
+      padding: 10px;
+    }
+  
+    .category-btn {
+      padding: 8px 6px;
+      font-size: 11px;
+    }
+  
+    .tree-badge {
+      font-size: 11px;
+      padding: 5px 8px;
+    }
+  
+    .product-image {
+      width: 90px;
+      height: 90px;
+    }
+  
+    .product-name {
+      font-size: 12px;
+    }
+  
+    .product-price {
+      font-size: 12px;
+    }
+  
+    .product-short {
+      font-size: 10px;
+    }
+  
+    .add-btn {
+      padding: 8px;
+      font-size: 11px;
+    }
+  
+    #checkout-btn {
+      padding: 12px;
+      font-size: 14px;
+    }
+  
+    /* Ultra Compact Order Paper Card with HORIZONTAL SCROLLING */
+    .order-paper-card {
+      padding: 10px;
+      border-radius: 12px;
+      margin: 4px;
+      max-width: calc(100% - 8px);
+    }
+  
+    .order-paper-card h3,
+    .order-paper-card .paper-title {
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+  
+    .order-paper-card p {
+      font-size: 11px;
+      margin-top: 3px;
+      line-height: 1.2;
+    }
+  
+    .paper-footer {
+      padding-top: 8px;
+      margin-top: 12px;
+    }
+  
+    .paper-total {
+      font-size: 14px;
+    }
+  
+    /* Ultra compact horizontal order list */
+    #order-list {
+      gap: 6px;
+      padding-bottom: 4px;
+    }
+  
+    .order-row {
+      min-width: 220px;
+      padding: 8px;
+      gap: 6px;
+      border-radius: 8px;
+    }
+  
+    .qty-controls {
+      gap: 4px;
+    }
+  
+    .qty-controls button {
+      padding: 5px 8px;
+      font-size: 12px;
+      min-width: 32px;
+    }
+  
+    .qty-controls input {
+      width: 40px;
+      padding: 5px;
+      font-size: 12px;
+    }
+  
+    /* Minimal form fields */
+    #customer-name,
+    #customer-email,
+    #customer-phone,
+    #santa-message {
+      padding: 6px 8px;
+      font-size: 12px;
+      border-radius: 6px;
+    }
+  
+    #customer-name::placeholder,
+    #customer-email::placeholder,
+    #customer-phone::placeholder,
+    #santa-message::placeholder {
+      font-size: 12px;
+    }
+  
+    #santa-message {
+      height: 50px;
+      min-height: 50px;
+    }
+  
+    /* Minimal buttons */
+    .btn-primary,
+    .btn-secondary,
+    .close-btn {
+      padding: 7px 10px;
+      font-size: 11px;
+      border-radius: 14px;
+      min-height: 36px;
+    }
+  
+    .gallery-main {
+      height: 180px;
+    }
+  
+    .product-details h3 {
+      font-size: 16px;
+    }
+  }
+  
+  /* Landscape mobile orientation */
+  @media (max-width: 900px) and (orientation: landscape) {
+    .app-container {
+      flex-direction: row;
+    }
+  
+    #catalog-panel {
+      width: 50%;
+      order: 1;
+      border-right: 1px solid rgba(255, 255, 255, 0.4);
+      border-top: none;
+      max-height: 100vh;
+      overflow-y: auto;
+    }
+  
+    #tree-area,
+    #canvas-container {
+      width: 50%;
+      order: 2;
+      min-height: 100vh;
+      max-height: 100vh;
+    }
+  
+    #checkout-btn {
+      right: 12px;
+      left: auto;
+      width: auto;
+    }
+  
+    .product-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .order-paper-card {
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+    
+    #order-list {
+      max-height: 120px;
+    }
+  }
+  
+  /* Touch-specific improvements */
+  @media (hover: none) and (pointer: coarse) {
+    .category-btn,
+    .add-btn,
+    .btn-primary,
+    .btn-secondary,
+    .close-btn,
+    #checkout-btn,
+    .nav-btn {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  
+    .product-card {
+      cursor: default;
+    }
+  
+    .product-card:active {
+      transform: scale(0.98);
+    }
+  
+    .add-btn:active,
+    .category-btn:active,
+    .btn-primary:active,
+    .btn-secondary:active {
+      transform: scale(0.95);
+    }
+  
+    .category-btn:hover,
+    .add-btn:hover,
+    .nav-btn:hover,
+    .btn-primary:hover,
+    .btn-secondary:hover {
+      transform: none;
+    }
+  
+    .category-btn:active,
+    .add-btn:active {
+      opacity: 0.8;
+    }
+  
+    .order-paper-card .qty-controls button,
+    .order-paper-card .btn-primary,
+    .order-paper-card .btn-secondary,
+    .order-paper-card .close-btn {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    
+    .qty-controls input {
+      min-height: 44px;
+    }
+    
+    #customer-name,
+    #customer-email,
+    #customer-phone,
+    #santa-message {
+      min-height: 44px;
+    }
+  
+    /* Better touch scrolling for horizontal list */
+    #order-list {
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+    }
+  
+    .order-row {
+      scroll-snap-align: start;
+    }
+  }
+  
+  /* High DPI screens optimization */
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .product-image,
+    .gallery-main img,
+    .gallery-thumbs img {
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+    }
+  }
+  
+  /* High DPI optimization for small screens */
+  @media (max-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+    .order-paper-card {
+      border-width: 1.5px;
+    }
+    
+    .paper-footer {
+      border-top-width: 1px;
+    }
+  }
+  
+  /* Horizontal scroll indicators */
+  @media (max-width: 650px) {
+    #order-list {
+      position: relative;
+    }
+  
+    #order-list::before,
+    #order-list::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 20px;
+      pointer-events: none;
+      z-index: 1;
+    }
+  
+    #order-list::before {
+      left: 0;
+      background: linear-gradient(to right, rgba(255, 253, 245, 0.9), transparent);
+    }
+  
+    #order-list::after {
+      right: 0;
+      background: linear-gradient(to left, rgba(255, 253, 245, 0.9), transparent);
+    }
+  }
+  
+  /* Reduced motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  
+    .tree-badge,
+    #checkout-btn,
+    .paper-card::before {
+      animation: none !important;
+    }
+  }
+  
+  /* Dark mode support (if needed in future) */
+  @media (prefers-color-scheme: dark) {
+    /* Optionally add dark mode styles here */
+  }
+  
+  /* Print styles */
+  @media print {
+    .app-container {
+      display: block;
+    }
+  
+    #catalog-panel,
+    #checkout-btn,
+    .tree-badge,
+    .nav-btn,
+    .modal-overlay {
+      display: none !important;
+    }
+  
+    .paper-card {
+      box-shadow: none;
+      border: 1px solid #000;
+    }
+  }
+  
+  /* ================================
+     RESPONSIVE FIXES FOR TREE BADGE
+     ================================ */
+  @media (max-width: 900px) {
+    .category-header {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+  
+    .tree-badge {
+      align-self: center;
+      order: -1;
+      margin-bottom: 8px;
+    }
+  }
+  
+  /* Ensure proper scrolling on very small screens */
+  @media (max-width: 360px) {
+    .modal-overlay {
+      padding: 4px;
+      align-items: flex-start;
+    }
+    
+    .paper-card {
+      margin-top: 10vh;
+      max-height: 80vh;
+    }
+  }
