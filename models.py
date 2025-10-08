@@ -7,6 +7,8 @@ db = SQLAlchemy()
 
 class Product(db.Model):
     __tablename__ = 'products'
+    __table_args__ = {'schema': 'newyear_shop'}  # <--- add this
+
     
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False, index=True)
@@ -36,6 +38,8 @@ class Product(db.Model):
 
 class Order(db.Model):
     __tablename__ = 'orders'
+    __table_args__ = {'schema': 'newyear_shop'}  # <--- add this
+
     
     id = db.Column(db.Integer, primary_key=True)
     customer_name = db.Column(db.String(200), nullable=False, index=True)
@@ -67,7 +71,8 @@ class Order(db.Model):
 
 class AdminUser(UserMixin, db.Model):
     __tablename__ = 'admin_users'
-    
+    __table_args__ = {'schema': 'newyear_shop'}  # <--- add this
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False, index=True)
     password_hash = db.Column(db.String(255), nullable=False)
