@@ -26,7 +26,7 @@ async function main(products) {
         const sceneFunctions = initScene(canvasContainer);
 
         // 2. Fetch product data
-        const response = await fetch("/api/products");
+        const response = await fetch("/mandarin/api/products");
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const products = await response.json();
 
