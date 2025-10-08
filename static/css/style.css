@@ -741,9 +741,6 @@
     color: #4a2c1e;
     text-align: left;
     line-height: 1.7;
-    background-image: 
-      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.6), transparent 40%),
-      url("https://www.transparenttextures.com/patterns/paper-fibers.png");
     background-size: cover;
     position: relative;
     animation: fadeIn 0.5s ease-out;
@@ -752,7 +749,7 @@
     flex-direction: column;
     max-height: 85vh;
   }
-  
+
   .order-paper-card h3,
   .order-paper-card .paper-title {
     font-family: "Great Vibes", cursive;
