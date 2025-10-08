@@ -1677,8 +1677,8 @@
     .close-btn,
     #checkout-btn,
     .nav-btn {
-      min-height: 44px;
-      min-width: 44px;
+      min-height: 50px;
+      min-width: 50px;
     }
   
     .product-card {
@@ -1733,7 +1733,12 @@
       -webkit-overflow-scrolling: touch;
       scroll-snap-type: x mandatory;
     }
-  
+  #order-paper-card
+  {
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: y mandatory;
+  }
+
     .order-row {
       scroll-snap-align: start;
     }
