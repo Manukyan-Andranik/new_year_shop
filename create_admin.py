@@ -12,40 +12,46 @@ from werkzeug.security import generate_password_hash
 # Add the current directory to Python path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from app import app, db
-from models import AdminUser
+# from app import app, db
+# from models import AdminUser
+pass_hash = generate_password_hash('admin123')
+print(pass_hash)
 
-def create_admin_user():
-    with app.app_context():
-        # Check if admin user already exists
-        existing_admin = AdminUser.query.filter_by(username='admin').first()
-        
-        if existing_admin:
-            print("⚠️  Admin user already exists. Updating password...")
-            existing_admin.password_hash = generate_password_hash('admin123')
-            db.session.commit()
-            print("✅ Admin password updated successfully!")
-        else:
-            # Create new admin user
-            admin = AdminUser(
-                username='admin',
-                password_hash=generate_password_hash('admin123')
-            )
-            db.session.add(admin)
-            db.session.commit()
-            print("✅ Admin user created successfully!")
-        
-        print("\n🔐 Admin Credentials:")
-        print("   Username: admin")
-        print("   Password: admin123")
-        print("\n💡 You can now login at: http://localhost:5000/admin/login")
+# def create_admin_user():
+#     with app.app_context():
+#         # Check if admin user already exists
+#         existing_admin = AdminUser.query.filter_by(username='admin').first()
+#         pass_hash = generate_password_hash('admin123')
+#         if existing_admin:
+#             print("⚠️  Admin user already exists. Updating password...")
+#             existing_admin.password_hash = pass_hash
+#             db.session.commit()
+#             print("✅ Admin password updated successfully!")
+#         else:
+#             # Create new admin user
+#             admin = AdminUser(
+#                 username='admin',
+#                 password_hash=pass_hash
+#             )
+#             db.session.add(admin)
+#             db.session.commit()
+#             print("✅ Admin user created successfully!")
+#         print(pass_hash)
+#         print("\n🔐 Admin Credentials:")
+#         print("   Username: admin")
+#         print("   Password: admin123")
+#         print("\n💡 You can now login at: http://localhost:5000/admin/login")
 
-if __name__ == '__main__':
-    try:
-        create_admin_user()
-    except Exception as e:
-        print(f"❌ Error creating admin user: {e}")
-        print("\nMake sure you have:")
-        print("1. The database initialized")
-        print("2. All required packages installed")
-        print("3. The Flask app structure set up correctly")
+# if __name__ == '__main__':
+#     try:
+#         create_admin_user()
+#     except Exception as e:
+#         print(f"❌ Error creating admin user: {e}")
+#         print("\nMake sure you have:")
+#         print("1. The database initialized")
+#         print("2. All required packages installed")
+#         print("3. The Flask app structure set up correctly")
+
+
+# INSERT INTO newyear_shop_schema.admin_users (username, password_hash)
+# VALUES ('admin', 'pbkdf2:sha256:600000$EyqwEwtJSZ6zAu0M$0c6d64cce5bcca44e6e04016d75ae0771344999c113da2e117808d5d1d56dfc3');
