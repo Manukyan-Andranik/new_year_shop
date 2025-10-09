@@ -1702,7 +1702,7 @@
   }
   
   /* Touch-specific improvements */
-  @media (hover: none) and (pointer: coarse) {
+  /* @media (hover: none) and (pointer: coarse) {
     .category-btn,
     .add-btn,
     .btn-primary,
@@ -1710,7 +1710,6 @@
     .close-btn,
     #checkout-btn,
     .nav-btn {
-
       min-width: 70px;
     }
   
@@ -1761,7 +1760,6 @@
       min-height: 44px;
     }
   
-    /* Better touch scrolling for both lists */
     #order-list {
       -webkit-overflow-scrolling: touch;
       scroll-snap-type: x mandatory;
@@ -1775,7 +1773,7 @@
     .order-row {
       scroll-snap-align: start;
     }
-  }
+  } */
   
   /* High DPI screens optimization */
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
