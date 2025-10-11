@@ -25,8 +25,9 @@ async function main(products) {
         
         const sceneFunctions = initScene(canvasContainer);
 
-        // 2. Fetch product data
-        const response = await fetch("/mandarin/api/products");
+        // 2. Fetch product data with current language
+        const currentLang = window.translationManager ? window.translationManager.currentLanguage : 'en';
+        const response = await fetch(`/api/products?lang=${currentLang}`);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const products = await response.json();
 
@@ -40,8 +41,8 @@ async function main(products) {
     } catch (error) {
         console.error("Failed to initialize the application:", error);
         document.body.innerHTML = `<div style="text-align:center; padding: 40px; font-size:1.2em;">
-            <h2>Oh no! 😔</h2>
-            <p>Something went wrong while loading the toy workshop. Please try again later.</p>
+            <h2>${window.t ? window.t('error.loading') : 'Oh no! 😔'}</h2>
+            <p>${window.t ? window.t('error.loading.message') : 'Something went wrong while loading the toy workshop. Please try again later.'}</p>
         </div>`;
     }
 }

@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Christmas Magic Shop - Beautiful Tree Decorations{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
     
     <!-- Web Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Discover magical Christmas tree decorations and toys. Bring holiday cheer to your home with our beautiful collection.">
+    <meta name="description" content="{% block description %}Discover magical Christmas tree decorations and toys. Bring holiday cheer to your home with our beautiful collection.{% endblock %}">
     <meta name="keywords" content="christmas decorations, tree toys, holiday, ornaments, christmas shop">
     
     <!-- OG Tags -->
-    <meta property="og:title" content="Christmas Magic Shop">
-    <meta property="og:description" content="Beautiful Christmas tree decorations and toys">
+    <meta property="og:title" content="{% block og_title %}Christmas Magic Shop{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Beautiful Christmas tree decorations and toys{% endblock %}">
     <meta property="og:type" content="website">
     
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
@@ -28,7 +28,6 @@
     </main>
     
     {% include 'components/footer.html' %}
-    {% include 'components/cart.html' %}
     
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     {% block scripts %}{% endblock %}

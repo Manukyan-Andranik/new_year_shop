@@ -117,6 +117,11 @@ function addEventListeners() {
     // Global listeners
     window.addEventListener('keydown', handleGlobalKeys);
     
+    // Language change listener
+    window.addEventListener('languageChanged', (event) => {
+        updateDynamicContent();
+    });
+    
     // Canvas drag-and-drop
     if (sceneFunctions.renderer && sceneFunctions.renderer.domElement) {
         const canvasContainer = sceneFunctions.renderer.domElement.parentElement;
@@ -190,7 +195,7 @@ function initCategoryFilter() {
                     </div>
                 </div>
                 <div class="card-bottom">
-                    <button class="add-btn" aria-label="Add ${product.name} to cart"><span class="icon">🎁</span>Add to Tree</button>
+                    <button class="add-btn" aria-label="${window.t ? window.t('product.add.aria', {name: product.name}) : `Add ${product.name} to cart`}"><span class="icon">🎁</span>${window.t ? window.t('product.add') : 'Add to Tree'}</button>
                 </div>`;
 
             card.querySelector('.add-btn').addEventListener('click', e => { e.stopPropagation(); handleAdd(product, card); });
@@ -230,8 +235,8 @@ function renderProducts() {
                 <div class="product-name">${product.name}</div>
                 <div class="product-price">$${product.price.toFixed(2)}</div>
               </div>
-              <button class="add-btn" aria-label="Add ${product.name} to cart">
-                🎁 Add
+              <button class="add-btn" aria-label="${window.t ? window.t('product.add.aria', {name: product.name}) : `Add ${product.name} to cart`}">
+                🎁 ${window.t ? window.t('product.add') : 'Add'}
               </button>`;
           
             card.querySelector('.add-btn').addEventListener('click', e => {
@@ -263,7 +268,7 @@ function handleAdd(product, cardElement) {
     }
     updateCartUI();
     animateToyToTree(product, cardElement);
-    announce(`${product.name} added to the tree`);
+    announce(window.t ? window.t('announcement.added', {name: product.name}) : `${product.name} added to the tree`);
 }
 
 function handleDropOnTree(e) {
@@ -276,7 +281,7 @@ function handleDropOnTree(e) {
         else cart.push({ productId: product.id, name: product.name, price: product.price, image: product.images_url_list[0], qty: 1 });
         updateCartUI();
         sceneFunctions.add3DToyToTree(product);
-        announce(`${product.name} added to the tree`);
+        announce(window.t ? window.t('announcement.added', {name: product.name}) : `${product.name} added to the tree`);
     } catch (err) { console.error('Drop error', err); }
 }
 
@@ -308,7 +313,7 @@ function updateCartUI() {
     const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
     dom.cartCount.textContent = totalItems;
     dom.checkoutBtn.disabled = totalItems === 0;
-    dom.modalItemsCount.textContent = `${totalItems} item${totalItems !== 1 ? 's' : ''}`;
+    dom.modalItemsCount.textContent = window.t ? window.t('order.items', {count: totalItems}) : `${totalItems} item${totalItems !== 1 ? 's' : ''}`;
 }
 
 function announce(msg) {
@@ -316,11 +321,45 @@ function announce(msg) {
     setTimeout(() => dom.announcements.textContent = '', 3000);
 }
 
+// Update dynamic content when language changes
+function updateDynamicContent() {
+    if (!window.t) return;
+    
+    // Update checkout button text
+    if (dom.checkoutBtn && dom.checkoutBtn.querySelector('#checkout-text')) {
+        dom.checkoutBtn.querySelector('#checkout-text').textContent = window.t('checkout.button');
+    }
+    
+    // Update cart count badge
+    if (dom.cartCount && dom.cartCount.nextElementSibling) {
+        dom.cartCount.nextElementSibling.textContent = window.t('cert.badge');
+    }
+    
+    // Update category buttons
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    categoryBtns.forEach(btn => {
+        const category = btn.dataset.category;
+        if (category) {
+            btn.textContent = window.t(`category.${category}`);
+        }
+    });
+    
+    // Update modal content if open
+    if (dom.orderModal && dom.orderModal.style.display === 'flex') {
+        renderOrderModal();
+    }
+    
+    // Update product modal if open
+    if (dom.productModal && dom.productModal.style.display === 'flex' && modalProduct) {
+        openProductModal(modalProduct);
+    }
+}
+
 // --- Order Modal Logic ---
 function renderOrderModal() {
     dom.orderList.innerHTML = '';
     if (cart.length === 0) {
-        dom.orderList.innerHTML = `<div style="text-align:center; padding:18px;">Your letter to Santa is empty!</div>`;
+        dom.orderList.innerHTML = `<div style="text-align:center; padding:18px;">${window.t ? window.t('order.empty') : 'Your letter to Santa is empty!'}</div>`;
     }
     cart.forEach(item => {
         const row = document.createElement('div');
@@ -334,9 +373,9 @@ function renderOrderModal() {
               </div>
             </div>
             <div class="qty-controls">
-              <button data-id="${item.productId}" class="qty-decrease" aria-label="Decrease quantity">-</button>
-              <input type="number" min="0" value="${item.qty}" data-id="${item.productId}" aria-label="Quantity for ${item.name}">
-              <button data-id="${item.productId}" class="qty-increase" aria-label="Increase quantity">+</button>
+              <button data-id="${item.productId}" class="qty-decrease" aria-label="${window.t ? window.t('qty.decrease') : 'Decrease quantity'}">-</button>
+              <input type="number" min="0" value="${item.qty}" data-id="${item.productId}" aria-label="${window.t ? window.t('qty.label', {name: item.name}) : `Quantity for ${item.name}`}">
+              <button data-id="${item.productId}" class="qty-increase" aria-label="${window.t ? window.t('qty.increase') : 'Increase quantity'}">+</button>
             </div>
         `;
         dom.orderList.appendChild(row);
@@ -389,7 +428,7 @@ async function handleOrderSubmit(event) {
     if (cart.length === 0) return;
 
     dom.paperConfirm.disabled = true;
-    dom.paperConfirm.textContent = 'Sending...';
+    dom.paperConfirm.textContent = window.t ? window.t('order.sending') : 'Sending...';
 
     // Animate envelope + elf at the same time
     await Promise.all([
@@ -408,18 +447,18 @@ async function handleOrderSubmit(event) {
     try {
         const result = await sendOrder(orderData);
         dom.successOverlay.style.display = 'flex';
-        announce('Order successfully sent to Santa!');
+        announce(window.t ? window.t('announcement.order.success') : 'Order successfully sent to Santa!');
         cart = [];
         updateCartUI();
         sceneFunctions.clearAllToysFromScene();
         dom.orderModal.style.display = 'none';
         dom.orderForm.reset();
     } catch (err) {
-        alert('Failed to send order. Please try again.');
+        alert(window.t ? window.t('error.order.failed') : 'Failed to send order. Please try again.');
         console.error(err);
     } finally {
         dom.paperConfirm.disabled = false;
-        dom.paperConfirm.textContent = 'Send to Santa ✨';
+        dom.paperConfirm.textContent = window.t ? window.t('order.buttons.send') : 'Send to Santa ✨';
     }
 }
 

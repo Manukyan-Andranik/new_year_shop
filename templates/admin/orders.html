@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orders - Admin Dashboard</title>
+    <title data-translate="admin.orders.title">📦 Orders - Admin Dashboard</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
         rel="stylesheet">
@@ -181,17 +181,17 @@
     <div class="admin-dashboard">
         <header class="admin-header">
             <nav class="admin-nav">
-                <h1 class="admin-title">📦 Order Management</h1>
+                <h1 class="admin-title" data-translate="admin.orders.title">📦 Order Management</h1>
                 <div class="admin-actions">
-                    <a href="{{ url_for('admin_dashboard') }}" class="admin-btn">Products</a>
-                    <a href="{{ url_for('index') }}" class="admin-btn">View Shop</a>
-                    <a href="{{ url_for('admin_logout') }}" class="admin-btn">Logout</a>
+                    <a href="{{ url_for('admin_dashboard') }}" class="admin-btn" data-translate="admin.orders.products">Products</a>
+                    <a href="{{ url_for('index') }}" class="admin-btn" data-translate="admin.orders.shop">View Shop</a>
+                    <a href="{{ url_for('admin_logout') }}" class="admin-btn" data-translate="admin.orders.logout">Logout</a>
                 </div>
             </nav>
         </header>
 
         <main class="admin-content">
-            <h2>Customer Orders</h2>
+            <h2 data-translate="admin.orders.customers">Customer Orders</h2>
 
             <div class="orders-list" id="ordersList">
                 <!-- Orders will be loaded here -->
@@ -204,7 +204,7 @@
 
         async function loadOrders() {
             try {
-                const response = await fetch('/mandarin/api/admin/orders');
+                const response = await fetch('/api/admin/orders');
                 const orders = await response.json();
                 displayOrders(orders);
             } catch (error) {
@@ -216,7 +216,7 @@
             const container = document.getElementById('ordersList');
 
             if (orders.length === 0) {
-                container.innerHTML = '<p>No orders found.</p>';
+                container.innerHTML = `<p>${window.t ? window.t('admin.orders.empty') : 'No orders found.'}</p>`;
                 return;
             }
 
@@ -224,31 +224,31 @@
                 <div class="order-card">
                     <div class="order-header">
                         <div>
-                            <span class="order-id">Order #${order.id}</span>
+                            <span class="order-id">${window.t ? window.t('admin.orders.order', {id: order.id}) : `Order #${order.id}`}</span>
                             <span> - ${new Date(order.created_at).toLocaleDateString()}</span>
                         </div>
                         <select class="status-select" onchange="updateOrderStatus(${order.id}, this.value)">
-                            <option value="new" ${order.status === 'new' ? 'selected' : ''}>New</option>
-                            <option value="processed" ${order.status === 'processed' ? 'selected' : ''}>Processed</option>
-                            <option value="shipped" ${order.status === 'shipped' ? 'selected' : ''}>Shipped</option>
+                            <option value="new" ${order.status === 'new' ? 'selected' : ''}>${window.t ? window.t('admin.orders.status.new') : 'New'}</option>
+                            <option value="processed" ${order.status === 'processed' ? 'selected' : ''}>${window.t ? window.t('admin.orders.status.processed') : 'Processed'}</option>
+                            <option value="shipped" ${order.status === 'shipped' ? 'selected' : ''}>${window.t ? window.t('admin.orders.status.shipped') : 'Shipped'}</option>
                         </select>
                     </div>
 
                     <div class="order-details">
                         <div>
-                            <strong>Customer:</strong> ${order.customer_name}<br>
-                            <strong>Phone:</strong> ${order.phone}<br>
-                            <strong>Email:</strong> ${order.email}
+                            <strong>${window.t ? window.t('admin.orders.customer') : 'Customer:'}</strong> ${order.customer_name}<br>
+                            <strong>${window.t ? window.t('admin.orders.phone') : 'Phone:'}</strong> ${order.phone}<br>
+                            <strong>${window.t ? window.t('admin.orders.email') : 'Email:'}</strong> ${order.email}
                         </div>
                         <div>
-                            <strong>Status:</strong> 
+                            <strong>${window.t ? window.t('admin.orders.status') : 'Status:'}</strong> 
                             <span class="order-status status-${order.status}">${order.status.toUpperCase()}</span><br>
-                            ${order.comment ? `<strong>Comment:</strong> ${order.comment}` : ''}
+                            ${order.comment ? `<strong>${window.t ? window.t('admin.orders.comment') : 'Comment:'}</strong> ${order.comment}` : ''}
                         </div>
                     </div>
 
                     <div class="order-items">
-                        <strong>Items:</strong>
+                        <strong>${window.t ? window.t('admin.orders.items') : 'Items:'}</strong>
                         ${order.items.map(item => `
                         <div class="order-item">
                             <div class="item-info">
@@ -259,7 +259,7 @@
                         </div>
                         `).join('')}
                         <div class="order-total">
-                            <span>Total:</span>
+                            <span>${window.t ? window.t('admin.orders.total') : 'Total:'}</span>
                             <span>$${order.items.reduce((sum, item) => sum + (item.price * item.qty), 0).toFixed(2)}</span>
                         </div>
                     </div>
@@ -269,7 +269,7 @@
 
         async function updateOrderStatus(orderId, newStatus) {
             try {
-                const response = await fetch(`/mandarin/api/admin/orders/${orderId}/status`, {
+                const response = await fetch(`/api/admin/orders/${orderId}/status`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -280,13 +280,15 @@
                 if (response.ok) {
                     loadOrders(); // Reload to show updated status
                 } else {
-                    alert('Error updating order status');
+                    alert(window.t ? window.t('admin.orders.error.update') : 'Error updating order status');
                 }
             } catch (error) {
-                alert('Failed to update order status');
+                alert(window.t ? window.t('admin.orders.error.failed') : 'Failed to update order status');
             }
         }
     </script>
+    
+    <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
 </body>
 
 </html>

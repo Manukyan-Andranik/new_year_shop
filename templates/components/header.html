@@ -1,14 +1,14 @@
 <header class="header">
     <nav class="nav">
-        <a href="{{ url_for('index') }}" class="logo">Christmas Magic</a>
+        <a href="{{ url_for('index') }}" class="logo" data-translate="logo.title">Christmas Magic</a>
         
         <ul class="nav-links">
-            <li><a href="{{ url_for('index') }}">Home</a></li>
-            <li><a href="#products">Shop</a></li>
-            <li><a href="/admin/login">Admin</a></li>
+            <li><a href="{{ url_for('index') }}" data-translate="nav.home">Home</a></li>
+            <li><a href="#products" data-translate="nav.shop">Shop</a></li>
+            <li><a href="/admin/login" data-translate="nav.admin">Admin</a></li>
         </ul>
         
-        <button class="cart-icon">
+        <button class="cart-icon" data-translate-aria="nav.cart">
             🛒
             <span class="cart-count">0</span>
         </button>

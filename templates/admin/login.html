@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Christmas Magic Shop</title>
+    <title data-translate="admin.login.title">🎄 Admin Login - Christmas Magic Shop</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <style>
@@ -100,7 +100,7 @@
 <body>
     <div class="admin-login">
         <div class="login-form">
-            <h1>🎄 Admin Login</h1>
+            <h1 data-translate="admin.login.title">🎄 Admin Login</h1>
             
             {% if error %}
             <div class="error-message">
@@ -110,22 +110,24 @@
             
             <form method="POST">
                 <div class="form-group">
-                    <label for="username">Username</label>
+                    <label for="username" data-translate="admin.login.username">Username</label>
                     <input type="text" id="username" name="username" required>
                 </div>
                 
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label for="password" data-translate="admin.login.password">Password</label>
                     <input type="password" id="password" name="password" required>
                 </div>
                 
-                <button type="submit" class="login-btn">Login</button>
+                <button type="submit" class="login-btn" data-translate="admin.login.button">Login</button>
             </form>
             
             <div class="back-link">
-                <a href="{{ url_for('index') }}">← Back to Shop</a>
+                <a href="{{ url_for('index') }}" data-translate="admin.login.back">← Back to Shop</a>
             </div>
         </div>
     </div>
+    
+    <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
 </body>
 </html>
