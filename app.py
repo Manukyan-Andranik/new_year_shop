@@ -202,19 +202,29 @@ def get_products():
     """
     Returns list of products. Each product should include at least:
     id, name, price, description, images_url_list (as list)
+    Supports language parameter: ?lang=en|hy|ru
     """
+    language = request.args.get('lang', 'en')
+    if language not in ['en', 'hy', 'ru']:
+        language = 'en'
+    
     products = Product.query.order_by(Product.id).all()
     if not products:
         # Return an empty list (front-end may show placeholders) or a small seed.
         return jsonify([])
 
-    return jsonify([product.to_dict() for product in products])
+    return jsonify([product.to_dict(language) for product in products])
 
 
 @app.route('/api/products/<int:product_id>', methods=['GET'])
 def get_product(product_id):
+    language = request.args.get('lang', 'en')
+    if language not in ['en', 'hy', 'ru']:
+        language = 'en'
+    
     product = Product.query.get_or_404(product_id)
-    return jsonify(product.to_dict())
+    return jsonify(product.to_dict(language))
+
 
 
 @app.route('/api/products/seed', methods=['GET'])
