@@ -12,6 +12,9 @@ from flask import Flask, render_template, request, jsonify, session, redirect, u
 from flask_login import login_user, logout_user, login_required, current_user
 from flask_migrate import Migrate
 
+from sqlalchemy import event
+from sqlalchemy.engine import Engine
+
 # local imports (models, admin auth)
 from models import db, Product, Order
 from admin_auth import login_manager, init_admin_user, verify_admin
@@ -82,8 +85,11 @@ def send_email(to_address: str, subject: str, body: str):
         return False
 
 
-from sqlalchemy import event
-from sqlalchemy.engine import Engine
+
+@app.after_request
+def add_cors_headers(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @event.listens_for(Engine, "connect")
 def set_search_path(dbapi_connection, connection_record):
