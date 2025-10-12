@@ -449,13 +449,8 @@ class TranslationManager {
             this.updateLanguage();
             this.updatePageContent();
             this.updateLanguageSwitcherUI();
-
-            // 🔄 Reload products from backend if available
-            if (typeof loadProducts === 'function') {
-                loadProducts(lang);
-            } else {
-                this.updateProductsCatalogLanguage();
-            }
+            loadProducts(lang);
+          
         }
     }
 
