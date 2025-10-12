@@ -16,22 +16,28 @@ from flask_migrate import Migrate
 from models import db, Product, Order
 from admin_auth import login_manager, init_admin_user, verify_admin
 from data.toys import get_toys_by_category  # New import
-
 # Load environment variables
 load_dotenv()
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 app.config['APPLICATION_ROOT'] = '/mandarin'
 
-ORIGINAL_ADD_URL_RULE = app.add_url_rule
-PREFIX = '/mandarin'
+def prefix_routes(app, prefix):
+    """Automatically add prefix to all routes that start with /api"""
+    new_rules = []
+    for rule in list(app.url_map.iter_rules()):
+        if rule.rule.startswith('/api'):
+            new_rule = f"{prefix}{rule.rule}"
+            app.add_url_rule(
+                new_rule,
+                endpoint=rule.endpoint,
+                view_func=app.view_functions[rule.endpoint],
+                methods=rule.methods,
+            )
+    app.url_map._rules = [r for r in app.url_map.iter_rules() if not r.rule.startswith('/api')] + new_rules
 
-def prefixed_add_url_rule(rule, *args, **kwargs):
-    if not rule.startswith(PREFIX):
-        rule = PREFIX + rule
-    return ORIGINAL_ADD_URL_RULE(rule, *args, **kwargs)
+# Apply the prefix
 
-app.add_url_rule = prefixed_add_url_rule
 
 # Configuration
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'christmas-shop-secret-key-2023')
@@ -544,6 +550,7 @@ def _init_for_dev():
             db.create_all()
             init_admin_user()
 
+prefix_routes(app, '/mandarin')
 
 if __name__ == '__main__':
     _init_for_dev()
