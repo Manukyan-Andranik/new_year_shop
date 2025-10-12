@@ -23,21 +23,18 @@ app = Flask(__name__, template_folder="templates", static_folder="static")
 app.config['APPLICATION_ROOT'] = '/mandarin'
 
 def prefix_routes(app, prefix):
-    """Automatically add prefix to all routes that start with /api"""
-    new_rules = []
+    """Clone all /api routes with a /mandarin prefix."""
     for rule in list(app.url_map.iter_rules()):
         if rule.rule.startswith('/api'):
             new_rule = f"{prefix}{rule.rule}"
-            app.add_url_rule(
-                new_rule,
-                endpoint=rule.endpoint,
-                view_func=app.view_functions[rule.endpoint],
-                methods=rule.methods,
-            )
-    app.url_map._rules = [r for r in app.url_map.iter_rules() if not r.rule.startswith('/api')] + new_rules
-
-# Apply the prefix
-
+            # Avoid duplicates
+            if not any(r.rule == new_rule for r in app.url_map.iter_rules()):
+                app.add_url_rule(
+                    new_rule,
+                    endpoint=f"{rule.endpoint}_mandarin",
+                    view_func=app.view_functions[rule.endpoint],
+                    methods=rule.methods,
+                )
 
 # Configuration
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'christmas-shop-secret-key-2023')
