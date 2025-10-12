@@ -1,6 +1,3 @@
-const APP_ROOT = document.querySelector('meta[name="app-root"]')?.content || '/mandarin';
-
-
 async function main(products) {
     if (window.christmasShopInitialized) {
         console.warn('Application already initialized, skipping...');
