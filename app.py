@@ -23,6 +23,16 @@ load_dotenv()
 app = Flask(__name__, template_folder="templates", static_folder="static")
 app.config['APPLICATION_ROOT'] = '/mandarin'
 
+ORIGINAL_ADD_URL_RULE = app.add_url_rule
+PREFIX = '/mandarin'
+
+def prefixed_add_url_rule(rule, *args, **kwargs):
+    if not rule.startswith(PREFIX):
+        rule = PREFIX + rule
+    return ORIGINAL_ADD_URL_RULE(rule, *args, **kwargs)
+
+app.add_url_rule = prefixed_add_url_rule
+
 # Configuration
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'christmas-shop-secret-key-2023')
 
