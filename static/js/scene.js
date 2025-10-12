@@ -5,14 +5,13 @@
 
 // Detect device performance level
 function detectPerformanceLevel() {
-  // const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  // const cores = navigator.hardwareConcurrency || 2;
-  // const memory = navigator.deviceMemory || 4;
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  const cores = navigator.hardwareConcurrency || 2;
+  const memory = navigator.deviceMemory || 4;
   
-  // if (isMobile || cores <= 2 || memory <= 2) return 'low';
-  // if (cores <= 4 || memory <= 4) return 'medium';
-  // return 'high';
-  return "low"
+  if (isMobile || cores <= 2 || memory <= 2) return 'low';
+  if (cores <= 4 || memory <= 4) return 'medium';
+  return 'high';
 }
 
 const PERFORMANCE_LEVEL = detectPerformanceLevel();
