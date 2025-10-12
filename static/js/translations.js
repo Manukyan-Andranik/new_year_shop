@@ -405,7 +405,7 @@ const translations = {
 };
 
 async function loadProducts(lang = 'en') {
-    const response = await fetch(`/api/products?lang=${lang}`);
+    const response = await fetch(`mandarin/api/products?lang=${lang}`);
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const products = await response.json();
 

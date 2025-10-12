@@ -16,25 +16,12 @@ from flask_migrate import Migrate
 from models import db, Product, Order
 from admin_auth import login_manager, init_admin_user, verify_admin
 from data.toys import get_toys_by_category  # New import
+
 # Load environment variables
 load_dotenv()
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
 app.config['APPLICATION_ROOT'] = '/mandarin'
-
-def prefix_routes(app, prefix):
-    """Clone all /api routes with a /mandarin prefix."""
-    for rule in list(app.url_map.iter_rules()):
-        if rule.rule.startswith('/api'):
-            new_rule = f"{prefix}{rule.rule}"
-            # Avoid duplicates
-            if not any(r.rule == new_rule for r in app.url_map.iter_rules()):
-                app.add_url_rule(
-                    new_rule,
-                    endpoint=f"{rule.endpoint}_mandarin",
-                    view_func=app.view_functions[rule.endpoint],
-                    methods=rule.methods,
-                )
 
 # Configuration
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'christmas-shop-secret-key-2023')
@@ -547,7 +534,6 @@ def _init_for_dev():
             db.create_all()
             init_admin_user()
 
-prefix_routes(app, '/mandarin')
 
 if __name__ == '__main__':
     _init_for_dev()

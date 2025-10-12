@@ -214,7 +214,7 @@
         async function loadProducts(language = 'en') {
             
             try {
-                const res = await fetch(`/api/products?lang=${language}`);
+                const res = await fetch(`mandarin/api/products?lang=${language}`);
                 const data = await res.json();
                 window.products = data;
                 renderProducts(); // render using localized data
