@@ -1,8 +1,3 @@
-/**
- * main.js
- * The main entry point for the application.
- * It fetches initial data and initializes the scene and UI modules.
- */
 const APP_ROOT = document.querySelector('meta[name="app-root"]')?.content || '/mandarin';
 
 
