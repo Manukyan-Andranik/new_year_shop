@@ -5,6 +5,7 @@
 
 // This function simulates sending an order to a backend.
 // Replace the URL with your actual API endpoint.
+const BASE_URL = "/mandarin"; // e.g., "https://your-backend.com"
 async function sendOrder(orderData) {
     console.log('--- Sending Order to Santa ---');
     console.log(orderData);
@@ -12,7 +13,7 @@ async function sendOrder(orderData) {
     // To use a real backend, uncomment the fetch block and update the URL.
 
     try {
-        const response = await fetch("/api/orders", {
+        const response = await fetch("${BASE_URL}/api/orders", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(orderData)

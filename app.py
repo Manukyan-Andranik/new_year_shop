@@ -24,7 +24,8 @@ from data.toys import get_toys_by_category  # New import
 load_dotenv()
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
-app.config['APPLICATION_ROOT'] = '/mandarin'
+BASE_URL = "/mandarin"
+app.config['APPLICATION_ROOT'] = BASE_URL
 
 # Configuration
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'christmas-shop-secret-key-2023')

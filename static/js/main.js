@@ -1,3 +1,5 @@
+const BASE_URL = "/mandarin"; // e.g., "https://your-backend.com"
+
 async function main(products) {
     if (window.christmasShopInitialized) {
         console.warn('Application already initialized, skipping...');
@@ -21,7 +23,7 @@ async function main(products) {
 
         // 2. Fetch product data with current language
         const currentLang = window.translationManager ? window.translationManager.currentLanguage : 'en';
-        const response = await fetch(`/mandarin/api/products?lang=${currentLang}`);
+        const response = await fetch(`${BASE_URL}/api/products?lang=${currentLang}`);
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const products = await response.json();
 
