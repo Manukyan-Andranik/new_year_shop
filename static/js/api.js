@@ -1,9 +1,6 @@
 // This function simulates sending an order to a backend.
 // Replace the URL with your actual API endpoint.
 async function sendOrder(orderData) {
-    console.log('--- Sending Order to Santa ---');
-    console.log(orderData);
-
     // To use a real backend, uncomment the fetch block and update the URL.
 
     try {

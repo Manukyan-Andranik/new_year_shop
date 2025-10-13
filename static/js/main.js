@@ -32,7 +32,6 @@ async function main(products) {
         initUI(products, sceneFunctions);
         
         window.christmasShopInitialized = true;
-        console.log('Application initialized successfully');
 
     } catch (error) {
         console.error("Failed to initialize the application:", error);
