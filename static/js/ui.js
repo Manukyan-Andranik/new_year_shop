@@ -191,7 +191,6 @@ function initCategoryFilter() {
                     <div class="product-info">
                         <div class="product-name">${product.name}</div>
                         <div class="product-price">$${product.price.toFixed(2)}</div>
-                        <div class="product-short">${product.description || ''}</div>
                     </div>
                 </div>
                 <div class="card-bottom">
