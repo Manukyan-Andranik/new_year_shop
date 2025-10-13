@@ -1,4 +1,4 @@
-
+const BASE_URL = "/mandarin"; // e.g., "https://your-backend.com
 
 async function main(products) {
     if (window.christmasShopInitialized) {
