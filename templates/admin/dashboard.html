@@ -214,8 +214,6 @@
         async function loadProducts(language = 'en') {
             
             try {
-                const BASE_URL = "/mandarin"; // e.g., "https://your-backend.com"
-
                 const res = await fetch(`${BASE_URL}/api/products?lang=${language}`);
                 const data = await res.json();
                 window.products = data;
