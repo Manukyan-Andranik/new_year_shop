@@ -409,6 +409,8 @@ async function loadProducts(lang = 'en') {
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const products = await response.json();
 
+    console.log(`Loaded ${products.length} products for language: ${lang}`);
+    console.log(products);
 
     // 3. Initialize the UI with the data and scene functions
     initUI(products, sceneFunctions);

@@ -1,8 +1,3 @@
-/**
- * api.js
- * Handles communication with the backend API.
- */
-
 // This function simulates sending an order to a backend.
 // Replace the URL with your actual API endpoint.
 async function sendOrder(orderData) {
