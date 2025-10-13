@@ -533,7 +533,6 @@ class TranslationManager {
             if (!product || !product.translations) return;
             const lang = this.currentLanguage;
             const name = product.translations.name?.[lang] || product.name;
-            const desc = product.translations.description?.[lang] || product.description || '';
             const nameEl = card.querySelector('.product-name');
             const descEl = card.querySelector('.product-short');
             const btnEl = card.querySelector('.add-btn');
