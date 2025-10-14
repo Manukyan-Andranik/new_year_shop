@@ -1,3 +1,111 @@
+<style>
+  /* === FESTIVE FOOTER === */
+  :root {
+    --deep-red: #B22222;
+    --pine-green: #0B6623;
+    --gold: #FFD700;
+    --snow-white: #FFFFFF;
+    --icy-blue: #E0F7FF;
+    --dark-charcoal: #222222;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --border-radius: 12px;
+    --transition: all 0.3s ease;
+    --festive-red: #d9534f;
+    --festive-red-deep: #c9302c;
+    --festive-green: #2d8a43;
+    --festive-green-deep: #1e7e34;
+    --festive-gold: #f0ad4e;
+    --sky-blue: #87CEEB;
+    --snow-white: #f8f9fa;
+    --deep-brown: #4a2c1e;
+    --glass: rgba(255, 255, 255, 0.85);
+    --card-bg: linear-gradient(180deg, #fffdf6, #f7f2e7);
+    --btn-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    --btn-press: 0 3px 8px rgba(0, 0, 0, 0.18);
+  }
+  
+.footer {
+    background: var(--pine-green);
+    color: var(--snow-white);
+    
+  }
+  
+  .footer::before {
+    content: "";
+    position: absolute;
+    top: -40px;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: url("https://png.pngtree.com/png-vector/20221123/ourmid/pngtree-snow-cap-border-decoration-png-image_6485173.png")
+      repeat-x;
+    background-size: contain;
+    opacity: 0.9;
+  }
+  
+  .footer .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+    text-align: left;
+  }
+  
+  .footer-section {
+    flex: 1 1 250px;
+    background: var(--glass);
+    color: var(--deep-brown);
+    border-radius: 16px;
+    padding: 20px 25px;
+    box-shadow: var(--btn-shadow);
+    backdrop-filter: blur(6px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 40px;
+  }
+  
+  .footer-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+  }
+  
+  .footer-section h3 {
+    color: var(--festive-red);
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    border-bottom: 2px solid var(--festive-gold);
+    display: inline-block;
+    padding-bottom: 5px;
+  }
+  
+  .footer-section p,
+  .footer-section a {
+    color: var(--deep-brown);
+    font-size: 0.95rem;
+    margin: 6px 0;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-section a:hover {
+    color: var(--festive-red-deep);
+    text-decoration: underline;
+  }
+  
+  .footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 15px;
+    font-size: 0.9rem;
+    color: var(--snow-white);
+  }
+  
+</style>
 <footer class="footer">
     <div class="container">
       <div class="footer-content">
@@ -18,7 +126,7 @@
   
         <div class="footer-section">
           <h3 data-translate="footer.links.title">🔗 Quick Links</h3>
-          <p><a href="{{ url_for('index') }}" data-translate="footer.links.home">Home</a></p>
+          <p><a href="{{ url_for('shop') }}" data-translate="footer.links.home">Home</a></p>
           <p><a href="#products" data-translate="footer.links.shop">Shop Collection</a></p>
           <p><a href="/admin/login" data-translate="footer.links.admin">Admin Dashboard</a></p>
         </div>

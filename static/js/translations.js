@@ -8,6 +8,7 @@ const translations = {
     en: {
         // Navigation & Header
         'nav.home': 'Home',
+        'nav.about': 'About',
         'nav.shop': 'Shop',
         'nav.admin': 'Admin',
         'logo.title': 'Christmas Magic',
@@ -131,13 +132,100 @@ const translations = {
         'category.lights': 'Lights',
         'category.stars': 'Stars',
         'category.figures': 'Figures',
-        'category.for_business': 'For Business'
+        'category.for_business': 'For Business',
+        'category.product_types': 'To Product Types',
+
+        "about.title": "About Our Christmas Magic Shop",
+        "about.hero.title": "Our Christmas Story",
+        "about.hero.subtitle": "Bringing Magic to Your Holidays Since 2018",
+        "about.story.title": "Creating Magical Moments",
+        "about.story.p1": "Founded in a small workshop filled with the scent of pine and cinnamon, Christmas Magic Shop began with a simple mission: to create decorations that capture the wonder and joy of the holiday season.",
+        "about.story.p2": "What started as a family passion project has grown into a beloved destination for families worldwide who seek to make their Christmas celebrations truly special.",
+        "about.stats.years": "Years of Experience",
+        "about.stats.customers": "Loyal Customers",
+        "about.stats.families": "Happy Families",
+        "about.image.workshop": "Our First Workshop",
+
+        "about.process.title": "Our Magical Workshop",
+        "about.process.subtitle": "See how we create Christmas magic",
+        "about.process.design.title": "Creative Design",
+        "about.process.design.desc": "Our designers sketch and plan each decoration with attention to every magical detail.",
+        "about.process.crafting.title": "Hand Crafting",
+        "about.process.crafting.desc": "Each piece is carefully handcrafted by our skilled artisans using traditional techniques.",
+        "about.process.finishing.title": "Magic Finishing",
+        "about.process.finishing.desc": "We add the final touches that make each decoration truly special and magical.",
+        "about.process.packaging.title": "Festive Packaging",
+        "about.process.packaging.desc": "Every order is carefully packaged with love, ready to bring joy to your home.",
+
+        "about.feedback.title": "What Our Customers Say",
+        "about.feedback.subtitle": "Spreading Christmas joy one customer at a time",
+        "about.feedback.testimonial1.text": "The decorations we bought last year made our Christmas tree absolutely magical! The quality is exceptional and they've become our family treasures.",
+        "about.feedback.testimonial1.name": "Sarah Johnson",
+        "about.feedback.testimonial1.role": "Happy Mom of Two",
+        "about.feedback.testimonial2.text": "As a Christmas enthusiast, I'm very particular about decorations. These are by far the most beautiful and well-made ornaments I've ever owned!",
+        "about.feedback.testimonial2.name": "Michael Brown",
+        "about.feedback.testimonial2.role": "Christmas Collector",
+        "about.feedback.testimonial3.text": "The customer service was as magical as the products! They helped me choose the perfect decorations for our office Christmas party.",
+        "about.feedback.testimonial3.name": "Emma Davis",
+        "about.feedback.testimonial3.role": "Office Manager",
+
+        "about.values.title": "Our Christmas Values",
+        "about.values.quality": "Handcrafted Quality",
+        "about.values.quality.desc": "Each decoration is carefully designed and inspected to ensure it meets our high standards for durability and beauty.",
+        "about.values.sustainable": "Sustainable Magic",
+        "about.values.sustainable.desc": "We're committed to environmentally friendly practices, using sustainable materials whenever possible.",
+        "about.values.family": "Family Focused",
+        "about.values.family.desc": "Our designs are created with families in mind, ensuring safe, durable decorations that become cherished heirlooms.",
+        "about.values.joy": "Spreading Joy",
+        "about.values.joy.desc": "For every order placed, we donate a decoration to families in need during the holiday season.",
+
+        "about.team.title": "Meet Our Elves",
+        "about.team.subtitle": "The passionate team behind the magic",
+        "about.team.nicholas": "Nicholas Winter",
+        "about.team.nicholas.role": "Founder & Head Designer",
+        "about.team.nicholas.bio": "With 5+ years in holiday decoration design, Nicholas ensures every piece tells a story.",
+        "about.team.holly": "Holly Green",
+        "about.team.holly.role": "Production Manager",
+        "about.team.holly.bio": "Holly oversees our workshop, making sure every decoration is crafted with care and precision.",
+        "about.team.rudy": "Rudy Johnson",
+        "about.team.rudy.role": "Customer Experience",
+        "about.team.rudy.bio": "Rudy ensures every customer feels the Christmas spirit when shopping with us.",
+
+        "about.cta.title": "Ready to Decorate Your Tree?",
+        "about.cta.description": "Browse our collection of magical decorations and create unforgettable Christmas memories.",
+        "about.cta.button": "Start Shopping",
+        "product_types.title": "Product Types — Wooden Gift Decorations",
+        "product_types.description": "Pure, natural wood holiday decorations — choose a type to filter in the shop page.",
+        "product_types.header.title": "Wooden Gift Decorations — Types",
+        "product_types.header.subtitle": "Pure, natural wood holiday decorations with printed images",
+        "product_types.grid.empty": "No types found",
+        "product_types.grid.loading": "Loading...",
+        "product_types.grid.error": "Failed to load. Please try again later.",
+        "product_types.card.choose": "Choose →",
+        "product_types.card.no_image": "No image",
+
+        "product_types.modal.title": "Add New Type",
+        "product_types.modal.title_label": "Title (general):",
+        "product_types.modal.title_placeholder": "E.g. For you...",
+        "product_types.modal.description_label": "Short description",
+        "product_types.modal.description_placeholder": "Short, 1-2 lines",
+        "product_types.modal.images_label": "Image(s)",
+        "product_types.modal.images_placeholder": "images/x.jpg",
+        "product_types.modal.images_hint": "Use relative path (e.g. <code>images/ornament1.jpg</code>).",
+        "product_types.modal.cancel": "Cancel",
+        "product_types.modal.save": "Save",
+        "product_types.modal.saving": "Saving...",
+
+        "product_types.validation.title_required": "Please enter a title",
+        "product_types.error.save": "Error: {message}",
+        "product_types.success.save": "Type added successfully"
     },
 
     // --- Armenian & Russian sections remain identical to your latest version ---
     hy: {
         // Navigation & Header
         'nav.home': 'Գլխավոր',
+        'nav.about': 'Մեր Մասին',
         'nav.shop': 'Խանութ',
         'nav.admin': 'Ադմին',
         'logo.title': 'Սուրբ Ծննդյան Կախարդություն',
@@ -264,12 +352,100 @@ const translations = {
         'category.lights': 'Լույսեր',
         'category.stars': 'Աստղեր',
         'category.figures': 'Բնորդներ',
-        'category.for_business': 'Բիզնեսի համար'
+        'category.for_business': 'Բիզնեսի համար',
+        'category.product_types': 'Ապրանքի Տեսակներ',
+        // About Page
+
+        "about.title": "Մեր Սուրբ Ծննդյան Կախարդություն Խանութի Մասին",
+        "about.hero.title": "Մեր Սուրբ Ծննդյան Պատմությունը",
+        "about.hero.subtitle": "Կախարդանք Բերելով Ձեր Տոներին 2018-ից",
+        "about.story.title": "Կախարդական Պահերի Ստեղծում",
+        "about.story.p1": "Հիմնադրվել է փոքրիկ արհեստանոցում, որը լցված էր սոճու և դարչինի բույրով, Սուրբ Ծննդյան Կախարդություն խանութը սկսվել է պարզ առաքելությամբ. ստեղծել զարդարանքներ, որոնք բռնում են տոնական սեզոնի հրաշքն ու ուրախությունը:",
+        "about.story.p2": "Այն, ինչ սկսվել է որպես ընտանեկան կիրք նախագիծ, վերածվել է սիրված վայրի ամբողջ աշխարհի ընտանիքների համար, որոնք ձգտում են իրենց Սուրբ Ծննդյան տոնակատարությունները դարձնել իսկապես հատուկ:",
+        "about.stats.years": "Փորձի Տարիներ",
+        "about.stats.customers": "Հավատարիմ Հաճախորդներ",
+        "about.stats.families": "Ուրախ Ընտանիքներ",
+        "about.image.workshop": "Մեր Առաջին Արհեստանոցը",
+
+        "about.process.title": "Մեր Կախարդական Արհեստանոցը",
+        "about.process.subtitle": "Տեսեք, թե ինչպես ենք մենք ստեղծում Սուրբ Ծննդյան կախարդանքը",
+        "about.process.design.title": "Ստեղծագործական Դիզայն",
+        "about.process.design.desc": "Մեր դիզայներները ուրվագծում և պլանավորում են յուրաքանչյուր զարդարանք՝ ուշադրություն դարձնելով յուրաքանչյուր կախարդական մանրամասնությանը:",
+        "about.process.crafting.title": "Ձեռագործ Ուրվագծում",
+        "about.process.crafting.desc": "Յուրաքանչյուր կտոր ուշադիր ձեռքով է պատրաստվում մեր հմուտ արհեստավորների կողմից՝ օգտագործելով ավանդական տեխնիկա:",
+        "about.process.finishing.title": "Կախարդական Վերջնական Մշակում",
+        "about.process.finishing.desc": "Մենք ավելացնում ենք վերջնական հպումները, որոնք յուրաքանչյուր զարդարանք դարձնում են իսկապես հատուկ և կախարդական:",
+        "about.process.packaging.title": "Տոնական Փաթեթավորում",
+        "about.process.packaging.desc": "Յուրաքանչյուր պատվեր ուշադիր փաթեթավորվում է սիրով՝ պատրաստ ուրախություն բերելու ձեր տուն:",
+
+        "about.feedback.title": "Ինչ Են Ասում Մեր Հաճախորդները",
+        "about.feedback.subtitle": "Տարածելով Սուրբ Ծննդյան ուրախությունը յուրաքանչյուր հաճախորդի միջոցով",
+        "about.feedback.testimonial1.text": "Անցյալ տարի գնված զարդարանքները մեր Սուրբ Ծննդյան ծառը դարձրեցին բացարձակապես կախարդական: Որակը բացառիկ է, և դրանք դարձել են մեր ընտանեկան գանձերը:",
+        "about.feedback.testimonial1.name": "Սառա Ջոնսոն",
+        "about.feedback.testimonial1.role": "Երկու Երեխայի Ուրախ Մայր",
+        "about.feedback.testimonial2.text": "Որպես Սուրբ Ծննդյան սիրահար, ես շատ բծախնդիր եմ զարդարանքների նկատմամբ: Սրանք առայժմ ամենագեղեցիկ և լավ պատրաստված զարդերն են, որ ես երբևէ ունեցել եմ:",
+        "about.feedback.testimonial2.name": "Մայքլ Բրաուն",
+        "about.feedback.testimonial2.role": "Սուրբ Ծննդյան Հավաքորդ",
+        "about.feedback.testimonial3.text": "Հաճախորդների սպասարկումը նույնքան կախարդական էր, որքան ապրանքները: Նրանք օգնեցին ինձ ընտրել կատարյալ զարդարանքները մեր գրասենյակի Սուրբ Ծննդյան երեկոյի համար:",
+        "about.feedback.testimonial3.name": "Էմմա Դևիս",
+        "about.feedback.testimonial3.role": "Գրասենյակի Մենեջեր",
+
+        "about.values.title": "Մեր Սուրբ Ծննդյան Արժեքները",
+        "about.values.quality": "Ձեռագործ Որակ",
+        "about.values.quality.desc": "Յուրաքանչյուր զարդարանք ուշադիր նախագծված և ստուգված է՝ ապահովելու համար, որ այն համապատասխանում է ամրության և գեղեցկության մեր բարձր չափանիշներին:",
+        "about.values.sustainable": "Կայուն Կախարդանք",
+        "about.values.sustainable.desc": "Մենք պարտավորված ենք շրջակա միջավայրի համար բարենպաստ պրակտիկային՝ օգտագործելով կայուն նյութեր, երբ դա հնարավոր է:",
+        "about.values.family": "Ընտանիքի վրա Կենտրոնացած",
+        "about.values.family.desc": "Մեր դիզայնը ստեղծված է ընտանիքների մտքով՝ ապահովելով անվտանգ, ամուր զարդարանքներ, որոնք դառնում են թանկարժեք ժառանգություն:",
+        "about.values.joy": "Տարածելով Ուրախություն",
+        "about.values.joy.desc": "Յուրաքանչյուր տրված պատվերի դիմաց մենք տոնական սեզոնի ընթացքում նվիրաբերում ենք զարդարանք կարիքավոր ընտանիքներին:",
+
+        "about.team.title": "Հանդիպեք Մեր Էլֆերին",
+        "about.team.subtitle": "Կիրքոտ թիմը կախարդանքի հետևում",
+        "about.team.nicholas": "Նիկոլաս Ձմեռ",
+        "about.team.nicholas.role": "Հիմնադիր և Գլխավոր Դիզայներ",
+        "about.team.nicholas.bio": "5+ տարի տոնական զարդարանքների դիզայնում Նիկոլասը ապահովում է, որ յուրաքանչյուր կտոր պատմություն պատմի:",
+        "about.team.holly": "Հոլի Կանաչ",
+        "about.team.holly.role": "Արտադրության Մենեջեր",
+        "about.team.holly.bio": "Հոլին վերահսկում է մեր արհեստանոցը՝ ապահովելով, որ յուրաքանչյուր զարդարանք պատրաստված է հոգատարությամբ և ճշգրտությամբ:",
+        "about.team.rudy": "Ռուդի Ջոնսոն",
+        "about.team.rudy.role": "Հաճախորդների Փորձ",
+        "about.team.rudy.bio": "Ռուդին ապահովում է, որ յուրաքանչյուր հաճախորդ զգա Սուրբ Ծննդյան ոգին, երբ գնումներ է կատարում մեզ հետ:",
+
+        "about.cta.title": "Պատրա՞ստ եք Զարդարել Ձեր Ծառը",
+        "about.cta.description": "Թերթեք մեր կախարդական զարդարանքների հավաքածուն և ստեղծեք անմոռանալի Սուրբ Ծննդյան հիշողություններ:",
+        "about.cta.button": "Սկսել Գնումները",
+        "product_types.title": "Տեսակներ — Փայտյա Նվեր-զարդեր",
+        "product_types.description": "Մաքուր, բնական փայտից պատրաստված տոնական զարդեր — ընտրեք տիպ՝ շոփ էջում զտելու համար.",
+        "product_types.header.title": "Փայտյա Նվեր-զարդեր — Տիպեր",
+        "product_types.header.subtitle": "Մաքուր, բնական փայտից պատրաստված տոնական զարդեր՝ տպագրված պատկերներով",
+        "product_types.grid.empty": "Տեսակներ չեն գտնվել",
+        "product_types.grid.loading": "Բեռնում...",
+        "product_types.grid.error": "Չհաջողվեց բեռնել. փորձեք ուշ էլ։",
+        "product_types.card.choose": "Ընտրել →",
+        "product_types.card.no_image": "Պատկեր չկա",
+
+        "product_types.modal.title": "Նոր տիպ ավելացնել",
+        "product_types.modal.title_label": "Վերնագիր (ընդհանրապես):",
+        "product_types.modal.title_placeholder": "Օր. Ձեզ համար...",
+        "product_types.modal.description_label": "Կարճ նկարագրություն",
+        "product_types.modal.description_placeholder": "Կարճ, 1-2 տող",
+        "product_types.modal.images_label": "Պատկեր(ներ)",
+        "product_types.modal.images_placeholder": "images/x.jpg",
+        "product_types.modal.images_hint": "Օգտագործեք relative path (օր. <code>images/ornament1.jpg</code>).",
+        "product_types.modal.cancel": "Չեղարկել",
+        "product_types.modal.save": "Պահպանել",
+        "product_types.modal.saving": "Պահպանվում...",
+
+        "product_types.validation.title_required": "Խնդրում ենք գրել վերնագիր",
+        "product_types.error.save": "Սխալ՝ {message}",
+        "product_types.success.save": "Տիպը հաջողությամբ ավելացվել է"
     },
 
     ru: {
         // Navigation & Header
         'nav.home': 'Главная',
+        'nav.about': 'О нас',
         'nav.shop': 'Магазин',
         'nav.admin': 'Админ',
         'logo.title': 'Рождественское Волшебство',
@@ -400,7 +576,93 @@ const translations = {
         'category.lights': 'Огни',
         'category.stars': 'Звезды',
         'category.figures': 'Фигурки',
-        'category.for_business': 'Для Бизнеса'
+        'category.for_business': 'Для Бизнеса',
+        'category.product_types': 'Типы Товаров',
+        // About Page
+        "about.title": "О Нашем Магазине Рождественского Волшебства",
+        "about.hero.title": "Наша Рождественская История",
+        "about.hero.subtitle": "Приносим Волшебство в Ваши Праздники с 2018 года",
+        "about.story.title": "Создание Волшебных Моментов",
+        "about.story.p1": "Основанная в маленькой мастерской, наполненной ароматом сосны и корицы, Рождественская Волшебная Лавка началась с простой миссии: создавать украшения, которые передают чудо и радость праздничного сезона.",
+        "about.story.p2": "То, что начиналось как семейный проект по увлечению, превратилось в любимое место для семей по всему миру, которые хотят сделать свои рождественские праздники по-настоящему особенными.",
+        "about.stats.years": "Лет Опыта",
+        "about.stats.customers": "Верных Клиентов",
+        "about.stats.families": "Счастливых Семей",
+        "about.image.workshop": "Наша Первая Мастерская",
+
+        "about.process.title": "Наша Волшебная Мастерская",
+        "about.process.subtitle": "Посмотрите, как мы создаем рождественское волшебство",
+        "about.process.design.title": "Креативный Дизайн",
+        "about.process.design.desc": "Наши дизайнеры эскизируют и планируют каждое украшение, уделяя внимание каждой волшебной детали.",
+        "about.process.crafting.title": "Ручная Работа",
+        "about.process.crafting.desc": "Каждая деталь тщательно изготавливается вручную нашими опытными мастерами с использованием традиционных техник.",
+        "about.process.finishing.title": "Волшебная Отделка",
+        "about.process.finishing.desc": "Мы добавляем последние штрихи, которые делают каждое украшение по-настоящему особенным и волшебным.",
+        "about.process.packaging.title": "Праздничная Упаковка",
+        "about.process.packaging.desc": "Каждый заказ тщательно упаковывается с любовью, готовый принести радость в ваш дом.",
+
+        "about.feedback.title": "Что Говорят Наши Клиенты",
+        "about.feedback.subtitle": "Распространяем рождественскую радость одного клиента за другим",
+        "about.feedback.testimonial1.text": "Украшения, которые мы купили в прошлом году, сделали нашу рождественскую елку абсолютно волшебной! Качество исключительное, и они стали нашими семейными сокровищами.",
+        "about.feedback.testimonial1.name": "Сара Джонсон",
+        "about.feedback.testimonial1.role": "Счастливая Мама Двоих Детей",
+        "about.feedback.testimonial2.text": "Как энтузиаст Рождества, я очень разборчив в украшениях. Это самые красивые и качественные украшения, которые у меня когда-либо были!",
+        "about.feedback.testimonial2.name": "Майкл Браун",
+        "about.feedback.testimonial2.role": "Коллекционер Рождественских Украшений",
+        "about.feedback.testimonial3.text": "Обслуживание клиентов было таким же волшебным, как и продукты! Они помогли мне выбрать идеальные украшения для нашего офисного рождественского вечера.",
+        "about.feedback.testimonial3.name": "Эмма Дэвис",
+        "about.feedback.testimonial3.role": "Офис-Менеджер",
+
+        "about.values.title": "Наши Рождественские Ценности",
+        "about.values.quality": "Ручная Работа",
+        "about.values.quality.desc": "Каждое украшение тщательно разработано и проверено, чтобы соответствовать нашим высоким стандартам прочности и красоты.",
+        "about.values.sustainable": "Устойчивое Волшебство",
+        "about.values.sustainable.desc": "Мы стремимся к экологически чистым практикам, используя устойчивые материалы, когда это возможно.",
+        "about.values.family": "Ориентация на Семью",
+        "about.values.family.desc": "Наши дизайны созданы с учетом семей, обеспечивая безопасные, долговечные украшения, которые становятся дорогими реликвиями.",
+        "about.values.joy": "Распространение Радости",
+        "about.values.joy.desc": "За каждый размещенный заказ мы жертвуем украшение нуждающимся семьям в праздничный сезон.",
+
+        "about.team.title": "Познакомьтесь с Нашими Эльфами",
+        "about.team.subtitle": "Страстная команда за волшебством",
+        "about.team.nicholas": "Николас Винтер",
+        "about.team.nicholas.role": "Основатель и Главный Дизайнер",
+        "about.team.nicholas.bio": "С 5+ годами опыта в дизайне праздничных украшений Николас следит за тем, чтобы каждая деталь рассказывала историю.",
+        "about.team.holly": "Холли Грин",
+        "about.team.holly.role": "Менеджер по Производству",
+        "about.team.holly.bio": "Холли курирует нашу мастерскую, следя за тем, чтобы каждое украшение было изготовлено с заботой и точностью.",
+        "about.team.rudy": "Руди Джонсон",
+        "about.team.rudy.role": "Обслуживание Клиентов",
+        "about.team.rudy.bio": "Руди следит за тем, чтобы каждый клиент чувствовал рождественский дух, совершая покупки у нас.",
+
+        "about.cta.title": "Готовы Украсить Вашу Елку?",
+        "about.cta.description": "Просмотрите нашу коллекцию волшебных украшений и создайте незабываемые рождественские воспоминания.",
+        "about.cta.button": "Начать Покупки",
+        "product_types.title": "Типы — Деревянные Подарочные Украшения",
+        "product_types.description": "Чистые, натуральные деревянные праздничные украшения — выберите тип для фильтрации на странице магазина.",
+        "product_types.header.title": "Деревянные Подарочные Украшения — Типы",
+        "product_types.header.subtitle": "Чистые, натуральные деревянные праздничные украшения с напечатанными изображениями",
+        "product_types.grid.empty": "Типы не найдены",
+        "product_types.grid.loading": "Загрузка...",
+        "product_types.grid.error": "Не удалось загрузить. Пожалуйста, попробуйте позже.",
+        "product_types.card.choose": "Выбрать →",
+        "product_types.card.no_image": "Нет изображения",
+
+        "product_types.modal.title": "Добавить Новый Тип",
+        "product_types.modal.title_label": "Название (общее):",
+        "product_types.modal.title_placeholder": "Напр. Для вас...",
+        "product_types.modal.description_label": "Краткое описание",
+        "product_types.modal.description_placeholder": "Краткое, 1-2 строки",
+        "product_types.modal.images_label": "Изображение(я)",
+        "product_types.modal.images_placeholder": "images/x.jpg",
+        "product_types.modal.images_hint": "Используйте относительный путь (напр. <code>images/ornament1.jpg</code>).",
+        "product_types.modal.cancel": "Отмена",
+        "product_types.modal.save": "Сохранить",
+        "product_types.modal.saving": "Сохранение...",
+
+        "product_types.validation.title_required": "Пожалуйста, введите название",
+        "product_types.error.save": "Ошибка: {message}",
+        "product_types.success.save": "Тип успешно добавлен"
     }
 };
 
@@ -411,7 +673,7 @@ async function loadProducts(lang = 'en') {
 
     // 3. Initialize the UI with the data and scene functions
     initUI(products, sceneFunctions);
-    
+
     window.christmasShopInitialized = true;
 }
 
@@ -448,7 +710,8 @@ class TranslationManager {
             this.updatePageContent();
             this.updateLanguageSwitcherUI();
             loadProducts(lang);
-          
+            
+
         }
     }
 
@@ -468,8 +731,8 @@ class TranslationManager {
             </button>
             <div id="lang-menu" class="lang-menu hidden">
                 ${this.getOtherLanguages()
-                    .map(lang => `<button class="lang-btn" data-lang="${lang}">${this.getLangLabel(lang)}</button>`)
-                    .join('')}
+                .map(lang => `<button class="lang-btn" data-lang="${lang}">${this.getLangLabel(lang)}</button>`)
+                .join('')}
             </div>
         `;
 

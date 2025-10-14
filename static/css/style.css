@@ -1700,82 +1700,7 @@
       max-height: 120px;
     }
   }
-  
-  /* Touch-specific improvements */
-  /* @media (hover: none) and (pointer: coarse) {
-    .category-btn,
-    .add-btn,
-    .btn-primary,
-    .btn-secondary,
-    .close-btn,
-    #checkout-btn,
-    .nav-btn {
-      min-width: 70px;
-    }
-  
-    .product-card {
-      cursor: default;
-    }
-  
-    .product-card:active {
-      transform: scale(0.98);
-    }
-  
-    .add-btn:active,
-    .category-btn:active,
-    .btn-primary:active,
-    .btn-secondary:active {
-      transform: scale(0.95);
-    }
-  
-    .category-btn:hover,
-    .add-btn:hover,
-    .nav-btn:hover,
-    .btn-primary:hover,
-    .btn-secondary:hover {
-      transform: none;
-    }
-  
-    .category-btn:active,
-    .add-btn:active {
-      opacity: 0.8;
-    }
-  
-    .order-paper-card .qty-controls button,
-    .order-paper-card .btn-primary,
-    .order-paper-card .btn-secondary,
-    .order-paper-card .close-btn {
-      min-height: 44px;
-      min-width: 44px;
-    }
-    
-    .qty-controls input {
-      min-height: 44px;
-    }
-    
-    #customer-name,
-    #customer-email,
-    #customer-phone,
-    #santa-message {
-      min-height: 44px;
-    }
-  
-    #order-list {
-      -webkit-overflow-scrolling: touch;
-      scroll-snap-type: x mandatory;
-    }
-  
-    .order-paper-card {
-      -webkit-overflow-scrolling: touch;
-      scroll-behavior: smooth;
-    }
-  
-    .order-row {
-      scroll-snap-align: start;
-    }
-  } */
-  
-  /* High DPI screens optimization */
+
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     .product-image,
     .gallery-main img,
@@ -1908,3 +1833,4 @@
       max-height: 78vh;
     }
   }
+

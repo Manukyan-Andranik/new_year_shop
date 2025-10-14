@@ -15,6 +15,7 @@ class Product(db.Model):
     description = db.Column(db.Text)
     images_url_list = db.Column(db.Text)
     category = db.Column(db.String(100), index=True)
+    type = db.Column(db.String(50), index=True)
     is_active = db.Column(db.Boolean, default=True, nullable=False)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     updated_at = db.Column(
@@ -23,7 +24,7 @@ class Product(db.Model):
         onupdate=lambda: datetime.now(timezone.utc)
     )
 
-    # ✅ Translation fields
+    # Translation fields
     name_en = db.Column(db.String(200))
     name_hy = db.Column(db.String(200))
     name_ru = db.Column(db.String(200))
@@ -35,16 +36,13 @@ class Product(db.Model):
         return f'<Product {self.name}>'
 
     def get_translated(self, field_base, lang):
-        """Helper: return translated value for given language or fallback to default."""
         field_name = f"{field_base}_{lang}"
         value = getattr(self, field_name, None)
         if value:
             return value
-        # fallback to English → original
         return getattr(self, f"{field_base}_en", None) or getattr(self, field_base, "")
 
     def to_dict(self, lang='en'):
-        """Return serialized product with translated fields."""
         return {
             'id': self.id,
             'name': self.get_translated('name', lang),
@@ -52,13 +50,15 @@ class Product(db.Model):
             'description': self.get_translated('description', lang),
             'images_url_list': json.loads(self.images_url_list) if self.images_url_list else [],
             'category': self.category,
+            'type': self.type,
             'is_active': self.is_active,
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'updated_at': self.updated_at.isoformat() if self.updated_at else None,
         }
+
 class Order(db.Model):
     __tablename__ = 'orders'
-    __table_args__ = {'schema': 'newyear_shop_schema'}  # <-- corrected schema name
+    __table_args__ = {'schema': 'newyear_shop_schema'}
 
     id = db.Column(db.Integer, primary_key=True)
     customer_name = db.Column(db.String(200), nullable=False, index=True)
@@ -89,9 +89,10 @@ class Order(db.Model):
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }
 
+
 class AdminUser(UserMixin, db.Model):
     __tablename__ = 'admin_users'
-    __table_args__ = {'schema': 'newyear_shop_schema'}  # <-- corrected schema name
+    __table_args__ = {'schema': 'newyear_shop_schema'}
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False, index=True)

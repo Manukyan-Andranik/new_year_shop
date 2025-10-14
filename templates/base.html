@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    {% include 'components/header.html' %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,18 +19,80 @@
     <meta property="og:type" content="website">
     
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    
+
+    <style>
+        /* ===== Loading Overlay Styles ===== */
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        #loading-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #e74c3c;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #loading-text {
+            font-family: 'Cinzel', serif;
+            color: #e74c3c;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+    </style>
 </head>
 <body>
 
-    
-    <main>
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <div id="loading-text">Loading Christmas Magic...</div>
+    </div>
+
+    <!-- Main Site Content -->
+    <main id="main-content" style="opacity: 0;">
         {% block content %}{% endblock %}
     </main>
     
     {% include 'components/footer.html' %}
     
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     {% block scripts %}{% endblock %}
+
+    <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
+
+    <script>
+        // Hide loading overlay when page finishes loading
+        window.addEventListener('load', function() {
+            const overlay = document.getElementById('loading-overlay');
+            const mainContent = document.getElementById('main-content');
+            overlay.classList.add('hidden');
+            mainContent.style.transition = 'opacity 0.8s ease';
+            mainContent.style.opacity = 1;
+        });
+    </script>
 </body>
 </html>

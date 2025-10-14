@@ -9,7 +9,7 @@ function detectPerformanceLevel() {
   const cores = navigator.hardwareConcurrency || 2;
   const memory = navigator.deviceMemory || 4;
   
-  if (isMobile || cores <= 2 || memory <= 2) return 'low';
+  if (cores <= 2 || memory <= 2) return 'low';
   if (cores <= 4 || memory <= 4) return 'medium';
   return 'high';
 }

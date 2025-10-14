@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+
+{% block title %}<span data-translate="product_types.title">Տեսակներ — Փայտյա Նվեր-զարդեր</span>{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width:1100px; margin:24px auto; padding:16px;">
+  <header style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px;">
+    <div>
+      <h1 style="font-size:20px; margin:0;" data-translate="product_types.header.title">Փայտյա Նվեր-զարդեր — Տիպեր</h1>
+      <p style="margin:0; color:#666; font-size:13px;" data-translate="product_types.header.subtitle">Մաքուր, բնական փայտից պատրաստված տոնական զարդեր՝ տպագրված պատկերներով</p>
+    </div>
+  </header>
+
+  <section>
+    <div id="grid" class="grid" aria-live="polite" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap:16px; margin-top:18px;">
+      {% if PRODUCT_TYPES %}
+        {% for pt in PRODUCT_TYPES %}
+          <article class="card" style="background:white; border-radius:12px; box-shadow:0 6px 18px rgba(20,20,35,0.06); overflow:hidden; display:flex; flex-direction:column; min-height:220px;">
+            <a class="card-link" href="{{ SHOP_URL }}?type={{ pt.type if pt.type is defined else pt.id }}" style="text-decoration:none; color:inherit; display:block;">
+              <div class="image-wrap" style="height:140px; background:linear-gradient(180deg,#fff,#f6f6f8); display:flex; align-items:center; justify-content:center; overflow:hidden;">
+                <img src="{{ pt.image_url }}" alt="{{ pt.title }}" style="max-width:100%; max-height:100%; object-fit:contain; display:block;">
+              </div>
+
+              <div class="card-body" style="padding:12px 14px; display:flex; gap:12px; flex-direction:column; flex:1;">
+                <h3 class="card-title" style="font-weight:700; font-size:15px; margin:0 0 4px 0;">{{ pt.title }}</h3>
+                <p class="card-desc" style="font-size:13px; color:#666; flex:1; margin:0 0 8px 0;">{{ pt.description or "" }}</p>
+                <div class="card-footer" style="display:flex; gap:8px; align-items:center; justify-content:space-between; margin-top:8px;">
+                  <div class="small" style="font-size:12px; color:#999;">&nbsp;</div>
+                  <div style="font-size:13px; color:#2d8a43; font-weight:600;" data-translate="product_types.card.choose">Ընտրել →</div>
+                </div>
+              </div>
+            </a>
+          </article>
+        {% endfor %}
+      {% else %}
+        <div style="grid-column:1/-1; text-align:center; padding:24px; color:#666" data-translate="product_types.grid.empty">Տեսակներ չեն գտնվել</div>
+      {% endif %}
+    </div>
+  </section>
+</div>
+
+<!-- Modal for adding new product type -->
+<div id="modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true" style="position:fixed; inset:0; background:rgba(0,0,0,0.35); display:none; align-items:center; justify-content:center; padding:12px; z-index:40;">
+  <div class="modal" role="document" style="background:white; border-radius:12px; max-width:720px; width:100%; padding:18px; box-shadow:0 12px 40px rgba(10,10,30,0.18);">
+    <h2 style="margin-top:0;" data-translate="product_types.modal.title">Նոր տիպ ավելացնել</h2>
+    <div class="form-row" style="margin-bottom:12px;">
+      <label for="title" data-translate="product_types.modal.title_label">Վերնագիր (ընդհանրապես):</label>
+      <input id="title" type="text" data-translate-placeholder="product_types.modal.title_placeholder" placeholder="Օր. Ձեզ համար..." style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px;" />
+    </div>
+    <div class="form-row" style="margin-bottom:12px;">
+      <label for="description" data-translate="product_types.modal.description_label">Կարճ նկարագրություն</label>
+      <textarea id="description" data-translate-placeholder="product_types.modal.description_placeholder" placeholder="Կարճ, 1-2 տող" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px;"></textarea>
+    </div>
+    <div class="form-row" style="margin-bottom:12px;">
+      <label for="images" data-translate="product_types.modal.images_label">Պատկեր(ներ)</label>
+      <input id="images" type="text" data-translate-placeholder="product_types.modal.images_placeholder" placeholder="images/x.jpg" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px;" />
+      <div class="muted" style="font-size:12px; color:#777; margin-top:4px;">
+        <span data-translate="product_types.modal.images_hint">Օգտագործեք relative path (օր. <code>images/ornament1.jpg</code>).</span>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:8px; justify-content:flex-end; margin-top:12px;">
+      <button id="btn-cancel" class="btn secondary" data-translate="product_types.modal.cancel">Չեղարկել</button>
+      <button id="btn-save" class="btn primary" data-translate="product_types.modal.save">Պահպանել</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script>
+    // Endpoint variables provided by Flask context
+    const API_LIST = "{{ API_LIST | default('/api/product-types') }}";
+    const API_ADD  = "{{ API_ADD  | default('/api/product-types') }}";
+    const SHOP_URL = "{{ SHOP_URL | default('/shop') }}";
+    const IMAGE_PREFIX = "{{ IMAGE_PREFIX | default('') }}";
+
+    const modal = document.getElementById("modal");
+    const btnAdd = document.getElementById("btn-add");
+    const btnCancel = document.getElementById("btn-cancel");
+    const btnSave = document.getElementById("btn-save");
+    const btnRefresh = document.getElementById("btn-refresh");
+    const grid = document.getElementById("grid");
+
+    function showModal(show) {
+      modal.style.display = show ? "flex" : "none";
+      modal.setAttribute("aria-hidden", show ? "false" : "true");
+    }
+
+    btnAdd && btnAdd.addEventListener("click", () => showModal(true));
+    btnCancel && btnCancel.addEventListener("click", () => showModal(false));
+
+    async function fetchAndRender() {
+      if (!grid) return;
+      grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:24px; color:#666" data-translate="product_types.grid.loading">Բեռնում...</div>`;
+      try {
+        const res = await fetch(API_LIST);
+        if (!res.ok) throw new Error("Network error");
+        const arr = await res.json();
+        if (!arr || !arr.length) {
+          grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:24px; color:#666" data-translate="product_types.grid.empty">Տեսակներ չեն գտնվել</div>`;
+          return;
+        }
+        grid.innerHTML = "";
+        arr.forEach(pt => {
+          const card = document.createElement("article");
+          card.className = "card";
+          card.style = "background:white; border-radius:12px; box-shadow:0 6px 18px rgba(20,20,35,0.06); overflow:hidden; display:flex; flex-direction:column; min-height:220px;";
+
+          const link = document.createElement("a");
+          link.href = `${SHOP_URL}?type=${encodeURIComponent(pt.type || pt.id)}`;
+          link.style = "text-decoration:none; color:inherit; display:block;";
+
+          const imgWrap = document.createElement("div");
+          imgWrap.className = "image-wrap";
+          imgWrap.style = "height:140px; background:linear-gradient(180deg,#fff,#f6f6f8); display:flex; align-items:center; justify-content:center; overflow:hidden;";
+
+          const img = document.createElement("img");
+          img.alt = pt.title || "";
+          let src = pt.image_url || null;
+          if (src) {
+            if (src.startsWith('http')) img.src = src;
+            else img.src = (IMAGE_PREFIX || "") + src;
+          } else {
+            img.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='200'><rect width='100%' height='100%' fill='%23f6f6f8'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='14' data-translate='product_types.card.no_image'>No image</text></svg>";
+          }
+          img.style = "max-width:100%; max-height:100%; object-fit:contain; display:block;";
+          imgWrap.appendChild(img);
+
+          const body = document.createElement("div");
+          body.className = "card-body";
+          body.style = "padding:12px 14px; display:flex; gap:12px; flex-direction:column; flex:1;";
+
+          const h = document.createElement("h3");
+          h.className = "card-title";
+          h.textContent = pt.title || "";
+          h.style = "font-weight:700; font-size:15px; margin:0 0 4px 0;";
+
+          const p = document.createElement("p");
+          p.className = "card-desc";
+          p.textContent = pt.description || "";
+          p.style = "font-size:13px; color:#666; flex:1; margin:0 0 8px 0;";
+
+          const choose = document.createElement("div");
+          choose.textContent = window.t ? window.t('product_types.card.choose') : "Ընտրել →";
+          choose.style = "font-size:13px; color:#2d8a43; font-weight:600;";
+
+          body.appendChild(h);
+          body.appendChild(p);
+          body.appendChild(choose);
+          link.appendChild(imgWrap);
+          link.appendChild(body);
+          card.appendChild(link);
+          grid.appendChild(card);
+        });
+      } catch (err) {
+        grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:24px; color:#d00" data-translate="product_types.grid.error">Չհաջողվեց բեռնել. փորձեք ուշ էլ։</div>`;
+        console.error(err);
+      }
+    }
+
+    btnRefresh && btnRefresh.addEventListener("click", fetchAndRender);
+
+    // Save handler for modal
+    btnSave && btnSave.addEventListener("click", async () => {
+      const title = document.getElementById("title").value.trim();
+      const description = document.getElementById("description").value.trim();
+      const image = document.getElementById("images").value.trim();
+      if (!title) {
+        alert(window.t ? window.t('product_types.validation.title_required') : "Խնդրում ենք գրել վերնագիր");
+        return;
+      }
+      btnSave.disabled = true;
+      btnSave.textContent = window.t ? window.t('product_types.modal.saving') : "Պահպանվում...";
+      try {
+        const res = await fetch(API_ADD, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title, description, image_url: image })
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Սխալ է");
+        document.getElementById("title").value = "";
+        document.getElementById("description").value = "";
+        document.getElementById("images").value = "";
+        showModal(false);
+        fetchAndRender();
+      } catch (err) {
+        const errorMessage = window.t ? window.t('product_types.error.save', { message: err.message || "unknown" }) : "Սխալ՝ " + (err.message || "unknown");
+        alert(errorMessage);
+        console.error(err);
+      } finally {
+        btnSave.disabled = false;
+        btnSave.textContent = window.t ? window.t('product_types.modal.save') : "Պահպանել";
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", fetchAndRender);
+  </script>
+{% endblock %}
