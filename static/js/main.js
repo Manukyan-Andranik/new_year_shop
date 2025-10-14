@@ -1,5 +1,4 @@
-BASE_URL = "mandarin";
-
+BASE_URL = "http://logiclab.am/mandarin";
 async function main(products) {
     if (window.christmasShopInitialized) {
         console.warn('Application already initialized, skipping...');
