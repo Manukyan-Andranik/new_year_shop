@@ -1,4 +1,4 @@
-BASE_URL = "";
+BASE_URL = "mandarin";
 
 async function main(products) {
     if (window.christmasShopInitialized) {
