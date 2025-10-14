@@ -103,6 +103,7 @@ class AdminUser(UserMixin, db.Model):
 
 class ProductType(db.Model):
     __tablename__ = "product_types"
+    __table_args__ = {'schema': 'newyear_shop_schema'}
 
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String(50), nullable=False, unique=True, index=True)

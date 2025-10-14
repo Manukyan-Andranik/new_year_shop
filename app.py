@@ -239,12 +239,10 @@ def get_toy_price(toy_id):
             return toy['price']
     return 0
 
-
 @app.route('/product/<int:product_id>')
 def product_detail(product_id):
     product = Product.query.get_or_404(product_id)
     return render_template('product.html', product=product)
-
 
 # ===============================
 # API Routes
@@ -258,9 +256,6 @@ def prefix_image_urls(product_data):
         for img in images
     ]
     return product_data
-
-
-
 
 @app.route('/api/products/<int:product_id>', methods=['GET'])
 def get_product(product_id):
