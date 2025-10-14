@@ -89,7 +89,6 @@ class Order(db.Model):
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
         }
 
-
 class AdminUser(UserMixin, db.Model):
     __tablename__ = 'admin_users'
     __table_args__ = {'schema': 'newyear_shop_schema'}
@@ -101,3 +100,52 @@ class AdminUser(UserMixin, db.Model):
     
     def __repr__(self):
         return f'<AdminUser {self.username}>'
+
+class ProductType(db.Model):
+    __tablename__ = "product_types"
+
+    id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.String(50), nullable=False, unique=True, index=True)
+    title = db.Column(db.String(250), nullable=False, unique=True, index=True)
+    description = db.Column(db.String(1024))
+    image_url = db.Column(db.String(200))
+
+    # Translation fields
+    title_en = db.Column(db.String(250))
+    title_hy = db.Column(db.String(250))
+    title_ru = db.Column(db.String(250))
+    description_en = db.Column(db.Text)
+    description_hy = db.Column(db.Text)
+    description_ru = db.Column(db.Text)
+
+    def image_url_full(self, prefix: str = "") -> str:
+        """Return full image URL or default placeholder."""
+        default = "http://127.0.0.1:5001/static/images/default_product_type_image.png"
+        # if not self.image_url:
+        #     return default
+        # if self.image_url.startswith("http"):
+        #     return self.image_url
+        # if prefix:
+        #     if not prefix.endswith("/") and not self.image_url.startswith("/"):
+        #         return prefix + "/" + self.image_url
+        #     return prefix.rstrip("/") + "/" + self.image_url.lstrip("/")
+        return default
+
+    def get_translated(self, field_base, lang):
+        field_name = f"{field_base}_{lang}"
+        value = getattr(self, field_name, None)
+        if value:
+            return value
+        return getattr(self, f"{field_base}_en", None) or getattr(self, field_base, "")
+
+    def to_dict(self, lang='en'):
+        return {
+            "id": self.id,
+            "type": self.type,
+            "title": self.get_translated("title", lang),
+            "description": self.get_translated("description", lang),
+            "image_url": self.image_url_full()
+        }
+
+    def __repr__(self):
+        return f"<ProductType {self.title}>"
