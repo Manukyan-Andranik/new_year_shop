@@ -167,7 +167,7 @@ sample_product_types = [
         "description_hy": "Տոնական փայտե զարդեր՝ ուսուցիչների և դաստիարակների համար։",
         "description_en": "Festive wooden ornaments for teachers and educators.",
         "description_ru": "Праздничные деревянные украшения для учителей и воспитателей.",
-        "image_url": "images/teacher-ornament.jpg",
+        "image_url": "static/images/teacher-ornament.jpg",
     },
     {
         "type": "staff",
@@ -177,7 +177,7 @@ sample_product_types = [
         "description_hy": "Փայտե տոնական նվերներ՝ գործընկերների համար։",
         "description_en": "Wooden holiday gifts for colleagues.",
         "description_ru": "Деревянные праздничные подарки для коллег.",
-        "image_url": "images/office-ornament.jpg",
+        "image_url": "static/images/office-ornament.jpg",
     },
     {
         "type": "love",
@@ -187,7 +187,7 @@ sample_product_types = [
         "description_hy": "Հուշարժեք փայտե խաղալիքներ՝ սիրելիի համար։",
         "description_en": "Memorable wooden toys for your loved one.",
         "description_ru": "Деревянные сувениры для любимого человека.",
-        "image_url": "images/love-ornament.jpg",
+        "image_url": "static/images/love-ornament.jpg",
     },
     {
         "type": "friend",
@@ -197,7 +197,7 @@ sample_product_types = [
         "description_hy": "Բնավորությամբ լի զարդեր՝ ձեր լավ ընկերոջ համար։",
         "description_en": "Personality-filled ornaments for your friend.",
         "description_ru": "Украшения, полные характера, для вашего друга.",
-        "image_url": "images/friend-ornament.jpg",
+        "image_url": "static/images/friend-ornament.jpg",
     },
     {
         "type": "family",
@@ -207,7 +207,7 @@ sample_product_types = [
         "description_hy": "Փայտե խաղալիքների հավաքածու՝ ընտանեկան հիշողությունների համար։",
         "description_en": "Wooden toy sets for family memories.",
         "description_ru": "Наборы деревянных игрушек для семейных воспоминаний.",
-        "image_url": "images/family-ornament.jpg",
+        "image_url": "static/images/family-ornament.jpg",
     },
     {
         "type": "corporate",
@@ -217,7 +217,7 @@ sample_product_types = [
         "description_hy": "Բրենդավորմամբ զարդեր՝ ձեր թիմի և գործընկերների համար։",
         "description_en": "Branded ornaments for your team and partners.",
         "description_ru": "Брендированные украшения для вашей команды и партнеров.",
-        "image_url": "images/corporate-ornament.jpg",
+        "image_url": "static/images/corporate-ornament.jpg",
     },
     {
         "type": "custom",
@@ -227,7 +227,7 @@ sample_product_types = [
         "description_hy": "Հատուկ պատվերներ՝ ցանկացած առիթի համար։",
         "description_en": "Special orders for any occasion.",
         "description_ru": "Специальные заказы для любого случая.",
-        "image_url": "images/custom-ornament.jpg",
+        "image_url": "static/images/custom-ornament.jpg",
     },
 ]
 
@@ -298,8 +298,8 @@ sample_products = [
         "description_ru": "Мягкий плюшевый мишка с нежным мехом. Идеален для объятий перед сном и праздничных вечеров.",
         "price": 24.99,
         "images_url_list": [
-            "https://logiclab.am/mandarin/static/images/dino.png",
-            "https://logiclab.am/mandarin/static/images/exo.png"
+            "static/images/dino.png",
+            "static/images/exo.png"
         ],
         "category": "Toys",
         "type": "love",
@@ -315,8 +315,8 @@ sample_products = [
         "description_ru": "Классический деревянный поезд с гладкими краями и яркой раскраской. Стимулирует воображение.",
         "price": 34.99,
         "images_url_list": [
-            "https://logiclab.am/mandarin/static/images/dino.png",
-            "https://logiclab.am/mandarin/static/images/exo.png"
+            "static/images/dino.png",
+            "static/images/exo.png"
         ],
         "category": "big",
         "type": "family",
@@ -332,8 +332,8 @@ sample_products = [
         "description_ru": "Весёлый снеговик с морковным носом и шляпой. Добавляет зимнее очарование любой полке.",
         "price": 19.99,
         "images_url_list": [
-            "https://logiclab.am/mandarin/static/images/exo.png",
-            "https://logiclab.am/mandarin/static/images/dino.png"
+            "static/images/exo.png",
+            "static/images/dino.png"
         ],
         "category": "big",
         "type": "family",
@@ -349,8 +349,8 @@ sample_products = [
         "description_ru": "Отправляйся в космос с этой красочной ракетой. Прочная и отличная для приключений.",
         "price": 29.99,
         "images_url_list": [
-            "https://logiclab.am/mandarin/static/images/noro.png",
-            "https://logiclab.am/mandarin/static/images/exo.png"
+            "static/images/noro.png",
+            "static/images/exo.png"
         ],
         "category": "smal",
         "type": "teacher",
@@ -366,8 +366,8 @@ sample_products = [
         "description_ru": "Милая кукла с подвижными конечностями и улыбающимся лицом. В комплекте есть одежда.",
         "price": 27.99,
         "images_url_list": [
-            "https://logiclab.am/mandarin/static/images/dino.png",
-            "https://logiclab.am/mandarin/static/images/exo.png"
+            "static/images/dino.png",
+            "static/images/exo.png"
         ],
         "category": "for_business",
         "type": "staff",
@@ -383,8 +383,8 @@ sample_products = [
         "description_ru": "Яркий барабан для маленьких музыкантов. Легкий и удобный в использовании.",
         "price": 22.99,
         "images_url_list": [
-            "https://logiclab.am/mandarin/static/images/noro.png",
-            "https://logiclab.am/mandarin/static/images/exo.png"
+            "static/images/noro.png",
+            "static/images/exo.png"
         ],
         "category": "for_business",
         "type": "friend",
@@ -400,8 +400,8 @@ sample_products = [
         "description_ru": "Классическая юла, которая сияет яркими красками во время вращения.",
         "price": 15.99,
         "images_url_list": [
-            "https://logiclab.am/mandarin/static/images/noro.png",
-            "https://logiclab.am/mandarin/static/images/exo.png"
+            "static/images/noro.png",
+            "static/images/exo.png"
         ],
         "category": "big",
         "type": "custom",
@@ -417,8 +417,8 @@ sample_products = [
         "description_ru": "Праздничный олень с ручной росписью. Отлично подходит для новогоднего декора.",
         "price": 32.99,
         "images_url_list": [
-            "https://logiclab.am/mandarin/static/images/dino.png",
-            "https://logiclab.am/mandarin/static/images/exo.png"
+            "static/images/dino.png",
+            "static/images/exo.png"
         ],
         "category": "small",
         "type": "corporate",
@@ -450,7 +450,7 @@ def seed_products(commit=True):
 
         # Create new product
         p = Product(
-            id=item["id"]+24,
+            id=item["id"] + 24,
             name=item["name_en"],  # default main name
             name_hy=item["name_hy"],
             name_en=item["name_en"],
@@ -483,3 +483,98 @@ if __name__ == "__main__":
         db.session.commit()
 
         print("Inserted:", seed_products())
+
+
+
+
+# INSERT INTO newyear_shop_schema.product_types (
+#     type, 
+#     title, 
+#     description,
+#     title_hy, title_en, title_ru, 
+#     description_hy, description_en, description_ru, 
+#     image_url
+# ) VALUES
+# -- 1. Teacher
+# ('teacher',
+#  'Ձեր սիրելի դպրոցի/մանկապարտեզի ուսուցիչների համար',
+#  'Տոնական փայտե զարդեր՝ ուսուցիչների և դաստիարակների համար։',
+#  'Ձեր սիրելի դպրոցի/մանկապարտեզի ուսուցիչների համար',
+#  'For your favorite school/kindergarten teachers',
+#  'Для ваших любимых учителей школы/детского сада',
+#  'Տոնական փայտե զարդեր՝ ուսուցիչների և դաստիարակների համար։',
+#  'Festive wooden ornaments for teachers and educators.',
+#  'Праздничные деревянные украшения для учителей и воспитателей.',
+#  'images/teacher-ornament.jpg'),
+
+# -- 2. Staff
+# ('staff',
+#  'Սիրելի աշխատակիցների համար',
+#  'Փայտե տոնական նվերներ՝ գործընկերների համար։',
+#  'Սիրելի աշխատակիցների համար',
+#  'For beloved staff members',
+#  'Для любимых сотрудников',
+#  'Փայտե տոնական նվերներ՝ գործընկերների համար։',
+#  'Wooden holiday gifts for colleagues.',
+#  'Деревянные праздничные подарки для коллег.',
+#  'images/office-ornament.jpg'),
+
+# -- 3. Love
+# ('love',
+#  'Սիրելիս համար',
+#  'Հուշարժեք փայտե խաղալիքներ՝ սիրելիի համար։',
+#  'Սիրելիս համար',
+#  'For your loved one',
+#  'Для любимого человека',
+#  'Հուշարժեք փայտե խաղալիքներ՝ սիրելիի համար։',
+#  'Memorable wooden toys for your loved one.',
+#  'Деревянные сувениры для любимого человека.',
+#  'images/love-ornament.jpg'),
+
+# -- 4. Friend
+# ('friend',
+#  'Ընկերոջ համար',
+#  'Բնավորությամբ լի զարդեր՝ ձեր լավ ընկերոջ համար։',
+#  'Ընկերոջ համար',
+#  'For a friend',
+#  'Для друга',
+#  'Բնավորությամբ լի զարդեր՝ ձեր լավ ընկերոջ համար։',
+#  'Personality-filled ornaments for your friend.',
+#  'Украшения, полные характера, для вашего друга.',
+#  'images/friend-ornament.jpg'),
+
+# -- 5. Family
+# ('family',
+#  'Ընտանիքի համար',
+#  'Փայտե խաղալիքների հավաքածու՝ ընտանեկան հիշողությունների համար։',
+#  'Ընտանիքի համար',
+#  'For the family',
+#  'Для семьи',
+#  'Փայտե խաղալիքների հավաքածու՝ ընտանեկան հիշողությունների համար։',
+#  'Wooden toy sets for family memories.',
+#  'Наборы деревянных игрушек для семейных воспоминаний.',
+#  'images/family-ornament.jpg'),
+
+# -- 6. Corporate
+# ('corporate',
+#  'Կորպորատիվի համար',
+#  'Բրենդավորմամբ զարդեր՝ ձեր թիմի և գործընկերների համար։',
+#  'Կորպորատիվի համար',
+#  'For corporate clients',
+#  'Для корпоративных клиентов',
+#  'Բրենդավորմամբ զարդեր՝ ձեր թիմի և գործընկերների համար։',
+#  'Branded ornaments for your team and partners.',
+#  'Брендированные украшения для вашей команды и партнеров.',
+#  'images/corporate-ornament.jpg'),
+
+# -- 7. Custom
+# ('custom',
+#  'Այլ',
+#  'Հատուկ պատվերներ՝ ցանկացած առիթի համար։',
+#  'Այլ',
+#  'Custom / Other',
+#  'Другие / По заказу',
+#  'Հատուկ պատվերներ՝ ցանկացած առիթի համար։',
+#  'Special orders for any occasion.',
+#  'Специальные заказы для любого случая.',
+#  'images/custom-ornament.jpg');

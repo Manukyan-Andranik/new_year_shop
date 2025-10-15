@@ -16,7 +16,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.engine import Engine
 
 # Local imports
-from models import db, Product, Order, ProductType
+from models import db, Product, Order, ProductType, ProductTypesSamples
 from admin_auth import login_manager, init_admin_user, verify_admin
 from data.toys import get_toys_by_category  # New import
 
@@ -44,7 +44,7 @@ DB_PORT = os.getenv('DB_PORT', '5432')
 DB_NAME = os.getenv('DB_NAME', 'christmas_shop')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = (
-    os.getenv('SQLALCHEMY_DATABASE_URI'))
+    os.getenv('SQLALCHEMY_DATABASE_URI') or f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}") 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize extensions
@@ -143,10 +143,10 @@ def shop():
 @app.route("/product-types", methods=["GET"])
 def product_types_page():
     print("Rendering product types page")
-    items = ProductType.query.all()
+    items = ProductTypesSamples().get_all()
     return render_template(
         "product_types.html",
-        PRODUCT_TYPES=[p.to_dict() for p in items],
+        PRODUCT_TYPES=[p for p in items],
         SHOP_URL="/shop",
         API_LIST="/api/product-types",
         API_ADD="/api/product-types",
@@ -156,8 +156,8 @@ def product_types_page():
 
 @app.route("/api/product-types", methods=["GET"])
 def api_list_product_types():
-    items = ProductType.query.order_by(ProductType.id.desc()).all()
-    return jsonify([p.to_dict() for p in items])
+    items = ProductTypesSamples().get_all()
+    return jsonify([p for p in items])
 
 
 @app.route('/api/products', methods=['GET'])
@@ -247,7 +247,9 @@ def product_detail(product_id):
 # ===============================
 def prefix_image_urls(product_data):
     """Prefix relative image URLs with site domain"""
-    BASE_PREFIX = os.getenv('BASE_PREFIX', "https://logiclab.am/mandarin/")
+    BASE_PREFIX = os.getenv("BASE_PREFIX", "https://logiclab.am/mandarin/")
+    print(BASE_PREFIX)
+    print("=========")
     images = product_data.get("images_url_list", [])
     product_data["images_url_list"] = [
         img if img.startswith("http") else BASE_PREFIX + img.lstrip('/')

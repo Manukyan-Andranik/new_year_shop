@@ -5,9 +5,12 @@ import json
 
 db = SQLAlchemy()
 
+
+
+
 class Product(db.Model):
     __tablename__ = 'products'
-    __table_args__ = {'schema': 'newyear_shop_schema'}
+    # __table_args__ = {'schema': 'newyear_shop_schema'}
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False, index=True)
@@ -58,7 +61,7 @@ class Product(db.Model):
 
 class Order(db.Model):
     __tablename__ = 'orders'
-    __table_args__ = {'schema': 'newyear_shop_schema'}
+    # __table_args__ = {'schema': 'newyear_shop_schema'}
 
     id = db.Column(db.Integer, primary_key=True)
     customer_name = db.Column(db.String(200), nullable=False, index=True)
@@ -91,7 +94,7 @@ class Order(db.Model):
 
 class AdminUser(UserMixin, db.Model):
     __tablename__ = 'admin_users'
-    __table_args__ = {'schema': 'newyear_shop_schema'}
+    # __table_args__ = {'schema': 'newyear_shop_schema'}
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False, index=True)
@@ -103,7 +106,7 @@ class AdminUser(UserMixin, db.Model):
 
 class ProductType(db.Model):
     __tablename__ = "product_types"
-    __table_args__ = {'schema': 'newyear_shop_schema'}
+    # __table_args__ = {'schema': 'newyear_shop_schema'}
 
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String(50), nullable=False, unique=True, index=True)
@@ -121,7 +124,7 @@ class ProductType(db.Model):
 
     def image_url_full(self, prefix: str = "") -> str:
         """Return full image URL or default placeholder."""
-        default = "https://logiclab.am/mandarin/static/images/default_product_type_image.png"
+        default = "http://logiclab.am/mandarin/static/images/default_product_type_image.png"
         # if not self.image_url:
         #     return default
         # if self.image_url.startswith("http"):
@@ -150,3 +153,85 @@ class ProductType(db.Model):
 
     def __repr__(self):
         return f"<ProductType {self.title}>"
+
+
+class ProductTypesSamples:
+    def __init__(self):
+        self.data = [
+            {
+                "type": "teacher",
+                "title_hy": "Ձեր սիրելի դպրոցի/մանկապարտեզի ուսուցիչների համար",
+                "title_en": "For your favorite school/kindergarten teachers",
+                "title_ru": "Для ваших любимых учителей школы/детского сада",
+                "description_hy": "Տոնական փայտե զարդեր՝ ուսուցիչների և դաստիարակների համար։",
+                "description_en": "Festive wooden ornaments for teachers and educators.",
+                "description_ru": "Праздничные деревянные украшения для учителей и воспитателей.",
+                "image_url": "images/default_product_type_image.png",
+            },
+            {
+                "type": "staff",
+                "title_hy": "Սիրելի աշխատակիցների համար",
+                "title_en": "For beloved staff members",
+                "title_ru": "Для любимых сотрудников",
+                "description_hy": "Փայտե տոնական նվերներ՝ գործընկերների համար։",
+                "description_en": "Wooden holiday gifts for colleagues.",
+                "description_ru": "Деревянные праздничные подарки для коллег.",
+                "image_url": "images/default_product_type_image.png",
+            },
+            {
+                "type": "love",
+                "title_hy": "Սիրելիս համար",
+                "title_en": "For your loved one",
+                "title_ru": "Для любимого человека",
+                "description_hy": "Հուշարժեք փայտե խաղալիքներ՝ սիրելիի համար։",
+                "description_en": "Memorable wooden toys for your loved one.",
+                "description_ru": "Деревянные сувениры для любимого человека.",
+                "image_url": "images/default_product_type_image.png",
+            },
+            {
+                "type": "friend",
+                "title_hy": "Ընկերոջ համար",
+                "title_en": "For a friend",
+                "title_ru": "Для друга",
+                "description_hy": "Բնավորությամբ լի զարդեր՝ ձեր լավ ընկերոջ համար։",
+                "description_en": "Personality-filled ornaments for your friend.",
+                "description_ru": "Украшения, полные характера, для вашего друга.",
+                "image_url": "images/default_product_type_image.png",
+            },
+            {
+                "type": "family",
+                "title_hy": "Ընտանիքի համար",
+                "title_en": "For the family",
+                "title_ru": "Для семьи",
+                "description_hy": "Փայտե խաղալիքների հավաքածու՝ ընտանեկան հիշողությունների համար։",
+                "description_en": "Wooden toy sets for family memories.",
+                "description_ru": "Наборы деревянных игрушек для семейных воспоминаний.",
+                "image_url": "images/default_product_type_image.png",
+            },
+            {
+                "type": "corporate",
+                "title_hy": "Կորպորատիվի համար",
+                "title_en": "For corporate clients",
+                "title_ru": "Для корпоративных клиентов",
+                "description_hy": "Բրենդավորմամբ զարդեր՝ ձեր թիմի և գործընկերների համար։",
+                "description_en": "Branded ornaments for your team and partners.",
+                "description_ru": "Брендированные украшения для вашей команды и партнеров.",
+                "image_url": "images/default_product_type_image.png",
+            },
+            {
+                "type": "custom",
+                "title_hy": "Այլ",
+                "title_en": "Custom / Other",
+                "title_ru": "Другие / По заказу",
+                "description_hy": "Հատուկ պատվերներ՝ ցանկացած առիթի համար։",
+                "description_en": "Special orders for any occasion.",
+                "description_ru": "Специальные заказы для любого случая.",
+                "image_url": "images/default_product_type_image.png",
+            },
+        ]
+
+    def get_all(self):
+        return self.data
+
+    def get_by_type(self, type):
+        return [item for item in self.data if item["type"] == type]
