@@ -44,9 +44,7 @@ DB_PORT = os.getenv('DB_PORT', '5432')
 DB_NAME = os.getenv('DB_NAME', 'christmas_shop')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = (
-    os.getenv('SQLALCHEMY_DATABASE_URI') or
-    f'postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}'
-)
+    os.getenv('SQLALCHEMY_DATABASE_URI'))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize extensions
