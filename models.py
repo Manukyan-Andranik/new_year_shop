@@ -121,7 +121,7 @@ class ProductType(db.Model):
 
     def image_url_full(self, prefix: str = "") -> str:
         """Return full image URL or default placeholder."""
-        default = "http://127.0.0.1:5001/static/images/default_product_type_image.png"
+        default = "https://logiclab.am/mandarin/static/images/default_product_type_image.png"
         # if not self.image_url:
         #     return default
         # if self.image_url.startswith("http"):
