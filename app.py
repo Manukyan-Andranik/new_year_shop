@@ -1,4 +1,3 @@
-# app.py
 import os
 import json
 import uuid
@@ -12,13 +11,14 @@ from flask_login import login_user, logout_user, login_required, current_user
 from flask_migrate import Migrate
 from sqlalchemy import event
 from sqlalchemy.exc import IntegrityError
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
 from sqlalchemy.engine import Engine
 
 # Local imports
 from models import db, Product, Order, ProductType, ProductTypesSamples
 from admin_auth import login_manager, init_admin_user, verify_admin
-from data.toys import get_toys_by_category  # New import
+from data.toys import get_toys_by_category
 
 load_dotenv()
 
@@ -29,10 +29,6 @@ app = Flask(__name__, template_folder="templates", static_folder="static")
 
 SCHEMA_NAME = 'newyear_shop_schema'
 BASE_URL = os.getenv("BASE_URL", "/mandarin")
-app.config['APPLICATION_ROOT'] = BASE_URL
-
-# Secret key
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'christmas-shop-secret-key-2023')
 
 # ===============================
 # Database Configuration
@@ -43,19 +39,7 @@ DB_HOST = os.getenv('DB_HOST', 'localhost')
 DB_PORT = os.getenv('DB_PORT', '5432')
 DB_NAME = os.getenv('DB_NAME', 'christmas_shop')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = (
-    os.getenv('SQLALCHEMY_DATABASE_URI') or f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}") 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-# Initialize extensions
-db.init_app(app)
-migrate = Migrate(app, db)
-login_manager.init_app(app)
-login_manager.login_view = 'admin_login'
-
-# ===============================
 # Email Config
-# ===============================
 EMAIL_REGEX = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 
 SMTP_HOST = os.getenv('SMTP_HOST')
@@ -65,6 +49,16 @@ SMTP_PASS = os.getenv('SMTP_PASS')
 EMAIL_FROM = os.getenv('EMAIL_FROM', SMTP_USER or f'no-reply@{os.getenv("MAIL_DOMAIN","localhost")}')
 ADMIN_NOTIFICATION_EMAIL = os.getenv('ADMIN_NOTIFICATION_EMAIL')
 
+# App Config
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'christmas-shop-secret-key-2023')
+app.config['SQLALCHEMY_DATABASE_URI'] = (os.getenv('SQLALCHEMY_DATABASE_URI') or f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}") 
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Initialize extensions
+db.init_app(app)
+migrate = Migrate(app, db)
+login_manager.init_app(app)
+login_manager.login_view = 'admin_login'
 
 # ===============================
 # Email Utility
@@ -118,7 +112,12 @@ def home():
 
 @app.route('/test')
 def test():
-    return jsonify({'message': BASE_URL})
+    return jsonify({
+        'message': 'API is working', 
+        'base_url': BASE_URL,
+        'request_path': request.path,
+        'request_url': request.url
+    })
     
 
 @app.route('/about')
@@ -154,7 +153,7 @@ def product_types_page():
         SHOP_URL="/shop",
         API_LIST="/api/product-types",
         API_ADD="/api/product-types",
-        IMAGE_PREFIX="/static/"  # adjust if needed
+        IMAGE_PREFIX="/static/"
     )
 
 
@@ -176,17 +175,20 @@ def get_products():
     if language not in ['en', 'hy', 'ru']:
         language = 'en'
 
+    print(f"[API] GET /api/products - type: {products_type}, lang: {language}")
+
     query = Product.query.order_by(Product.id)
     if products_type != 'all':
-        # Ensure your model field is correct: `type` or `product_type`
         query = query.filter(Product.type == products_type)
 
     products = query.all()
-    print(f"Products fetched for type '{products_type}': {len(products)} items")
+    print(f"[API] Products fetched for type '{products_type}': {len(products)} items")
+    
     if not products:
         return jsonify([])
 
-    return jsonify([prefix_image_urls(product.to_dict(language)) for product in products])
+    result = [prefix_image_urls(product.to_dict(language)) for product in products]
+    return jsonify(result)
 
 # ===============================
 # Santa Message Order
@@ -252,8 +254,7 @@ def product_detail(product_id):
 def prefix_image_urls(product_data):
     """Prefix relative image URLs with site domain"""
     BASE_PREFIX = os.getenv("BASE_PREFIX", "https://logiclab.am/mandarin/")
-    print(BASE_PREFIX)
-    print("=========")
+    
     images = product_data.get("images_url_list", [])
     product_data["images_url_list"] = [
         img if img.startswith("http") else BASE_PREFIX + img.lstrip('/')
@@ -371,7 +372,7 @@ def create_order():
 
 
 # ===============================
-# Admin Routes (unchanged)
+# Admin Routes
 # ===============================
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
@@ -390,7 +391,7 @@ def admin_login():
 @login_required
 def admin_logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('home'))
 
 
 @app.route('/admin/dashboard')

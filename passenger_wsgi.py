@@ -2,12 +2,15 @@ import imp
 import os
 import sys
 
-# Path to this file
-BASE_DIR = os.path.dirname(__file__)
+sys.path.insert(0, os.path.dirname(__file__))
 
-# Add backend folder to sys.path
-sys.path.insert(0, os.path.join(BASE_DIR))
+wsgi = imp.load_source('wsgi', 'app.py')
 
-# Load run.py
-wsgi = imp.load_source('wsgi', os.path.join(BASE_DIR, 'app.py'))
+# This exposes the Flask app at the root level
 application = wsgi.app
+
+# If you want to mount it at /mandarin as well, uncomment below:
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
+application = DispatcherMiddleware(wsgi.app, {
+    '/mandarin': wsgi.app
+})
