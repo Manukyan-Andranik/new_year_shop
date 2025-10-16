@@ -190,7 +190,7 @@ function initCategoryFilter() {
                     <img src="${product.images_url_list[0]}" alt="${product.name}" class="product-image" draggable="false">
                     <div class="product-info">
                         <div class="product-name">${product.name}</div>
-                        <div class="product-price">$${product.price.toFixed(2)}</div>
+                        <div class="product-price">${product.price}  ֏</div>
                     </div>
                 </div>
                 <div class="card-bottom">
@@ -232,7 +232,7 @@ function renderProducts() {
               <img src="${product.images_url_list[0]}" alt="${product.name}" class="product-image" draggable="false">
               <div class="product-info">
                 <div class="product-name">${product.name}</div>
-                <div class="product-price">$${product.price.toFixed(2)}</div>
+                <div class="product-price">${product.price}  ֏</div>
               </div>
               <button class="add-btn" aria-label="${window.t ? window.t('product.add.aria', {name: product.name}) : `Add ${product.name} to cart`}">
                 🎁 ${window.t ? window.t('product.add') : 'Add'}
