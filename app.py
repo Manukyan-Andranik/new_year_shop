@@ -116,6 +116,10 @@ def set_search_path(dbapi_connection, connection_record):
 def home():
     return redirect(url_for('product_types_page'))
 
+@app.route('/test')
+def test():
+    return jsonify({'message': BASE_URL})
+    
 
 @app.route('/about')
 def about():
