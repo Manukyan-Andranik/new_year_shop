@@ -3,46 +3,43 @@
 {% block title %}<span data-translate="product_types.title">Տեսակներ — Փայտյա Նվեր-զարդեր</span>{% endblock %}
 
 {% block content %}
-<div class="container" style="max-width:1100px; margin:24px auto; padding:16px;">
-  <header style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px;">
-    <div>
-      <h1 style="font-size:20px; margin:0;" data-translate="product_types.header.title">Փայտյա Նվեր-զարդեր — Տիպեր</h1>
-      <p style="margin:0; color:#666; font-size:13px;" data-translate="product_types.header.subtitle">Մաքուր, բնական
-        փայտից պատրաստված տոնական զարդեր՝ տպագրված պատկերներով</p>
-    </div>
+<div class="container" style="max-width:1200px; margin:24px auto; padding:16px;">
+  <header style="margin-bottom:32px;">
+    <h1 style="font-size:28px; margin:0 0 8px 0; font-weight:700; background:linear-gradient(135deg, #2d8a43 0%, #1a5a2d 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;" data-translate="product_types.header.title">Փայտյա Նվեր-զարդեր — Տիպեր</h1>
+    <p style="margin:0; color:#666; font-size:15px; max-width:600px;" data-translate="product_types.header.subtitle">Մաքուր, բնական փայտից պատրաստված տոնական զարդեր՝ տպագրված պատկերներով</p>
   </header>
 
   <section>
-    <div id="grid" class="grid" aria-live="polite"
-      style="display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap:16px; margin-top:18px;">
+    <div id="grid" class="grid" aria-live="polite" style="display:flex; flex-direction:column; gap:16px;">
       {% if PRODUCT_TYPES %}
       {% for pt in PRODUCT_TYPES %}
       <article class="card"
-        style="background:white; border-radius:12px; box-shadow:0 6px 18px rgba(20,20,35,0.06); overflow:hidden; display:flex; flex-direction:column; min-height:220px;">
+        style="background:white; border-radius:16px; box-shadow:0 2px 8px rgba(20,20,35,0.08); overflow:hidden; transition:all 0.3s ease; border:1px solid #f0f0f0;">
         <a class="card-link" href="{{ SHOP_URL }}?type={{ pt.type if pt.type is defined else pt.id }}"
-          style="text-decoration:none; color:inherit; display:block;">
+          style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:20px; padding:20px; min-height:140px;">
+          
           <div class="image-wrap"
-            style="height:140px; background:linear-gradient(180deg,#fff,#f6f6f8); display:flex; align-items:center; justify-content:center; overflow:hidden;">
-            <img src="static/{{ pt.image_url }}" alt="{{ pt.title }}"
-              style="max-width:100%; max-height:100%; object-fit:contain; display:block;">
+            style="flex-shrink:0; width:140px; height:140px; background:linear-gradient(135deg,#f8f9fa,#e9ecef); display:flex; align-items:center; justify-content:center; overflow:hidden; border-radius:12px;">
+            <img src="static/{{ pt.image_url }}" alt="{{ pt.title_hy or pt.title }}"
+              style="max-width:90%; max-height:90%; object-fit:contain; display:block;">
           </div>
 
-          <div class="card-body" style="padding:12px 14px; display:flex; gap:12px; flex-direction:column; flex:1;">
-            <h3 class="card-title" style="font-weight:700; font-size:15px; margin:0 0 4px 0;">{{ pt.title }}</h3>
-            <p class="card-desc" style="font-size:13px; color:#666; flex:1; margin:0 0 8px 0;">{{ pt.description or ""
-              }}</p>
-            <div class="card-footer"
-              style="display:flex; gap:8px; align-items:center; justify-content:space-between; margin-top:8px;">
-              <div class="small" style="font-size:12px; color:#999;">&nbsp;</div>
-              <div style="font-size:13px; color:#2d8a43; font-weight:600;" data-translate="product_types.card.choose">
-                Ընտրել →</div>
-            </div>
+          <div class="card-body" style="flex:1; display:flex; flex-direction:column; gap:8px; min-width:0;">
+            <h3 class="card-title" style="font-weight:700; font-size:18px; margin:0; color:#1a1a1a;">{{ pt.title_hy or pt.title }}</h3>
+            <p class="card-desc" style="font-size:14px; color:#666; margin:0; line-height:1.5;">{{ pt.description_hy or pt.description or "" }}</p>
+          </div>
+
+          <div class="card-action" style="flex-shrink:0; display:flex; align-items:center; gap:8px; padding:12px 20px; background:linear-gradient(135deg, #2d8a43 0%, #239438 100%); border-radius:10px; color:white; font-weight:600; font-size:14px; transition:all 0.3s ease;">
+            <span data-translate="product_types.card.choose">Ընտրել</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="transition:transform 0.3s ease;">
+              <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
         </a>
       </article>
       {% endfor %}
       {% else %}
-      <div style="grid-column:1/-1; text-align:center; padding:24px; color:#666"
+      <div style="text-align:center; padding:48px; color:#999; background:#f8f9fa; border-radius:16px;"
         data-translate="product_types.grid.empty">Տեսակներ չեն գտնվել</div>
       {% endif %}
     </div>
@@ -84,28 +81,60 @@
 
 <!-- Modal for adding new product type -->
 <div id="modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true"
-  style="position:fixed; inset:0; background:rgba(0,0,0,0.35); display:none; align-items:center; justify-content:center; padding:12px; z-index:40;">
+  style="position:fixed; inset:0; background:rgba(0,0,0,0.4); backdrop-filter:blur(4px); display:none; align-items:center; justify-content:center; padding:12px; z-index:40;">
   <div class="modal" role="document"
-    style="background:white; border-radius:12px; max-width:720px; width:100%; padding:18px; box-shadow:0 12px 40px rgba(10,10,30,0.18);">
-    <h2 style="margin-top:0;" data-translate="product_types.modal.title">Նոր տիպ ավելացնել</h2>
-    <div class="form-row" style="margin-bottom:12px;">
-      <label for="title" data-translate="product_types.modal.title_label">Վերնագիր (ընդհանրապես):</label>
-      <input id="title" type="text" data-translate-placeholder="product_types.modal.title_placeholder"
-        placeholder="Օր. Ձեզ համար..." style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px;" />
+    style="background:white; border-radius:16px; max-width:720px; width:100%; padding:24px; box-shadow:0 20px 60px rgba(10,10,30,0.25); max-height:90vh; overflow-y:auto;">
+    <h2 style="margin-top:0; font-size:22px; font-weight:700; color:#1a1a1a;" data-translate="product_types.modal.title">Նոր տիպ ավելացնել</h2>
+    
+    <div class="form-row" style="margin-bottom:16px;">
+      <label for="type" style="display:block; margin-bottom:6px; font-weight:600; font-size:13px; color:#444;" data-translate="product_types.modal.type_label">Տիպի կոդ:</label>
+      <input id="type" type="text" placeholder="օր. teacher, staff, custom"
+        style="width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; transition:border 0.2s;" />
     </div>
-    <div class="form-row" style="margin-bottom:12px;">
-      <label for="description" data-translate="product_types.modal.description_label">Կարճ նկարագրություն</label>
-      <textarea id="description" data-translate-placeholder="product_types.modal.description_placeholder"
-        placeholder="Կարճ, 1-2 տող"
-        style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px;"></textarea>
+
+    <div class="form-row" style="margin-bottom:16px;">
+      <label for="title_hy" style="display:block; margin-bottom:6px; font-weight:600; font-size:13px; color:#444;" data-translate="product_types.modal.title_hy_label">Վերնագիր (հայերեն):</label>
+      <input id="title_hy" type="text" placeholder="Օր. Ընկերոջ համար"
+        style="width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; transition:border 0.2s;" />
     </div>
-    <div class="form-row" style="margin-bottom:12px;">
-      <label for="images" data-translate="product_types.modal.images_label">Պատկեր(ներ)</label>
-      <input id="images" type="text" data-translate-placeholder="product_types.modal.images_placeholder"
-        placeholder="images/x.jpg" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px;" />
-      <div class="muted" style="font-size:12px; color:#777; margin-top:4px;">
+
+    <div class="form-row" style="margin-bottom:16px;">
+      <label for="title_en" style="display:block; margin-bottom:6px; font-weight:600; font-size:13px; color:#444;" data-translate="product_types.modal.title_en_label">Վերնագիր (անգլերեն):</label>
+      <input id="title_en" type="text" placeholder="e.g. For a friend"
+        style="width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; transition:border 0.2s;" />
+    </div>
+
+    <div class="form-row" style="margin-bottom:16px;">
+      <label for="title_ru" style="display:block; margin-bottom:6px; font-weight:600; font-size:13px; color:#444;" data-translate="product_types.modal.title_ru_label">Վերնագիր (ռուսերեն):</label>
+      <input id="title_ru" type="text" placeholder="напр. Для друга"
+        style="width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; transition:border 0.2s;" />
+    </div>
+
+    <div class="form-row" style="margin-bottom:16px;">
+      <label for="description_hy" style="display:block; margin-bottom:6px; font-weight:600; font-size:13px; color:#444;" data-translate="product_types.modal.description_hy_label">Նկարագրություն (հայերեն):</label>
+      <textarea id="description_hy" placeholder="Կարճ նկարագրություն"
+        style="width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; min-height:70px; transition:border 0.2s; resize:vertical;"></textarea>
+    </div>
+
+    <div class="form-row" style="margin-bottom:16px;">
+      <label for="description_en" style="display:block; margin-bottom:6px; font-weight:600; font-size:13px; color:#444;" data-translate="product_types.modal.description_en_label">Նկարագրություն (անգլերեն):</label>
+      <textarea id="description_en" placeholder="Short description"
+        style="width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; min-height:70px; transition:border 0.2s; resize:vertical;"></textarea>
+    </div>
+
+    <div class="form-row" style="margin-bottom:16px;">
+      <label for="description_ru" style="display:block; margin-bottom:6px; font-weight:600; font-size:13px; color:#444;" data-translate="product_types.modal.description_ru_label">Նկարագրություն (ռուսերեն):</label>
+      <textarea id="description_ru" placeholder="Краткое описание"
+        style="width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; min-height:70px; transition:border 0.2s; resize:vertical;"></textarea>
+    </div>
+
+    <div class="form-row" style="margin-bottom:20px;">
+      <label for="images" style="display:block; margin-bottom:6px; font-weight:600; font-size:13px; color:#444;" data-translate="product_types.modal.images_label">Պատկեր(ներ)</label>
+      <input id="images" type="text" placeholder="images/ornament1.jpg"
+        style="width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; transition:border 0.2s;" />
+      <div class="muted" style="font-size:12px; color:#777; margin-top:6px;">
         <span data-translate="product_types.modal.images_hint">Օգտագործեք relative path (օր.
-          <code>images/ornament1.jpg</code>).</span>
+          <code style="background:#f5f5f5; padding:2px 6px; border-radius:4px; font-family:monospace;">images/ornament1.jpg</code>).</span>
       </div>
     </div>
 
@@ -155,6 +184,11 @@
   const btnRefresh = document.getElementById("btn-refresh");
   const grid = document.getElementById("grid");
 
+  // Get current language from window or default to 'hy'
+  function getCurrentLang() {
+    return window.currentLanguage || 'hy';
+  }
+
   function showModal(show) {
     modal.style.display = show ? "flex" : "none";
     modal.setAttribute("aria-hidden", show ? "false" : "true");
@@ -165,69 +199,95 @@
 
   async function fetchAndRender() {
     if (!grid) return;
-    grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:24px; color:#666" data-translate="product_types.grid.loading">Բեռնում...</div>`;
+    grid.innerHTML = `<div style="text-align:center; padding:48px; color:#999; background:#f8f9fa; border-radius:16px;" data-translate="product_types.grid.loading">Բեռնում...</div>`;
     try {
       const res = await fetch(`${BASE_URL}${API_LIST}`);
       if (!res.ok) throw new Error("Network error");
       const arr = await res.json();
       if (!arr || !arr.length) {
-        grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:24px; color:#666" data-translate="product_types.grid.empty">Տեսակներ չեն գտնվել</div>`;
+        grid.innerHTML = `<div style="text-align:center; padding:48px; color:#999; background:#f8f9fa; border-radius:16px;" data-translate="product_types.grid.empty">Տեսակներ չեն գտնվել</div>`;
         return;
       }
       grid.innerHTML = "";
+      const lang = getCurrentLang();
+      
       arr.forEach(pt => {
         const card = document.createElement("article");
         card.className = "card";
-        card.style = "background:white; border-radius:12px; box-shadow:0 6px 18px rgba(20,20,35,0.06); overflow:hidden; display:flex; flex-direction:column; min-height:220px;";
+        card.style = "background:white; border-radius:16px; box-shadow:0 2px 8px rgba(20,20,35,0.08); overflow:hidden; transition:all 0.3s ease; border:1px solid #f0f0f0;";
 
         const link = document.createElement("a");
-        link.href = `${SHOP_URL}?type=${encodeURIComponent(pt.type || pt.id)}`;
-        link.style = "text-decoration:none; color:inherit; display:block;";
+        link.className = "card-link";
+        link.href = `${BASE_URL}${SHOP_URL}?type=${encodeURIComponent(pt.type || pt.id)}`;
+        link.style = "text-decoration:none; color:inherit; display:flex; align-items:center; gap:20px; padding:20px; min-height:140px;";
 
         const imgWrap = document.createElement("div");
         imgWrap.className = "image-wrap";
-        imgWrap.style = "height:140px; background:linear-gradient(180deg,#fff,#f6f6f8); display:flex; align-items:center; justify-content:center; overflow:hidden;";
+        imgWrap.style = "flex-shrink:0; width:140px; height:140px; background:linear-gradient(135deg,#f8f9fa,#e9ecef); display:flex; align-items:center; justify-content:center; overflow:hidden; border-radius:12px;";
 
         const img = document.createElement("img");
-        img.alt = pt.title || "";
+        const title = pt[`title_${lang}`] || pt.title_hy || pt.title || "";
+        img.alt = title;
         let src = pt.image_url || null;
         if (src) {
           if (src.startsWith('http')) img.src = src;
-          else img.src = (IMAGE_PREFIX || "") + src;
+          else img.src = (BASE_URL + IMAGE_PREFIX || "") + src;
         } else {
-          img.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='200'><rect width='100%' height='100%' fill='%23f6f6f8'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='14' data-translate='product_types.card.no_image'>No image</text></svg>";
+          img.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='200'><rect width='100%' height='100%' fill='%23f8f9fa'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='14'>No image</text></svg>";
         }
-        img.style = "max-width:100%; max-height:100%; object-fit:contain; display:block;";
+        img.style = "max-width:90%; max-height:90%; object-fit:contain; display:block;";
         imgWrap.appendChild(img);
 
         const body = document.createElement("div");
         body.className = "card-body";
-        body.style = "padding:12px 14px; display:flex; gap:12px; flex-direction:column; flex:1;";
+        body.style = "flex:1; display:flex; flex-direction:column; gap:8px; min-width:0;";
 
         const h = document.createElement("h3");
         h.className = "card-title";
-        h.textContent = pt.title || "";
-        h.style = "font-weight:700; font-size:15px; margin:0 0 4px 0;";
+        h.textContent = title;
+        h.style = "font-weight:700; font-size:18px; margin:0; color:#1a1a1a;";
 
         const p = document.createElement("p");
         p.className = "card-desc";
-        p.textContent = pt.description || "";
-        p.style = "font-size:13px; color:#666; flex:1; margin:0 0 8px 0;";
+        const description = pt[`description_${lang}`] || pt.description_hy || pt.description || "";
+        p.textContent = description;
+        p.style = "font-size:14px; color:#666; margin:0; line-height:1.5;";
 
-        const choose = document.createElement("div");
-        choose.textContent = window.t ? window.t('product_types.card.choose') : "Ընտրել →";
-        choose.style = "font-size:13px; color:#2d8a43; font-weight:600;";
+        const action = document.createElement("div");
+        action.className = "card-action";
+        action.style = "flex-shrink:0; display:flex; align-items:center; gap:8px; padding:12px 20px; background:linear-gradient(135deg, #2d8a43 0%, #239438 100%); border-radius:10px; color:white; font-weight:600; font-size:14px; transition:all 0.3s ease;";
+        
+        const span = document.createElement("span");
+        span.textContent = window.t ? window.t('product_types.card.choose') : "Ընտրել";
+        
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("width", "16");
+        svg.setAttribute("height", "16");
+        svg.setAttribute("viewBox", "0 0 16 16");
+        svg.setAttribute("fill", "none");
+        svg.style = "transition:transform 0.3s ease;";
+        
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", "M6 3L11 8L6 13");
+        path.setAttribute("stroke", "currentColor");
+        path.setAttribute("stroke-width", "2");
+        path.setAttribute("stroke-linecap", "round");
+        path.setAttribute("stroke-linejoin", "round");
+        
+        svg.appendChild(path);
+        action.appendChild(span);
+        action.appendChild(svg);
 
         body.appendChild(h);
         body.appendChild(p);
-        body.appendChild(choose);
         link.appendChild(imgWrap);
         link.appendChild(body);
+        link.appendChild(action);
         card.appendChild(link);
         grid.appendChild(card);
       });
     } catch (err) {
-      grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:24px; color:#d00" data-translate="product_types.grid.error">Չհաջողվեց բեռնել. փորձեք ուշ էլ։</div>`;
+      grid.innerHTML = `<div style="text-align:center; padding:48px; color:#d00; background:#fff5f5; border-radius:16px; border:1px solid #ffdddd;" data-translate="product_types.grid.error">Չհաջողվեց բեռնել. փորձեք ուշ էլ։</div>`;
       console.error(err);
     }
   }
@@ -244,26 +304,54 @@
 
   // Save handler for modal
   btnSave && btnSave.addEventListener("click", async () => {
-    const title = document.getElementById("title").value.trim();
-    const description = document.getElementById("description").value.trim();
+    const type = document.getElementById("type").value.trim();
+    const title_hy = document.getElementById("title_hy").value.trim();
+    const title_en = document.getElementById("title_en").value.trim();
+    const title_ru = document.getElementById("title_ru").value.trim();
+    const description_hy = document.getElementById("description_hy").value.trim();
+    const description_en = document.getElementById("description_en").value.trim();
+    const description_ru = document.getElementById("description_ru").value.trim();
     const image = document.getElementById("images").value.trim();
-    if (!title) {
-      alert(window.t ? window.t('product_types.validation.title_required') : "Խնդրում ենք գրել վերնագիր");
+    
+    if (!type || !title_hy) {
+      alert(window.t ? window.t('product_types.validation.required') : "Խնդրում ենք լրացնել տիպի կոդը և հայերեն վերնագիրը");
       return;
     }
+    
     btnSave.disabled = true;
     btnSave.textContent = window.t ? window.t('product_types.modal.saving') : "Պահպանվում...";
+    
     try {
-      const res = await fetch(API_ADD, {
+      const payload = {
+        type,
+        title_hy,
+        title_en,
+        title_ru,
+        description_hy,
+        description_en,
+        description_ru,
+        image_url: image
+      };
+      
+      const res = await fetch(`${BASE_URL}${API_ADD}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, description, image_url: image })
+        body: JSON.stringify(payload)
       });
+      
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Սխալ է");
-      document.getElementById("title").value = "";
-      document.getElementById("description").value = "";
+      
+      // Clear form
+      document.getElementById("type").value = "";
+      document.getElementById("title_hy").value = "";
+      document.getElementById("title_en").value = "";
+      document.getElementById("title_ru").value = "";
+      document.getElementById("description_hy").value = "";
+      document.getElementById("description_en").value = "";
+      document.getElementById("description_ru").value = "";
       document.getElementById("images").value = "";
+      
       showModal(false);
       fetchAndRender();
     } catch (err) {
