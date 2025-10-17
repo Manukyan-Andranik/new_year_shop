@@ -553,18 +553,7 @@ h1, h2, h3, h4, h5, h6 {
       opacity: 0;
     }
   }
-  
-  .footer::after {
-    content: "❄️ ❄️ ❄️ ❄️";
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: snowfall 10s linear infinite;
-    font-size: 1.2rem;
-    opacity: 0.3;
-  }
-  
+
   /* 🌍 Responsive Design */
   @media (max-width: 768px) {
     .footer-content {

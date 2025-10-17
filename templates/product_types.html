@@ -2,367 +2,829 @@
 
 {% block title %}<span data-translate="product_types.title">Տեսակներ — Փայտյա Նվեր-զարդեր</span>{% endblock %}
 
-{% block content %}
-<div class="container" style="max-width:1200px; margin:24px auto; padding:16px;">
-  <header style="margin-bottom:32px;">
-    <h1 style="font-size:28px; margin:0 0 8px 0; font-weight:700; background:linear-gradient(135deg, #2d8a43 0%, #1a5a2d 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;" data-translate="product_types.header.title">Փայտյա Նվեր-զարդեր — Տիպեր</h1>
-    <p style="margin:0; color:#666; font-size:15px; max-width:600px;" data-translate="product_types.header.subtitle">Մաքուր, բնական փայտից պատրաստված տոնական զարդեր՝ տպագրված պատկերներով</p>
-  </header>
+{% block content %}>
+<head>
 
-  <section>
-    <div id="grid" class="grid" aria-live="polite" style="display:flex; flex-direction:column; gap:16px;">
-      {% if PRODUCT_TYPES %}
-      {% for pt in PRODUCT_TYPES %}
-      <article class="card"
-        style="background:white; border-radius:16px; box-shadow:0 2px 8px rgba(20,20,35,0.08); overflow:hidden; transition:all 0.3s ease; border:1px solid #f0f0f0;">
-        <a class="card-link" href="{{ SHOP_URL }}?type={{ pt.type if pt.type is defined else pt.id }}"
-          style="text-decoration:none; color:inherit; display:flex; align-items:center; gap:20px; padding:20px; min-height:140px;">
-          
-          <div class="image-wrap"
-            style="flex-shrink:0; width:140px; height:140px; background:linear-gradient(135deg,#f8f9fa,#e9ecef); display:flex; align-items:center; justify-content:center; overflow:hidden; border-radius:12px;">
-            <img src="static/{{ pt.image_url }}" alt="{{ pt.title_hy or pt.title }}"
-              style="max-width:90%; max-height:90%; object-fit:contain; display:block;">
-          </div>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-          <div class="card-body" style="flex:1; display:flex; flex-direction:column; gap:8px; min-width:0;">
-            <h3 class="card-title" style="font-weight:700; font-size:18px; margin:0; color:#1a1a1a;">{{ pt.title_hy or pt.title }}</h3>
-            <p class="card-desc" style="font-size:14px; color:#666; margin:0; line-height:1.5;">{{ pt.description_hy or pt.description or "" }}</p>
-          </div>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      overflow-x: hidden;
+      background: linear-gradient(135deg, #0f3d1f 0%, #1a5a2d 50%, #0f3d1f 100%);
+      min-height: 100vh;
+    }
 
-          <div class="card-action" style="flex-shrink:0; display:flex; align-items:center; gap:8px; padding:12px 20px; background:linear-gradient(135deg, #2d8a43 0%, #239438 100%); border-radius:10px; color:white; font-weight:600; font-size:14px; transition:all 0.3s ease;">
-            <span data-translate="product_types.card.choose">Ընտրել</span>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="transition:transform 0.3s ease;">
-              <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </a>
-      </article>
-      {% endfor %}
-      {% else %}
-      <div style="text-align:center; padding:48px; color:#999; background:#f8f9fa; border-radius:16px;"
-        data-translate="product_types.grid.empty">Տեսակներ չեն գտնվել</div>
-      {% endif %}
+    /* Snowflakes animation */
+    @keyframes snowfall {
+      0% {
+        transform: translateY(-10vh) translateX(0);
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) translateX(100px);
+        opacity: 0;
+      }
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    .snowflake {
+      position: fixed;
+      top: -10vh;
+      color: white;
+      font-size: 1.5em;
+      opacity: 0.8;
+      pointer-events: none;
+      z-index: 1;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: twinkle 2s infinite;
+    }
+
+    /* Hero section */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0f3d1f 0%, #1a5a2d 50%, #0f3d1f 100%);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(45, 138, 67, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(26, 90, 45, 0.2) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 40px;
+      max-width: 800px;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      margin-bottom: 20px;
+      color: white;
+      font-weight: 800;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      letter-spacing: -1px;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 40px;
+      line-height: 1.6;
+      text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .snowglobe {
+      display: inline-block;
+      font-size: 10rem;
+      margin: 20px 0;
+      animation: bounce 3s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 50px;
+    }
+
+    .btn {
+      padding: 16px 40px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #c41e3a 0%, #8b1428 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(196, 30, 58, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(196, 30, 58, 0.6);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border: 2px solid white;
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-3px);
+    }
+
+    /* Products section */
+    .products-section {
+      position: relative;
+      padding: 120px 20px;
+      background: linear-gradient(180deg, #0f3d1f 0%, #1a5a2d 50%, #0f3d1f 100%);
+      z-index: 10;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 80px;
+      animation: fadeInUp 1s ease-out 0.2s both;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      color: white;
+      margin-bottom: 15px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .ornament-icon {
+      display: inline-block;
+      font-size: 3rem;
+      margin: 0 10px;
+      animation: rotate 20s infinite linear;
+    }
+
+    @keyframes rotate {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+
+    .section-header p {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      position: relative;
+      backdrop-filter: blur(10px);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #c41e3a, #2d8a43, #c41e3a);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+      z-index: 10;
+    }
+
+    .card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 16px 48px rgba(196, 30, 58, 0.2);
+    }
+
+    .card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .card-link {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .image-wrap {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .image-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3), transparent);
+      pointer-events: none;
+    }
+
+    .image-wrap img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover .image-wrap img {
+      transform: scale(1.1) rotate(2deg);
+    }
+
+    .card-body {
+      padding: 24px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .card-title {
+      font-weight: 700;
+      font-size: 20px;
+      color: #1a1a1a;
+      margin: 0;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      color: #666;
+      margin: 0;
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .card-action {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: linear-gradient(135deg, #c41e3a 0%, #8b1428 100%);
+      border-radius: 10px;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      margin-top: 16px;
+      width: fit-content;
+    }
+
+    .card:hover .card-action {
+      background: linear-gradient(135deg, #8b1428 0%, #5f0e1a 100%);
+      gap: 12px;
+      padding-right: 24px;
+    }
+
+    .card-action svg {
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover .card-action svg {
+      transform: translateX(4px);
+    }
+
+    /* Modal styles */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      z-index: 50;
+    }
+
+    .modal {
+      background: white;
+      border-radius: 16px;
+      max-width: 720px;
+      width: 100%;
+      padding: 24px;
+      box-shadow: 0 20px 60px rgba(10, 10, 30, 0.25);
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal h2 {
+      margin-top: 0;
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    .form-row {
+      margin-bottom: 16px;
+    }
+
+    .form-row label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 13px;
+      color: #444;
+    }
+
+    .form-row input,
+    .form-row textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .form-row textarea {
+      min-height: 70px;
+      resize: vertical;
+    }
+
+    .form-row input:focus,
+    .form-row textarea:focus {
+      outline: none;
+      border-color: #c41e3a;
+      box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+    }
+
+    .muted {
+      font-size: 12px;
+      color: #777;
+      margin-top: 6px;
+    }
+
+    .muted code {
+      background: #f5f5f5;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 24px;
+    }
+
+    .btn-modal {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      font-size: 14px;
+    }
+
+    .btn-modal.secondary {
+      border: 1px solid #ddd;
+      background: white;
+      color: #333;
+    }
+
+    .btn-modal.secondary:hover {
+      background: #f8f9fa;
+      border-color: #ccc;
+      transform: translateY(-1px);
+    }
+
+    .btn-modal.primary {
+      background: linear-gradient(135deg, #2d8a43 0%, #239438 100%);
+      color: white;
+    }
+
+    .btn-modal.primary:hover {
+      background: linear-gradient(135deg, #239438 0%, #1a7a2d 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(45, 138, 67, 0.3);
+    }
+
+    .btn-modal.primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 48px;
+      color: #999;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+    }
+
+    .error-state {
+      text-align: center;
+      padding: 48px;
+      color: #d00;
+      background: rgba(255, 100, 100, 0.1);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 100, 100, 0.3);
+    }
+
+    /* Ribbon decoration */
+    .ribbon {
+      position: absolute;
+      top: 20px;
+      right: -40px;
+      width: 200px;
+      height: 40px;
+      background: linear-gradient(135deg, #c41e3a, #8b1428);
+      transform: rotate(45deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: rgba(255, 255, 255, 0.7);
+      background: rgba(0, 0, 0, 0.2);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer p {
+      margin: 10px 0;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        min-height: 80vh;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        margin: 0;
+      }
+
+      .ribbon {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Snowflakes container -->
+  <div id="snowflakes-container"></div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="snowglobe">🎄</div>
+      <h1>Փայտյա Նվեր-զարդեր</h1>
+      <p class="hero-subtitle">
+        Բնական փայտից պատրաստված տոնական զարդեր՝ տպագրված պատկերներով
+      </p>
+      <p class="hero-subtitle" style="font-size: 0.95rem; margin-top: -20px;">
+        ✨ Յուրաքանչյուր ընծայ պատրաստված սերով ❤️
+      </p>
     </div>
   </section>
-</div>
 
-<style>
-  .card:hover {
-    box-shadow: 0 8px 24px rgba(20,20,35,0.12) !important;
-    transform: translateY(-2px);
-    border-color: #e0e0e0 !important;
-  }
-  
-  .card:hover .card-action {
-    background: linear-gradient(135deg, #239438 0%, #1a7a2d 100%) !important;
-  }
-  
-  .card:hover .card-action svg {
-    transform: translateX(4px);
-  }
-
-  @media (max-width: 768px) {
-    .card-link {
-      flex-direction: column !important;
-      text-align: center;
-    }
-    
-    .image-wrap {
-      width: 100% !important;
-      height: 160px !important;
-    }
-    
-    .card-action {
-      width: 100%;
-      justify-content: center;
-    }
-  }
-</style>
-
-<!-- Modal for adding new product type -->
-<div id="modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true"
-  style="position:fixed; inset:0; background:rgba(0,0,0,0.4); backdrop-filter:blur(4px); display:none; align-items:center; justify-content:center; padding:12px; z-index:40;">
-  <div class="modal" role="document"
-    style="background:white; border-radius:16px; max-width:720px; width:100%; padding:24px; box-shadow:0 20px 60px rgba(10,10,30,0.25); max-height:90vh; overflow-y:auto;">
-    <h2 style="margin-top:0; font-size:22px; font-weight:700; color:#1a1a1a;" data-translate="product_types.modal.title">Նոր տիպ ավելացնել</h2>
-    
-    <div class="form-row" style="margin-bottom:16px;">
-      <label for="type" style="display:block; margin-bottom:6px; font-weight:600; font-size:13px; color:#444;" data-translate="product_types.modal.type_label">Տիպի կոդ:</label>
-      <input id="type" type="text" placeholder="օր. teacher, staff, custom"
-        style="width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; transition:border 0.2s;" />
-    </div>
-
-    <div class="form-row" style="margin-bottom:16px;">
-      <label for="title_hy" style="display:block; margin-bottom:6px; font-weight:600; font-size:13px; color:#444;" data-translate="product_types.modal.title_hy_label">Վերնագիր (հայերեն):</label>
-      <input id="title_hy" type="text" placeholder="Օր. Ընկերոջ համար"
-        style="width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; transition:border 0.2s;" />
-    </div>
-
-    <div class="form-row" style="margin-bottom:16px;">
-      <label for="title_en" style="display:block; margin-bottom:6px; font-weight:600; font-size:13px; color:#444;" data-translate="product_types.modal.title_en_label">Վերնագիր (անգլերեն):</label>
-      <input id="title_en" type="text" placeholder="e.g. For a friend"
-        style="width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; transition:border 0.2s;" />
-    </div>
-
-    <div class="form-row" style="margin-bottom:16px;">
-      <label for="title_ru" style="display:block; margin-bottom:6px; font-weight:600; font-size:13px; color:#444;" data-translate="product_types.modal.title_ru_label">Վերնագիր (ռուսերեն):</label>
-      <input id="title_ru" type="text" placeholder="напр. Для друга"
-        style="width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; transition:border 0.2s;" />
-    </div>
-
-    <div class="form-row" style="margin-bottom:16px;">
-      <label for="description_hy" style="display:block; margin-bottom:6px; font-weight:600; font-size:13px; color:#444;" data-translate="product_types.modal.description_hy_label">Նկարագրություն (հայերեն):</label>
-      <textarea id="description_hy" placeholder="Կարճ նկարագրություն"
-        style="width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; min-height:70px; transition:border 0.2s; resize:vertical;"></textarea>
-    </div>
-
-    <div class="form-row" style="margin-bottom:16px;">
-      <label for="description_en" style="display:block; margin-bottom:6px; font-weight:600; font-size:13px; color:#444;" data-translate="product_types.modal.description_en_label">Նկարագրություն (անգլերեն):</label>
-      <textarea id="description_en" placeholder="Short description"
-        style="width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; min-height:70px; transition:border 0.2s; resize:vertical;"></textarea>
-    </div>
-
-    <div class="form-row" style="margin-bottom:16px;">
-      <label for="description_ru" style="display:block; margin-bottom:6px; font-weight:600; font-size:13px; color:#444;" data-translate="product_types.modal.description_ru_label">Նկարագրություն (ռուսերեն):</label>
-      <textarea id="description_ru" placeholder="Краткое описание"
-        style="width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; min-height:70px; transition:border 0.2s; resize:vertical;"></textarea>
-    </div>
-
-    <div class="form-row" style="margin-bottom:20px;">
-      <label for="images" style="display:block; margin-bottom:6px; font-weight:600; font-size:13px; color:#444;" data-translate="product_types.modal.images_label">Պատկեր(ներ)</label>
-      <input id="images" type="text" placeholder="images/ornament1.jpg"
-        style="width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:8px; font-size:14px; transition:border 0.2s;" />
-      <div class="muted" style="font-size:12px; color:#777; margin-top:6px;">
-        <span data-translate="product_types.modal.images_hint">Օգտագործեք relative path (օր.
-          <code style="background:#f5f5f5; padding:2px 6px; border-radius:4px; font-family:monospace;">images/ornament1.jpg</code>).</span>
+  <!-- Products Section -->
+  <section class="products-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>
+          <span class="ornament-icon">🎅</span>
+          Մեր Կոլեկցիա
+          <span class="ornament-icon">⛄</span>
+        </h2>
+        <p>Գտեք կատարյալ տոնական ընծայը ձեր սիրելիների համար</p>
+      </div>
+      
+      <div id="grid" class="grid" aria-live="polite">
+        <div class="empty-state">
+          Բեռնում... ⏳
+        </div>
       </div>
     </div>
+  </section>
 
-    <div style="display:flex; gap:12px; justify-content:flex-end; margin-top:24px;">
-      <button id="btn-cancel" class="btn secondary" style="padding:10px 20px; border:1px solid #ddd; background:white; border-radius:8px; font-weight:600; cursor:pointer; transition:all 0.2s;" data-translate="product_types.modal.cancel">Չեղարկել</button>
-      <button id="btn-save" class="btn primary" style="padding:10px 24px; border:none; background:linear-gradient(135deg, #2d8a43 0%, #239438 100%); color:white; border-radius:8px; font-weight:600; cursor:pointer; transition:all 0.2s;" data-translate="product_types.modal.save">Պահպանել</button>
+  <!-- Modal for adding new product type -->
+  <div id="modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document">
+      <h2>🎄 Նոր տիպ ավելացնել</h2>
+      
+      <div class="form-row">
+        <label for="type">Տիպի կոդ:</label>
+        <input id="type" type="text" placeholder="օր. teacher, staff, custom" />
+      </div>
+
+      <div class="form-row">
+        <label for="title_hy">Վերնագիր (հայերեն):</label>
+        <input id="title_hy" type="text" placeholder="Օր. Ընկերոջ համար" />
+      </div>
+
+      <div class="form-row">
+        <label for="title_en">Վերնագիր (անգլերեն):</label>
+        <input id="title_en" type="text" placeholder="e.g. For a friend" />
+      </div>
+
+      <div class="form-row">
+        <label for="title_ru">Վերնագիր (ռուսերեն):</label>
+        <input id="title_ru" type="text" placeholder="напр. Для друга" />
+      </div>
+
+      <div class="form-row">
+        <label for="description_hy">Նկարագրություն (հայերեն):</label>
+        <textarea id="description_hy" placeholder="Կարճ նկարագրություն"></textarea>
+      </div>
+
+      <div class="form-row">
+        <label for="description_en">Նկարագրություն (անգլերեն):</label>
+        <textarea id="description_en" placeholder="Short description"></textarea>
+      </div>
+
+      <div class="form-row">
+        <label for="description_ru">Նկարագրություն (ռուսերեն):</label>
+        <textarea id="description_ru" placeholder="Краткое описание"></textarea>
+      </div>
+
+      <div class="form-row">
+        <label for="images">Պատկեր(ներ)</label>
+        <input id="images" type="text" placeholder="images/ornament1.jpg" />
+        <div class="muted">
+          Օգտագործեք relative path (օր. <code>images/ornament1.jpg</code>).
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<style>
-  input:focus, textarea:focus {
-    outline: none;
-    border-color: #2d8a43 !important;
-    box-shadow: 0 0 0 3px rgba(45, 138, 67, 0.1);
-  }
-  
-  .btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  }
-  
-  .btn.primary:hover {
-    background: linear-gradient(135deg, #239438 0%, #1a7a2d 100%) !important;
-  }
-  
-  .btn.secondary:hover {
-    background: #f8f9fa !important;
-    border-color: #ccc !important;
-  }
-</style>
-{% endblock %}
-
-{% block scripts %}
-{{ super() }}
-<script>
-  // Endpoint variables provided by Flask context
-  const API_LIST = "{{ API_LIST | default('/api/product-types') }}";
-  const API_ADD = "{{ API_ADD  | default('/api/product-types') }}";
-  const SHOP_URL = "{{ SHOP_URL | default('/shop') }}";
-  const IMAGE_PREFIX = "{{ IMAGE_PREFIX | default('') }}";
-
-  const modal = document.getElementById("modal");
-  const btnAdd = document.getElementById("btn-add");
-  const btnCancel = document.getElementById("btn-cancel");
-  const btnSave = document.getElementById("btn-save");
-  const btnRefresh = document.getElementById("btn-refresh");
-  const grid = document.getElementById("grid");
-
-  // Get current language from window or default to 'hy'
-  function getCurrentLang() {
-    return window.currentLanguage || 'hy';
-  }
-
-  function showModal(show) {
-    modal.style.display = show ? "flex" : "none";
-    modal.setAttribute("aria-hidden", show ? "false" : "true");
-  }
-
-  btnAdd && btnAdd.addEventListener("click", () => showModal(true));
-  btnCancel && btnCancel.addEventListener("click", () => showModal(false));
-
-  async function fetchAndRender() {
-    if (!grid) return;
-    grid.innerHTML = `<div style="text-align:center; padding:48px; color:#999; background:#f8f9fa; border-radius:16px;" data-translate="product_types.grid.loading">Բեռնում...</div>`;
-    try {
-      const res = await fetch(`${BASE_URL}${API_LIST}`);
-      if (!res.ok) throw new Error("Network error");
-      const arr = await res.json();
-      if (!arr || !arr.length) {
-        grid.innerHTML = `<div style="text-align:center; padding:48px; color:#999; background:#f8f9fa; border-radius:16px;" data-translate="product_types.grid.empty">Տեսակներ չեն գտնվել</div>`;
-        return;
-      }
-      grid.innerHTML = "";
-      const lang = getCurrentLang();
+  {% endblock %}
+  {% block scripts %}
+  <script>
+    // Snowflakes animation
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.classList.add('snowflake');
+      snowflake.textContent = ['❄️', '⛄', '🔶', '✨'][Math.floor(Math.random() * 4)];
+      snowflake.style.left = Math.random() * window.innerWidth + 'px';
+      snowflake.style.animation = `snowfall ${5 + Math.random() * 5}s linear forwards`;
+      snowflake.style.animationDelay = Math.random() * 2 + 's';
       
-      arr.forEach(pt => {
-        const card = document.createElement("article");
-        card.className = "card";
-        card.style = "background:white; border-radius:16px; box-shadow:0 2px 8px rgba(20,20,35,0.08); overflow:hidden; transition:all 0.3s ease; border:1px solid #f0f0f0;";
+      document.getElementById('snowflakes-container').appendChild(snowflake);
+      
+      setTimeout(() => snowflake.remove(), 12000);
+    }
 
-        const link = document.createElement("a");
-        link.className = "card-link";
-        link.href = `${BASE_URL}${SHOP_URL}?type=${encodeURIComponent(pt.type || pt.id)}`;
-        link.style = "text-decoration:none; color:inherit; display:flex; align-items:center; gap:20px; padding:20px; min-height:140px;";
+    setInterval(createSnowflake, 300);
 
-        const imgWrap = document.createElement("div");
-        imgWrap.className = "image-wrap";
-        imgWrap.style = "flex-shrink:0; width:140px; height:140px; background:linear-gradient(135deg,#f8f9fa,#e9ecef); display:flex; align-items:center; justify-content:center; overflow:hidden; border-radius:12px;";
+    // Create sparkles
+    function createSparkle(e) {
+      const sparkle = document.createElement('div');
+      sparkle.classList.add('sparkle');
+      sparkle.style.left = e.clientX + 'px';
+      sparkle.style.top = e.clientY + 'px';
+      sparkle.style.animationDelay = Math.random() * 0.5 + 's';
+      
+      document.body.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 2000);
+    }
 
-        const img = document.createElement("img");
-        const title = pt[`title_${lang}`] || pt.title_hy || pt.title || "";
-        img.alt = title;
-        let src = pt.image_url || null;
-        if (src) {
-          if (src.startsWith('http')) img.src = src;
-          else img.src = (BASE_URL + IMAGE_PREFIX || "") + src;
-        } else {
-          img.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='200'><rect width='100%' height='100%' fill='%23f8f9fa'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='14'>No image</text></svg>";
+    document.addEventListener('click', createSparkle);
+
+    // Endpoint variables
+    const API_LIST = "{{ API_LIST | default('/api/product-types') }}";
+    const API_ADD = "{{ API_ADD | default('/api/product-types') }}";
+    const SHOP_URL = "{{ SHOP_URL | default('/shop') }}";
+    const IMAGE_PREFIX = "{{ IMAGE_PREFIX | default('') }}";
+
+    const modal = document.getElementById("modal");
+    const grid = document.getElementById("grid");
+
+    function getCurrentLang() {
+      return window.currentLanguage || 'hy';
+    }
+
+    function showModal(show) {
+      modal.style.display = show ? "flex" : "none";
+      modal.setAttribute("aria-hidden", show ? "false" : "true");
+    }
+
+    async function fetchAndRender() {
+      if (!grid) return;
+      grid.innerHTML = `<div class="empty-state">Բեռնում... ⏳</div>`;
+      
+      try {
+        const res = await fetch(`${BASE_URL}${API_LIST}`);
+        if (!res.ok) throw new Error("Network error");
+        const arr = await res.json();
+        
+        if (!arr || !arr.length) {
+          grid.innerHTML = `<div class="empty-state">Տեսակներ չեն գտնվել 🎄</div>`;
+          return;
         }
-        img.style = "max-width:90%; max-height:90%; object-fit:contain; display:block;";
-        imgWrap.appendChild(img);
-
-        const body = document.createElement("div");
-        body.className = "card-body";
-        body.style = "flex:1; display:flex; flex-direction:column; gap:8px; min-width:0;";
-
-        const h = document.createElement("h3");
-        h.className = "card-title";
-        h.textContent = title;
-        h.style = "font-weight:700; font-size:18px; margin:0; color:#1a1a1a;";
-
-        const p = document.createElement("p");
-        p.className = "card-desc";
-        const description = pt[`description_${lang}`] || pt.description_hy || pt.description || "";
-        p.textContent = description;
-        p.style = "font-size:14px; color:#666; margin:0; line-height:1.5;";
-
-        const action = document.createElement("div");
-        action.className = "card-action";
-        action.style = "flex-shrink:0; display:flex; align-items:center; gap:8px; padding:12px 20px; background:linear-gradient(135deg, #2d8a43 0%, #239438 100%); border-radius:10px; color:white; font-weight:600; font-size:14px; transition:all 0.3s ease;";
         
-        const span = document.createElement("span");
-        span.textContent = window.t ? window.t('product_types.card.choose') : "Ընտրել";
+        grid.innerHTML = "";
+        const lang = getCurrentLang();
         
-        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        svg.setAttribute("width", "16");
-        svg.setAttribute("height", "16");
-        svg.setAttribute("viewBox", "0 0 16 16");
-        svg.setAttribute("fill", "none");
-        svg.style = "transition:transform 0.3s ease;";
-        
-        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        path.setAttribute("d", "M6 3L11 8L6 13");
-        path.setAttribute("stroke", "currentColor");
-        path.setAttribute("stroke-width", "2");
-        path.setAttribute("stroke-linecap", "round");
-        path.setAttribute("stroke-linejoin", "round");
-        
-        svg.appendChild(path);
-        action.appendChild(span);
-        action.appendChild(svg);
+        arr.forEach((pt, idx) => {
+          const card = document.createElement("article");
+          card.className = "card";
+          card.style.animationDelay = (idx * 0.1) + 's';
 
-        body.appendChild(h);
-        body.appendChild(p);
-        link.appendChild(imgWrap);
-        link.appendChild(body);
-        link.appendChild(action);
-        card.appendChild(link);
-        grid.appendChild(card);
-      });
-    } catch (err) {
-      grid.innerHTML = `<div style="text-align:center; padding:48px; color:#d00; background:#fff5f5; border-radius:16px; border:1px solid #ffdddd;" data-translate="product_types.grid.error">Չհաջողվեց բեռնել. փորձեք ուշ էլ։</div>`;
-      console.error(err);
-    }
-  }
+          const link = document.createElement("a");
+          link.className = "card-link";
+          link.href = `${BASE_URL}${SHOP_URL}?type=${encodeURIComponent(pt.type || pt.id)}`;
 
-  btnRefresh && btnRefresh.addEventListener("click", fetchAndRender);
+          const imgWrap = document.createElement("div");
+          imgWrap.className = "image-wrap";
 
-  const BASE_URL = (() => {
-    const path = window.location.pathname;
-    if (path.startsWith('/mandarin')) {
-      return '/mandarin';
-    }
-    return '';
-  })();
+          const img = document.createElement("img");
+          const title = pt[`title_${lang}`] || pt.title_hy || pt.title || "";
+          img.alt = title;
+          let src = pt.image_url || null;
+          if (src) {
+            img.src = src.startsWith('http') ? src : (BASE_URL + IMAGE_PREFIX || "") + src;
+          } else {
+            img.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='200'><rect width='100%' height='100%' fill='%23f8f9fa'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='%23999' font-size='14'>🎁</text></svg>";
+          }
+          imgWrap.appendChild(img);
 
-  // Save handler for modal
-  btnSave && btnSave.addEventListener("click", async () => {
-    const type = document.getElementById("type").value.trim();
-    const title_hy = document.getElementById("title_hy").value.trim();
-    const title_en = document.getElementById("title_en").value.trim();
-    const title_ru = document.getElementById("title_ru").value.trim();
-    const description_hy = document.getElementById("description_hy").value.trim();
-    const description_en = document.getElementById("description_en").value.trim();
-    const description_ru = document.getElementById("description_ru").value.trim();
-    const image = document.getElementById("images").value.trim();
-    
-    if (!type || !title_hy) {
-      alert(window.t ? window.t('product_types.validation.required') : "Խնդրում ենք լրացնել տիպի կոդը և հայերեն վերնագիրը");
-      return;
+          const body = document.createElement("div");
+          body.className = "card-body";
+
+          const h = document.createElement("h3");
+          h.className = "card-title";
+          h.textContent = title;
+
+          const p = document.createElement("p");
+          p.className = "card-desc";
+          const description = pt[`description_${lang}`] || pt.description_hy || pt.description || "";
+          p.textContent = description;
+
+          const action = document.createElement("div");
+          action.className = "card-action";
+          
+          const span = document.createElement("span");
+          span.textContent = window.t ? window.t('product_types.card.choose') : "Ընտրել";
+          
+          const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+          svg.setAttribute("width", "16");
+          svg.setAttribute("height", "16");
+          svg.setAttribute("viewBox", "0 0 16 16");
+          svg.setAttribute("fill", "none");
+          
+          const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          path.setAttribute("d", "M6 3L11 8L6 13");
+          path.setAttribute("stroke", "currentColor");
+          path.setAttribute("stroke-width", "2");
+          path.setAttribute("stroke-linecap", "round");
+          path.setAttribute("stroke-linejoin", "round");
+          
+          svg.appendChild(path);
+          action.appendChild(span);
+          action.appendChild(svg);
+
+          body.appendChild(h);
+          body.appendChild(p);
+          body.appendChild(action);
+          
+          link.appendChild(imgWrap);
+          link.appendChild(body);
+          card.appendChild(link);
+          grid.appendChild(card);
+        });
+      } catch (err) {
+        grid.innerHTML = `<div class="error-state">Չհաջողվեց բեռնել ❌</div>`;
+        console.error(err);
+      }
     }
-    
-    btnSave.disabled = true;
-    btnSave.textContent = window.t ? window.t('product_types.modal.saving') : "Պահպանվում...";
-    
-    try {
-      const payload = {
-        type,
-        title_hy,
-        title_en,
-        title_ru,
-        description_hy,
-        description_en,
-        description_ru,
-        image_url: image
-      };
-      
-      const res = await fetch(`${BASE_URL}${API_ADD}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-      
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Սխալ է");
-      
-      // Clear form
-      document.getElementById("type").value = "";
-      document.getElementById("title_hy").value = "";
-      document.getElementById("title_en").value = "";
-      document.getElementById("title_ru").value = "";
-      document.getElementById("description_hy").value = "";
-      document.getElementById("description_en").value = "";
-      document.getElementById("description_ru").value = "";
-      document.getElementById("images").value = "";
-      
-      showModal(false);
-      fetchAndRender();
-    } catch (err) {
-      const errorMessage = window.t ? window.t('product_types.error.save', { message: err.message || "unknown" }) : "Սխալ՝ " + (err.message || "unknown");
-      alert(errorMessage);
-      console.error(err);
-    } finally {
-      btnSave.disabled = false;
-      btnSave.textContent = window.t ? window.t('product_types.modal.save') : "Պահպանել";
-    }
-  });
+
+    const BASE_URL = (() => {
+      const path = window.location.pathname;
+      return path.startsWith('/mandarin') ? '/mandarin' : '';
+    })();
 
   document.addEventListener("DOMContentLoaded", fetchAndRender);
 

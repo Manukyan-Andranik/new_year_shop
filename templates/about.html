@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
+  <!-- Snowflakes container -->
+  <div id="snowflakes-container"></div>
 <div class="about-container">
     <!-- Hero Section -->
     <section class="about-hero">
@@ -14,7 +16,48 @@
             </div>
         </div>
     </section>
+    <style>
+            /* Snowflakes animation */
+    @keyframes snowfall {
+      0% {
+        transform: translateY(-10vh) translateX(0);
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) translateX(100px);
+        opacity: 0;
+      }
+    }
 
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    .snowflake {
+      position: fixed;
+      top: -10vh;
+      color: white;
+      font-size: 1.5em;
+      opacity: 0.8;
+      pointer-events: none;
+      z-index: 1;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: twinkle 2s infinite;
+    }
+    </style>
     <!-- Our Story Section -->
     <section class="story-section">
         <div class="story-content">
@@ -258,5 +301,20 @@
             console.log('Language changed on About page');
         });
     });
+        // Snowflakes animation
+        function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.classList.add('snowflake');
+      snowflake.textContent = ['❄️', '⛄', '🔶', '✨'][Math.floor(Math.random() * 4)];
+      snowflake.style.left = Math.random() * window.innerWidth + 'px';
+      snowflake.style.animation = `snowfall ${5 + Math.random() * 5}s linear forwards`;
+      snowflake.style.animationDelay = Math.random() * 2 + 's';
+      
+      document.getElementById('snowflakes-container').appendChild(snowflake);
+      
+      setTimeout(() => snowflake.remove(), 12000);
+    }
+
+    setInterval(createSnowflake, 300);
 </script>
 {% endblock %}
