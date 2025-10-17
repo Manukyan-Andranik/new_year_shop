@@ -106,19 +106,18 @@ def set_search_path(dbapi_connection, connection_record):
 # ===============================
 # Routes
 # ===============================
-@app.route('/')
+@app.route("/", methods=["GET"])
 def home():
-    return redirect(url_for('product_types_page'))
-
-@app.route('/test')
-def test():
-    return jsonify({
-        'message': 'API is working', 
-        'base_url': BASE_URL,
-        'request_path': request.path,
-        'request_url': request.url
-    })
-    
+    print("Rendering product types page")
+    items = ProductTypesSamples().get_all()
+    return render_template(
+        "product_types.html",
+        PRODUCT_TYPES=[p for p in items],
+        SHOP_URL="/shop",
+        API_LIST="/api/product-types",
+        API_ADD="/api/product-types",
+        IMAGE_PREFIX="/static/"
+    )
 
 @app.route('/about')
 def about():
@@ -141,20 +140,6 @@ def shop():
         product_type = 'all'
     print(f"Rendering shop page for type: {product_type}")
     return render_template('shop.html', product_type=product_type)
-
-
-@app.route("/product-types", methods=["GET"])
-def product_types_page():
-    print("Rendering product types page")
-    items = ProductTypesSamples().get_all()
-    return render_template(
-        "product_types.html",
-        PRODUCT_TYPES=[p for p in items],
-        SHOP_URL="/shop",
-        API_LIST="/api/product-types",
-        API_ADD="/api/product-types",
-        IMAGE_PREFIX="/static/"
-    )
 
 
 @app.route("/api/product-types", methods=["GET"])
