@@ -49,6 +49,8 @@ SMTP_PASS = os.getenv('SMTP_PASS')
 EMAIL_FROM = os.getenv('EMAIL_FROM', SMTP_USER or f'no-reply@{os.getenv("MAIL_DOMAIN","localhost")}')
 ADMIN_NOTIFICATION_EMAIL = os.getenv('ADMIN_NOTIFICATION_EMAIL')
 
+BASE_PREFIX = os.getenv("BASE_PREFIX", "https://logiclab.am/mandarin/")
+
 # App Config
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'christmas-shop-secret-key-2023')
 app.config['SQLALCHEMY_DATABASE_URI'] = (os.getenv('SQLALCHEMY_DATABASE_URI') or f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}") 
@@ -110,13 +112,17 @@ def set_search_path(dbapi_connection, connection_record):
 def home():
     print("Rendering product types page")
     items = ProductTypesSamples().get_all()
+    print(        
+        f"{BASE_URL}/api/product-types",
+        f"{BASE_URL}/api/product-types",
+        f"{BASE_URL}/static/")
     return render_template(
         "home.html",
         PRODUCT_TYPES=[p for p in items],
         SHOP_URL="/shop",
-        API_LIST="/mandarin/api/product-types",
-        API_ADD="mandarin/api/product-types",
-        IMAGE_PREFIX="/mandarin/static/"
+        API_LIST=f"{BASE_URL}/api/product-types",
+        API_ADD=f"{BASE_URL}/api/product-types",
+        IMAGE_PREFIX=f"{BASE_URL}/static/"
     )
 
 @app.route('/about')
@@ -139,7 +145,7 @@ def shop():
     else:
         product_type = 'all'
     print(f"Rendering shop page for type: {product_type}")
-    return render_template('shop.html', product_type=product_type)
+    return render_template('shop.html', product_type=product_type, BASE_PREFIX=BASE_PREFIX)
 
 
 @app.route("/api/product-types", methods=["GET"])
@@ -172,7 +178,7 @@ def get_products():
     if not products:
         return jsonify([])
 
-    result = [prefix_image_urls(product.to_dict(language)) for product in products]
+    result = [product.to_dict(language) for product in products]
     return jsonify(result)
 
 # ===============================
@@ -238,7 +244,6 @@ def product_detail(product_id):
 # ===============================
 def prefix_image_urls(product_data):
     """Prefix relative image URLs with site domain"""
-    BASE_PREFIX = os.getenv("BASE_PREFIX", "https://logiclab.am/mandarin/")
     
     images = product_data.get("images_url_list", [])
     product_data["images_url_list"] = [
@@ -388,7 +393,21 @@ def admin_dashboard():
 @app.route('/admin/orders')
 @login_required
 def admin_orders():
-    return render_template('admin/orders.html')
+    return render_template('admin/orders.html', BASE_PREFIX=BASE_PREFIX)
+
+
+@app.route('/api/admin/orders', methods=['GET'])
+@login_required
+def get_orders():
+    query = Order.query.order_by(Order.created_at.desc())
+    orders = query.all()
+    
+    if not orders:
+        return jsonify([])
+
+    result = [order.to_dict() for order in orders]
+    print(result[0])
+    return jsonify(result)
 
 
 @app.route('/.well-known/appspecific/com.chrome.devtools.json')

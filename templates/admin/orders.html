@@ -252,7 +252,7 @@
                         ${order.items.map(item => `
                         <div class="order-item">
                             <div class="item-info">
-                                <img class="product-image" src="${item.image}" alt="${item.name}">
+                                <img class="product-image" src="{{BASE_PREFIX}}${item.image}" alt="${item.name}">
                                 <span class="item-name">${item.name} x${item.qty}</span>
                             </div>
                             <span class="item-price">$${(item.price * item.qty).toFixed(2)}</span>
@@ -287,8 +287,6 @@
             }
         }
     </script>
-    
-    <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
 </body>
 
 </html>

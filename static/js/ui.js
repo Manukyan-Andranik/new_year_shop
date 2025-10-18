@@ -191,7 +191,7 @@ function initCategoryFilter() {
             card.setAttribute('draggable', 'true');
             card.innerHTML = `
                 <div class="card-top">
-                    <img src="${product.images_url_list[0]}" alt="${product.name}" class="product-image" draggable="false">
+                    <img src="{{BASE_PREFIX}}${product.images_url_list[0]}" alt="${product.name}" class="product-image" draggable="false">
                     <div class="product-info">
                         <div class="product-name">${product.name}</div>
                         <div class="product-price">${product.price}  ֏</div>
