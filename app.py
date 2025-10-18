@@ -112,17 +112,15 @@ def set_search_path(dbapi_connection, connection_record):
 def home():
     print("Rendering product types page")
     items = ProductTypesSamples().get_all()
-    print(        
-        f"{BASE_URL}/api/product-types",
-        f"{BASE_URL}/api/product-types",
-        f"{BASE_URL}/static/")
+
     return render_template(
         "home.html",
         PRODUCT_TYPES=[p for p in items],
         SHOP_URL="/shop",
         API_LIST=f"{BASE_URL}/api/product-types",
         API_ADD=f"{BASE_URL}/api/product-types",
-        IMAGE_PREFIX=f"{BASE_URL}/static/"
+        IMAGE_PREFIX=f"{BASE_URL}/static/",
+        BASE_PREFIX=BASE_PREFIX
     )
 
 @app.route('/about')
