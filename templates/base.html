@@ -1,96 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-    {% include 'components/header.html' %}
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
-    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Christmas Magic{% endblock %}</title>
+
     <!-- Web Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="{% block description %}Discover magical Christmas tree decorations and toys. Bring holiday cheer to your home with our beautiful collection.{% endblock %}">
-    <meta name="keywords" content="christmas decorations, tree toys, holiday, ornaments, christmas shop">
-    
-    <!-- OG Tags -->
+
+    <!-- SEO/OG Meta -->
+    <meta name="description" content="{% block description %}Discover magical Christmas tree decorations and toys.{% endblock %}">
     <meta property="og:title" content="{% block og_title %}Christmas Magic Shop{% endblock %}">
-    <meta property="og:description" content="{% block og_description %}Beautiful Christmas tree decorations and toys{% endblock %}">
-    <meta property="og:type" content="website">
-    
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 
     <style>
-        /* ===== Loading Overlay Styles ===== */
-        #loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #fff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease, visibility 0.5s ease;
-        }
-
-        #loading-overlay.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .spinner {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid #e74c3c;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1s linear infinite;
-            margin-bottom: 16px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        #loading-text {
-            font-family: 'Cinzel', serif;
-            color: #e74c3c;
-            font-size: 1.2rem;
-            letter-spacing: 1px;
-        }
+        /* Loading overlay */
+        #loading-overlay { position: fixed; inset: 0; background: #fff; display:flex;align-items:center;justify-content:center; z-index:9999; transition: opacity .4s, visibility .4s; }
+        #loading-overlay.hidden { opacity:0; visibility:hidden; }
+        .spinner { border:5px solid #f3f3f3; border-top:5px solid #e74c3c; border-radius:50%; width:48px; height:48px; animation: spin 1s linear infinite; margin-bottom:12px;}
+        @keyframes spin { to { transform: rotate(360deg);} }
     </style>
 </head>
 <body>
+    <!-- include header here (inside body) -->
+    {% include 'components/header.html' %}
 
     <!-- Loading Overlay -->
     <div id="loading-overlay">
-        <div class="spinner"></div>
-        <div id="loading-text">Loading Christmas Magic...</div>
+        <div style="text-align:center">
+            <div class="spinner"></div>
+            <div id="loading-text" style="font-family:'Cinzel', serif; color:#e74c3c;">Loading Christmas Magic...</div>
+        </div>
     </div>
 
-    <!-- Main Site Content -->
+    <!-- Main content -->
     <main id="main-content" style="opacity: 0;">
         {% block content %}{% endblock %}
     </main>
-    
+
     {% include 'components/footer.html' %}
-    
+
     {% block scripts %}{% endblock %}
 
+    <!-- translation script (if you rely on it) -->
     <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
 
+    <!-- Hamburger / Nav script (must run after header is in DOM) -->
     <script>
-        // Hide loading overlay when page finishes loading
+    (function () {
+        // Run after DOM is ready
+        function ready(fn) {
+            if (document.readyState !== 'loading') fn();
+            else document.addEventListener('DOMContentLoaded', fn);
+        }
+
+        ready(function () {
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('nav-links');
+
+            if (!hamburger || !navLinks) {
+                // Debug info if something went wrong
+                console.warn('Hamburger or nav-links not found in DOM.');
+                return;
+            }
+
+            function openMenu() {
+                navLinks.classList.add('active');
+                hamburger.classList.add('active');
+                hamburger.setAttribute('aria-expanded', 'true');
+                // disable page scroll when menu open
+                document.documentElement.style.overflow = 'hidden';
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeMenu() {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false');
+                document.documentElement.style.overflow = '';
+                document.body.style.overflow = '';
+            }
+
+            hamburger.addEventListener('click', function (e) {
+                const isOpen = navLinks.classList.contains('active');
+                if (isOpen) closeMenu(); else openMenu();
+            });
+
+            // Close when clicking any nav link (mobile)
+            navLinks.querySelectorAll('a').forEach(a => {
+                a.addEventListener('click', function () {
+                    // only close if menu is visible (mobile)
+                    if (navLinks.classList.contains('active')) closeMenu();
+                });
+            });
+
+            // Close on Escape key
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+                    closeMenu();
+                }
+            });
+
+            // Optional: close when clicking outside menu on mobile
+            document.addEventListener('click', function (e) {
+                if (!navLinks.classList.contains('active')) return;
+                const clickInside = navLinks.contains(e.target) || hamburger.contains(e.target);
+                if (!clickInside) closeMenu();
+            });
+        });
+    })();
+    </script>
+
+    <!-- Loading overlay hide -->
+    <script>
         window.addEventListener('load', function() {
             const overlay = document.getElementById('loading-overlay');
             const mainContent = document.getElementById('main-content');
             overlay.classList.add('hidden');
-            mainContent.style.transition = 'opacity 0.8s ease';
+            mainContent.style.transition = 'opacity 0.6s ease';
             mainContent.style.opacity = 1;
         });
     </script>

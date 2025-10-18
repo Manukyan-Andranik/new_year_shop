@@ -17,7 +17,7 @@ const translations = {
         'catalog.title': '🎁 Toy Catalog',
         'category.all': 'All Toys',
         'category.small': 'Small',
-        'category.big': 'Big',
+        'category.large': 'Large',
         'category.business': 'For Business',
         'checkout.button': 'Send to Santa',
         'checkout.disabled': 'Proceed to checkout',
@@ -234,7 +234,7 @@ const translations = {
         'catalog.title': '🎁 Խաղալիքների Կատալոգ',
         'category.all': 'Բոլոր Խաղալիքները',
         'category.small': 'Փոքր',
-        'category.big': 'Մեծ',
+        'category.large': 'Մեծ',
         'category.business': 'Բիզնեսի համար',
         'checkout.button': 'Ուղարկել Սանտային',
         'checkout.disabled': 'Անցնել պատվերի',
@@ -454,7 +454,7 @@ const translations = {
         'catalog.title': '🎁 Каталог Игрушек',
         'category.all': 'Все Игрушки',
         'category.small': 'Маленькие',
-        'category.big': 'Большие',
+        'category.large': 'Большие',
         'category.business': 'Для Бизнеса',
         'cert.badge': 'игрушек на дереве',
         'checkout.button': 'Отправить Санте',
@@ -738,7 +738,7 @@ class TranslationManager {
 
         const style = document.createElement('style');
         style.textContent = `
-            .language-switcher { position: fixed; top: 20px; right: 20px; z-index: 1000;
+            .language-switcher {  top: 20px; right: 20px; z-index: 1000;
                 background: rgba(255,255,255,0.9); padding: 5px 10px; border-radius: 20px;
                 box-shadow: 0 4px 12px rgba(0,0,0,0.15); backdrop-filter: blur(8px); }
             .lang-btn { border: none; background: transparent; cursor: pointer;
@@ -753,7 +753,8 @@ class TranslationManager {
             .lang-menu.show { display: block; }
         `;
         document.head.appendChild(style);
-        document.body.appendChild(switcher);
+        document.getElementById('language-container').appendChild(switcher);
+
 
         const currentBtn = switcher.querySelector('#current-lang');
         const menu = switcher.querySelector('#lang-menu');

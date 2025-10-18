@@ -111,7 +111,7 @@ def home():
     print("Rendering product types page")
     items = ProductTypesSamples().get_all()
     return render_template(
-        "product_types.html",
+        "home.html",
         PRODUCT_TYPES=[p for p in items],
         SHOP_URL="/shop",
         API_LIST="/api/product-types",
@@ -126,7 +126,7 @@ def about():
 @app.route('/toys/<category>', methods=['GET'])
 def get_toys_by_category_endpoint(category):
     category = category.replace('-', '_').lower()
-    if category not in ['all', 'small', 'big', 'for_business']:
+    if category not in ['all', 'small', 'large', 'for_business']:
         return jsonify({'error': 'Invalid category'}), 400
     toys = get_toys_by_category(category)
     return jsonify(toys)
@@ -206,7 +206,7 @@ def create_santa_order():
                 f"Dear {customer_name},\n\n"
                 f"Thank you for your letter to Santa!\n"
                 f"Your order reference: {order_id}\nTotal items: {len(items)}\n"
-                f"Estimated value: ${total:.2f}\n\nMerry Christmas!\nSanta's Workshop"
+                f"Estimated value:  ֏{total:.2f}\n\nMerry Christmas!\nSanta's Workshop"
             )
             send_email(email, subject, body)
 
@@ -325,12 +325,12 @@ def create_order():
         db.session.commit()
 
         total = sum([(float(it.get('price', 0)) * int(it.get('qty', 1))) for it in items])
-        items_text = "\n".join([f"- {it.get('name')} x{int(it.get('qty',1))} @ ${float(it.get('price',0)):.2f}" for it in items])
+        items_text = "\n".join([f"- {it.get('name')} x{int(it.get('qty',1))} @  ֏{float(it.get('price',0)):.2f}" for it in items])
 
         subject_user = "Your Santa Order Confirmation"
         body_user = (
             f"Hi {customer_name},\n\nThanks for your order!\n\nOrder summary:\n{items_text}\n\n"
-            f"Total: ${total:.2f}\n\nWe will contact you at {phone} or {email} if needed.\n\n"
+            f"Total:  ֏{total:.2f}\n\nWe will contact you at {phone} or {email} if needed.\n\n"
             "Happy holidays!\nSanta's Workshop\n"
         )
 
@@ -340,7 +340,7 @@ def create_order():
             subject_admin = f"New Order #{order.id} from {customer_name}"
             body_admin = (
                 f"Order ID: {order.id}\nCustomer: {customer_name}\nEmail: {email}\nPhone: {phone}\n\n"
-                f"Items:\n{items_text}\n\nTotal: ${total:.2f}\n\nComment: {comment}\nCreated at: {order.created_at.isoformat()}Z"
+                f"Items:\n{items_text}\n\nTotal:  ֏{total:.2f}\n\nComment: {comment}\nCreated at: {order.created_at.isoformat()}Z"
             )
             send_email(ADMIN_NOTIFICATION_EMAIL, subject_admin, body_admin)
 
@@ -391,6 +391,11 @@ def admin_orders():
     return render_template('admin/orders.html')
 
 
+@app.route('/.well-known/appspecific/com.chrome.devtools.json')
+def ignore_devtools_probe():
+    return '', 204  # 204 = No Content
+
+
 # ===============================
 # Development Init
 # ===============================
@@ -401,4 +406,4 @@ def _init_for_dev():
 
 if __name__ == '__main__':
     _init_for_dev()
-    app.run(host='0.0.0.0', port=int(os.getenv('PORT', 5001)), debug=(os.getenv('FLASK_ENV') == 'development'))
+    app.run(host='0.0.0.0', port=int(os.getenv('PORT', 5002)), debug=(os.getenv('FLASK_ENV') == 'development'))

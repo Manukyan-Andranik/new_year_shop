@@ -32,7 +32,11 @@ const dom = {
     galleryNext: document.getElementById('gallery-next'),
     modalTitle: document.getElementById('product-modal-title'),
     modalPrice: document.getElementById('product-modal-price'),
+    modalShape: document.getElementById('product-modal-shape'),
+
     modalDesc: document.getElementById('product-modal-description'),
+    modalPublicDesc: document.getElementById('product-modal-public-description'),
+
     modalSpecs: document.getElementById('product-modal-specs'),
     modalAddBtn: document.getElementById('modal-add-btn'),
     modalClose: document.getElementById('modal-close'),
@@ -288,7 +292,7 @@ function animateToyToTree(product, sourceElement) {
     const rect = sourceElement.getBoundingClientRect();
     const canvasRect = sceneFunctions.renderer.domElement.getBoundingClientRect();
     const flyingToy = document.createElement('img');
-    flyingToy.src = product.images_url_list[0];
+    flyingToy.src = product.images_url_list[1];
     flyingToy.style.cssText = `position:fixed; left:${rect.left}px; top:${rect.top}px; width:${rect.width * 0.5}px; height:${rect.height * 0.5}px; z-index:1000; pointer-events:none; border-radius:8px;`;
     document.body.appendChild(flyingToy);
 
@@ -368,7 +372,7 @@ function renderOrderModal() {
               <img src="${item.image}" alt="${item.name}" style="width:40px;height:40px;object-fit:contain">
               <div>
                   <div>${item.name}</div>
-                  <div style="font-size:13px;">$${item.price.toFixed(2)}</div>
+                  <div style="font-size:13px;">${item.price.toFixed(2)} ֏</div>
               </div>
             </div>
             <div class="qty-controls">
@@ -418,7 +422,7 @@ function setQuantity(productId, newQty) {
 
 function updateModalTotals() {
     const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-    dom.paperTotal.textContent = '$' + total.toFixed(2);
+    dom.paperTotal.textContent = total.toFixed(2) + ' ֏';
     updateCartUI();
 }
 
@@ -470,13 +474,10 @@ function openProductModal(product) {
     currentImageIndex = 0;
     dom.productModal.style.display = 'flex';
     dom.modalTitle.textContent = product.name;
-    dom.modalPrice.textContent = '$' + product.price.toFixed(2);
+    dom.modalPrice.textContent = product.price.toFixed(2) + ' ֏';
+    dom.modalShape.textContent = product.shape || '';
     dom.modalDesc.textContent = product.description || '';
-    dom.modalSpecs.innerHTML = '';
-    if (product.details) {
-        dom.modalSpecs.innerHTML = Object.entries(product.details)
-            .map(([k, v]) => `<div><strong>${k}:</strong> ${v}</div>`).join('');
-    }
+    dom.modalPublicDesc.textContent = product.public_description || '';
 
     const imgs = product.images_url_list;
     dom.galleryThumbs.innerHTML = imgs.map((src, i) => `<img src="${src}" alt="${product.name} thumbnail ${i+1}" data-index="${i}">`).join('');

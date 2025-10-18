@@ -2,15 +2,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from datetime import datetime, timezone
 import json
+import random
 
 db = SQLAlchemy()
 
-
-
-
 class Product(db.Model):
     __tablename__ = 'products'
-    # __table_args__ = {'schema': 'newyear_shop_schema'}
+    __table_args__ = {'schema': 'newyear_shop_schema'}
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False, index=True)
@@ -35,6 +33,7 @@ class Product(db.Model):
     description_hy = db.Column(db.Text)
     description_ru = db.Column(db.Text)
 
+    
     def __repr__(self):
         return f'<Product {self.name}>'
 
@@ -46,11 +45,14 @@ class Product(db.Model):
         return getattr(self, f"{field_base}_en", None) or getattr(self, field_base, "")
 
     def to_dict(self, lang='en'):
+        public_desc = self.get_public_description(self.category)
         return {
             'id': self.id,
             'name': self.get_translated('name', lang),
             'price': float(self.price) if self.price else 0.0,
             'description': self.get_translated('description', lang),
+            'public_description': public_desc.get(lang),
+            'shape': public_desc["shape"].get(lang) or "shape",
             'images_url_list': json.loads(self.images_url_list) if self.images_url_list else [],
             'category': self.category,
             'type': self.type,
@@ -59,9 +61,112 @@ class Product(db.Model):
             'updated_at': self.updated_at.isoformat() if self.updated_at else None,
         }
 
+    def get_public_description(self, category):
+        public_descriptions = {
+            "small": {
+                "hy": {
+                    "shape": "(45–55 մմ)",
+                    1: """Փոքրիկ չափս, բայց մեծ զգացողություն 🌟  
+    Այս խաղալիքները ձեռագործ արվեստի լավագույն օրինակն են՝ յուրաքանչյուրը ստեղծված սիրով ու համբերությամբ։ Նկարված են բարձրորակ ներկերով, փայլուն և տոնական գույներով, իսկ փայտը հատուկ մշակվել է՝ պահելով իր բնական հմայքը։ 🎨  
+    45–55 մմ չափսով այս փոքրիկ հրաշքները կատարյալ են՝ որպես նուրբ ծառի զարդ կամ նվերի հետ անակնկալ հավելում 🎁։""",
+                    2: """Չափերով փոքր, բայց կախարդանքով մեծ 🎄  
+    Այս փայտե ձեռագործ խաղալիքները լցնում են տարածքը ուրախությամբ և ջերմությամբ։ Բարձրորակ ներկերը ապահովում են երկար կյանք և գունային կայունություն 🌈։  
+    Նրանք դառնում են քո տոնի փոքրիկ մոգական շեշտադրումը՝ բերելով ժպիտ ու լույս ✨։""",
+                    3: """Այս փոքրիկ խաղալիքներն ստեղծվել են սիրով, հավատով ու բարի մաղթանքներով ❤️  
+    Յուրաքանչյուր խաղալիք ունի իր պատմությունը՝ փայտից ծնված ու ներկերից զարդարված։ Բարձրորակ նյութերն ապահովում են տարիների գեղեցկություն 🌟։  
+    Տոնի ամենափոքր, բայց ամենաթանկ հերոսները հենց այս փոքրիկներն են 💖🎅։"""
+                },
+                "ru": {
+                    "shape": "(45–55 мм)",
+                    1: """Маленький размер — большое волшебство 🌟  
+    Эти игрушки — пример лучшего ручного мастерства, созданные с любовью и терпением. Они расписаны качественными красками, сияющими праздничными оттенками, а дерево бережно обработано, сохранив свою природную красоту 🌲.  
+    Размер 45–55 мм делает их идеальным украшением для елки или милым дополнением к подарку 🎁.""",
+                    2: """Небольшие, но полные волшебства 🎄  
+    Эти деревянные игрушки наполняют дом радостью и теплом. Яркие, стойкие краски сохраняют свои цвета на долгие годы 🌈.  
+    Пусть каждая игрушка станет маленьким акцентом праздника — источником света и улыбок ✨.""",
+                    3: """Созданные с любовью и добрыми пожеланиями ❤️  
+    Каждая игрушка — это история, рожденная из дерева и раскрашенная вручную 🎨.  
+    Они маленькие герои большого праздника — самые трогательные и ценные сувениры 💖🎅."""
+                },
+                "en": {
+                    "shape": "(45–55 mm)",
+                    1: """Small in size, big in feeling 🌟  
+    These ornaments are masterpieces of handcraft — each made with love and patience. Painted with premium colors and festive sparkle, the wood is carefully treated to preserve its natural charm 🌲.  
+    At 45–55 mm, these little wonders are perfect as delicate tree decor or a charming gift addition 🎁.""",
+                    2: """Tiny but full of magic 🎄  
+    These handmade wooden ornaments fill your home with joy and warmth. Long-lasting, vibrant colors ensure beauty for years to come 🌈.  
+    Each one becomes a little highlight of your holiday — spreading smiles and light ✨.""",
+                    3: """Made with love, faith, and warm wishes ❤️  
+    Every piece tells its own story — born from wood, painted by hand, and glowing with festive spirit 🎨.  
+    They are the smallest yet most precious heroes of the holiday season 💖🎅."""
+                }
+            },
+
+            "large": {
+                "hy": {
+                    "shape": "(55–70 մմ)",
+                    1: """Այս խաղալիքները մեծ են ոչ միայն չափով, այլև իրենց տոնական ոգով ✨  
+    55–70 մմ տրամաչափով խաղալիքները դառնում են տոնածառի գլխավոր զարդը՝ գրավելով ուշադրություն փայլով ու ձեռքի աշխատանքի նրբությամբ 🌟։  
+    Փայտը բարձրորակ է, խնամքով մշակված՝ ապահովելով ամրություն և գեղեցկություն։ Ներկված են ոչ թունավոր, երկարատև ներկերով՝ պահպանելով իրենց տեսքը տարիներ շարունակ 🎨.""",
+                    2: """Մեր մեծ խաղալիքները համադրում են դասական ձևը և ժամանակակից վարպետությունը 🎁  
+    Յուրաքանչյուր խաղալիք պատրաստվում է ձեռքով՝ փայլուն և ջերմ գույներով։ Նրանք ոչ միայն ծառի զարդ են, այլև փոքր արվեստի գործ՝ լի տոնական էներգիայով ✨։  
+    55–70 մմ չափսի խաղալիքը դառնում է կենտրոնական տարր՝ ինչպես ծառի, այնպես էլ տան դեկորի համար 🎄.""",
+                    3: """55–70 մմ տրամաչափով խաղալիքները մարմնավորում են ձմեռային հրաշքի ամբողջ կախարդանքը ❄️  
+    Ձեռագործ, յուրահատուկ և հիշեցում տան ջերմության մասին 💫։  
+    Բարձրորակ ներկերն ու փայտի նուրբ մշակումը դարձնում են դրանք հիասքանչ արվեստի նմուշներ՝ պատրաստված հատուկ քո տոնի համար 🎅."""
+                },
+                "ru": {
+                    "shape": "(55–70 мм)",
+                    1: """Эти игрушки велики не только размером, но и праздничным духом ✨  
+    Игрушки диаметром 55–70 мм становятся главным украшением елки, сияя блеском ручной работы 🌟.  
+    Качественное дерево и нетоксичные краски обеспечивают долговечность и естественную красоту 🎨.""",
+                    2: """Наши большие игрушки сочетают классику и современное мастерство 🎁  
+    Каждая игрушка создается вручную, покрытая яркими и теплыми красками.  
+    Они не просто украшения, а настоящие произведения искусства, наполненные праздничной энергией ✨.  
+    Размер 55–70 мм делает их центральным элементом вашего декора 🎄.""",
+                    3: """Игрушки диаметром 55–70 мм воплощают всю магию зимнего чуда ❄️  
+    Ручная работа, уникальность и тепло домашнего уюта 💫.  
+    Благодаря качественным материалам и тонкой отделке они становятся настоящими шедеврами, созданными специально для вашего праздника 🎅."""
+                },
+                "en": {
+                    "shape": "(55–70 mm)",
+                    1: """These ornaments are grand not only in size but also in festive spirit ✨  
+    At 55–70 mm, they become the centerpiece of your Christmas tree — shining with handcrafted detail and warmth 🌟.  
+    Made from high-quality wood and painted with long-lasting, non-toxic colors, they stay beautiful for many holidays to come 🎨.""",
+                    2: """Our large ornaments combine classic design with modern craftsmanship 🎁  
+    Each one is handmade and painted in warm, vibrant tones — a true work of art filled with festive energy ✨.  
+    The 55–70 mm size makes them the perfect centerpiece for your tree or home décor 🎄.""",
+                    3: """At 55–70 mm, these ornaments capture the full magic of the winter season ❄️  
+    Handcrafted, unique, and full of warmth 💫.  
+    Premium materials and fine detailing make them timeless art pieces — created especially for your celebration 🎅."""
+                }
+            }
+        }
+
+        # Pick random variant (1, 2, or 3)
+        idx = random.randint(1, 3)
+        descs = public_descriptions.get(category)
+
+        if not descs:
+            raise ValueError(f"Unknown category: {category}")
+
+        public_desc = {
+            "hy": descs["hy"].get(idx),
+            "ru": descs["ru"].get(idx),
+            "en": descs["en"].get(idx),
+            "shape": {
+                "hy": descs["hy"]["shape"],
+                "ru": descs["ru"]["shape"],
+                "en": descs["en"]["shape"]
+            }
+        }
+
+        return public_desc
+
+
 class Order(db.Model):
     __tablename__ = 'orders'
-    # __table_args__ = {'schema': 'newyear_shop_schema'}
+    __table_args__ = {'schema': 'newyear_shop_schema'}
 
     id = db.Column(db.Integer, primary_key=True)
     customer_name = db.Column(db.String(200), nullable=False, index=True)
@@ -94,7 +199,7 @@ class Order(db.Model):
 
 class AdminUser(UserMixin, db.Model):
     __tablename__ = 'admin_users'
-    # __table_args__ = {'schema': 'newyear_shop_schema'}
+    __table_args__ = {'schema': 'newyear_shop_schema'}
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False, index=True)
@@ -106,7 +211,7 @@ class AdminUser(UserMixin, db.Model):
 
 class ProductType(db.Model):
     __tablename__ = "product_types"
-    # __table_args__ = {'schema': 'newyear_shop_schema'}
+    __table_args__ = {'schema': 'newyear_shop_schema'}
 
     id = db.Column(db.Integer, primary_key=True)
     type = db.Column(db.String(50), nullable=False, unique=True, index=True)
@@ -153,7 +258,6 @@ class ProductType(db.Model):
 
     def __repr__(self):
         return f"<ProductType {self.title}>"
-
 
 class ProductTypesSamples:
     def __init__(self):

@@ -88,6 +88,7 @@
      MAIN LAYOUT
      ================================ */
   .app-container {
+    margin-top: 64px;
     display: flex;
     height: 100vh;
     position: relative;
@@ -113,19 +114,19 @@
   /* ================================
      CATALOG PANEL
      ================================ */
-  #catalog-panel {
-    width: 40%;
-    background: var(--glass);
-    backdrop-filter: blur(8px) saturate(1.05);
-    padding: 22px;
-    overflow-y: auto;
-    box-shadow: 4px 0 30px rgba(0, 20, 40, 0.1);
-    z-index: 10;
-    border-right: 1px solid rgba(255, 255, 255, 0.4);
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
+     #catalog-panel {
+      width: 40%;
+      background: var(--glass);
+      backdrop-filter: blur(8px) saturate(1.05);
+      padding: 22px;
+      overflow-y: auto;
+      box-shadow: 4px 0 30px rgba(0, 20, 40, 0.1);
+      z-index: 10;
+      border-right: 1px solid rgba(255, 255, 255, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
   
   /* ================================
      CATEGORY HEADER + TREE BADGE
@@ -239,8 +240,8 @@
   
   /* Product Image - scaled for small column width */
   .product-image {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     object-fit: contain;
     border-radius: 10px;
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 1));
@@ -624,7 +625,7 @@
   }
   
   #product-modal-description {
-    font-size: 14px;
+    font-size: 17px;
     color: #444;
     line-height: 1.5;
     margin-top: 6px;
@@ -708,16 +709,7 @@
     background-image: linear-gradient(to bottom, #fffaf0 0%, #fff7e1 100%);
     border-style: dashed;
   }
-  
-  .paper-card::before {
-    content: "🎄";
-    position: absolute;
-    top: -14px;
-    right: 16px;
-    font-size: 22px;
-    color: #b83232;
-    animation: sparkle 2s infinite ease-in-out;
-  }
+
   
   @keyframes sparkle {
     0%, 100% { opacity: 0.7; transform: scale(1); }
@@ -985,8 +977,8 @@
     }
   
     .product-image {
-      width: 80px;
-      height: 80px;
+      width: 1500px;
+      height: 150px;
     }
   
     .product-name {
@@ -1288,8 +1280,8 @@
     }
   
     .product-image {
-      width: 100px;
-      height: 100px;
+      width: 200px;
+      height: 200px;
     }
   
     .product-name {
@@ -1533,8 +1525,8 @@
     }
   
     .product-image {
-      width: 90px;
-      height: 90px;
+      width: 150px;
+      height: 150px;
     }
   
     .product-name {

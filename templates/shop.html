@@ -21,7 +21,7 @@
         <div class="category-menu" role="navigation" aria-label="Product categories">
           <button class="category-btn active" data-category="all" data-translate="category.all">All Toys</button>
           <button class="category-btn" data-category="small" data-translate="category.small">Small</button>
-          <button class="category-btn" data-category="big" data-translate="category.big">Big</button>
+          <button class="category-btn" data-category="large" data-translate="category.large">Large</button>
           <button class="category-btn" data-category="for_business" data-translate="category.business">For
             Business</button>
           <a href="{{ url_for('home') }}" class="category-btn" data-translate="category.product_types">
@@ -146,9 +146,11 @@
         <div class="product-details">
           <h3 id="product-modal-title" data-translate="product.modal.title">Toy Name</h3>
           <div class="product-price" id="product-modal-price" data-translate="product.modal.price">0 ֏</div>
+          <p id="product-modal-shape" data-translate="product.modal.shape">Product shape.</p>
           <p id="product-modal-description" data-translate="product.modal.description">Product description.</p>
+          <p id="product-modal-public-description" data-translate="product.modal.public_description">Product public description.</p>
         </div>
-        <div class="product-specs" id="product-modal-specs" aria-labelledby="product-specs"></div>
+
         <div style="margin-top:auto;display:flex;gap:8px;">
           <button class="add-btn" id="modal-add-btn" data-translate="product.modal.add"><span class="icon">🎁</span>Add
             to Tree</button>
