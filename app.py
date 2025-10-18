@@ -114,9 +114,9 @@ def home():
         "home.html",
         PRODUCT_TYPES=[p for p in items],
         SHOP_URL="/shop",
-        API_LIST="/api/product-types",
-        API_ADD="/api/product-types",
-        IMAGE_PREFIX="/static/"
+        API_LIST="/mandarin/api/product-types",
+        API_ADD="mandarin/api/product-types",
+        IMAGE_PREFIX="/mandarin/static/"
     )
 
 @app.route('/about')
