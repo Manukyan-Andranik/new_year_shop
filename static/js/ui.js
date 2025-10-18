@@ -292,7 +292,7 @@ function animateToyToTree(product, sourceElement) {
     const rect = sourceElement.getBoundingClientRect();
     const canvasRect = sceneFunctions.renderer.domElement.getBoundingClientRect();
     const flyingToy = document.createElement('img');
-    flyingToy.src = product.images_url_list[1];
+    flyingToy.src = product.images_url_list[2];
     flyingToy.style.cssText = `position:fixed; left:${rect.left}px; top:${rect.top}px; width:${rect.width * 0.5}px; height:${rect.height * 0.5}px; z-index:1000; pointer-events:none; border-radius:8px;`;
     document.body.appendChild(flyingToy);
 

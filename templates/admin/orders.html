@@ -204,7 +204,7 @@
 
         async function loadOrders() {
             try {
-                const response = await fetch('/api/admin/orders');
+                const response = await fetch('{{BASE_PREFIX}}/api/admin/orders');
                 const orders = await response.json();
                 displayOrders(orders);
             } catch (error) {

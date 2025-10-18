@@ -428,7 +428,7 @@ function isPointerOnTree(clientX, clientY) {
 
 function createToyFromPNG(product) {
   const textureLoader = new THREE.TextureLoader();
-  const texture = textureLoader.load(product.images_url_list[1]);
+  const texture = textureLoader.load(product.images_url_list[2]);
   const material = new THREE.SpriteMaterial({ map: texture, transparent: true });
   const sprite = new THREE.Sprite(material);
   sprite.scale.set(0.01, 0.01, 0.5);
