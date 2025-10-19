@@ -218,7 +218,56 @@ const translations = {
 
         "product_types.validation.title_required": "Please enter a title",
         "product_types.error.save": "Error: {message}",
-        "product_types.success.save": "Type added successfully"
+        "product_types.success.save": "Type added successfully",
+        // Add these to the 'en' section:
+        "about.title": "About Us — Mandarin",
+        "about.hero.title": "🎄 Mandarin's Festive World",
+        "about.hero.subtitle": "Handcrafted wooden toys made with love since 2018",
+        "about.story.title": "Our Story",
+        "about.story.p1": "Welcome to Mandarin's festive world 🍊",
+        "about.story.p2": "Our team has been creating handcrafted Christmas toys since 2018 — with love, dedication, and holiday warmth.",
+        "about.story.p3": "Until now you've known us as Artworks and Souls of Art, and now we're opening a new page in our story under the name Mandarin — with a new spirit and the same sincerity.",
+        "about.story.p4": "Over these years, our little wooden wonders have become part of thousands of home Christmas trees — over 5000 handcrafted toys have found their place in our beloved customers' festive corners.",
+        "about.story.p5": "Each toy is made by hand — with heart, love, and attention to every detail.",
+        "about.story.p6": "Mandarin is not just a brand, but a festive mood that lives in every toy. We believe that even the smallest gift can convey great emotion — warmth, smiles, and memories that last for years 🎄",
+        "about.stats.years": "Years Experience",
+        "about.stats.toys": "Handcrafted Toys",
+        "about.stats.love": "Love & Care",
+        "about.image.workshop": "Our Workshop",
+
+        // Work Process Section
+        "about.process.title": "Our Creative Path",
+        "about.process.subtitle": "How Mandarin's wonders are created",
+        "about.process.step": "Step {number} — our work in detail and with love 🧡",
+
+        // Feedback Section
+        "about.feedback.title": "Our Customers' Words",
+        "about.feedback.subtitle": "Warm reactions from social networks",
+        "about.feedback.text1": "The package reached us with very beautiful and pleasant surprises. I am extremely grateful...",
+        "about.feedback.text2": "Very nice toys, I recommend them to everyone ❤️",
+        "about.feedback.text3": "Affordable, yet veeeery beautiful toys ❤️",
+        "about.feedback.text4": "Many thanks for the beautiful toys ❤️👏",
+        "about.feedback.text5": "Very cool handmade works ❤️",
+
+        // Values Section
+        "about.values.title": "Our Values",
+        "about.values.handcrafted": "Handcrafted Professionalism",
+        "about.values.handcrafted.desc": "Each toy is created not only by hand, but from the heart and soul.",
+        "about.values.nature": "Respect for Nature",
+        "about.values.nature.desc": "We use natural, eco-friendly wood and high-quality paints.",
+        "about.values.family": "Family Values",
+        "about.values.family.desc": "Our designs are created for family comfort and memories.",
+        "about.values.magic": "Festive Magic",
+        "about.values.magic.desc": "We believe that every object can bring holiday spirit.",
+
+        // CTA Section
+        "about.cta.title": "Our Collection",
+        "about.cta.button": "Open Shop →",
+
+        // UI Elements
+        "about.scroll.hint": "← Scroll horizontally → Or use arrows",
+
+
     },
 
     // --- Armenian & Russian sections remain identical to your latest version ---
@@ -439,7 +488,55 @@ const translations = {
 
         "product_types.validation.title_required": "Խնդրում ենք գրել վերնագիր",
         "product_types.error.save": "Սխալ՝ {message}",
-        "product_types.success.save": "Տիպը հաջողությամբ ավելացվել է"
+        "product_types.success.save": "Տիպը հաջողությամբ ավելացվել է",
+        "about.title": "Մեր մասին — Mandarin",
+        "about.hero.title": "🎄 Mandarin-ի Տոնական Աշխարհ",
+        "about.hero.subtitle": "Ձեռագործ փայտե խաղալիքներ՝ սիրով պատրաստված 2018-ից",
+        "about.story.title": "Մեր Պատմությունը",
+        "about.story.p1": "Բարի գալուստ Mandarin-ի տոնական աշխարհ 🍊",
+        "about.story.p2": "Մեր թիմը ձեռագործ ամանորյա խաղալիքներ է ստեղծում դեռևս 2018 թվականից՝ սիրով, նվիրվածությամբ և տոնի ջերմությամբ։",
+        "about.story.p3": "Մինչև այսօր մեզ ճանաչել եք որպես Artworks և Souls of Art, իսկ այժմ մենք նոր էջ ենք բացում մեր պատմության մեջ՝ Mandarin անունով՝ նոր ոգով և նույն անկեղծությամբ։",
+        "about.story.p4": "Այս տարիների ընթացքում մեր փոքրիկ փայտե հրաշքները դարձել են հազարավոր տների տոնածառերի մասը՝ ավելի քան 5000 ձեռագործ խաղալիք գտել են իրենց տեղը մեր սիրելի հաճախորդների տոնական անկյուններում։",
+        "about.story.p5": "Յուրաքանչյուր խաղալիք պատրաստվում է ձեռքով՝ սրտով, սիրով և ամեն մանրուքին ուշադրությամբ։",
+        "about.story.p6": "Mandarin-ը ոչ միայն բրենդ է, այլ՝ տոնական տրամադրություն, որը ապրում է յուրաքանչյուր խաղալիքի մեջ։ Մենք հավատում ենք, որ ամենափոքրիկ նվերն անգամ կարող է փոխանցել մեծ զգացմունք՝ ջերմություն, ժպիտ և հիշողություն, որը մնում է տարիներ շարունակ 🎄",
+        "about.stats.years": "Տարի Փորձ",
+        "about.stats.toys": "Ձեռագործ Խաղալիքներ",
+        "about.stats.love": "Սեր & Մտածածություն",
+        "about.image.workshop": "Մեր Արհեստանոցը",
+
+        // Work Process Section
+        "about.process.title": "Մեր Ստեղծագործական Ուղին",
+        "about.process.subtitle": "Ինչպես են ստեղծվում Mandarin-ի հրաշքները",
+        "about.process.step": "Քայլ {number} — մեր աշխատանքը մանրամասնությամբ և սիրով 🧡",
+
+        // Feedback Section
+        "about.feedback.title": "Մեր Հաճախորդների Խոսքերը",
+        "about.feedback.subtitle": "Ջերմ արձագանքներ սոցիալական ցանցերից",
+        "about.feedback.text1": "Շատ գեղեցիկ ու հաճելի անակնկալներովփաթեթը մեզել հասավ: Անչափ շնորհակալ եմ...",
+        "about.feedback.text2": "Շատ լավ խաղալիքներ են, բոլորին խորհուրդ կտամ ❤️",
+        "about.feedback.text3": "Մատչելի, բայց շա՜տ գեղեցիկ խաղալիքներ ❤️",
+        "about.feedback.text4": "Շատ շնորհակալ եմ գեղեցիկ խաղալիքների համար ❤️👏",
+        "about.feedback.text5": "Շատ թույն ձեռքի աշխատանքներ ❤️",
+
+
+        // Values Section
+        "about.values.title": "Մեր Արժեքները",
+        "about.values.handcrafted": "Ձեռագործ Մասնագիտություն",
+        "about.values.handcrafted.desc": "Յուրաքանչյուր խաղալիք ստեղծվում է ոչ միայն ձեռքով, այլ՝ սրտից ու հոգուց։",
+        "about.values.nature": "Բնության Հարգանք",
+        "about.values.nature.desc": "Մենք օգտագործում ենք բնական, էկոբաղ փայտ և բարձրակարգ ներկերը։",
+        "about.values.family": "Ընտանեկան Արժեքներ",
+        "about.values.family.desc": "Մեր դիզայններ ստեղծված են ընտանեկան հանգստի և հիշողության համար։",
+        "about.values.magic": "Տոնական Մոգ",
+        "about.values.magic.desc": "Մենք հավատում ենք, որ յուրաքանչյուր առարկա կարող է տոն հաղորդել։",
+
+        // CTA Section
+        "about.cta.title": "Մեր տեսականին այստեղ",
+        "about.cta.button": "Բացել Խանութը →",
+
+        // UI Elements
+        "about.scroll.hint": "← Սահեցրեք հորիզոնական → Կամ օգտագործեք սլաքները"
+
     },
 
     ru: {
@@ -662,7 +759,54 @@ const translations = {
 
         "product_types.validation.title_required": "Пожалуйста, введите название",
         "product_types.error.save": "Ошибка: {message}",
-        "product_types.success.save": "Тип успешно добавлен"
+        "product_types.success.save": "Тип успешно добавлен",
+        // Add these to the 'ru' (Russian) section:
+        "about.title": "О нас — Mandarin",
+        "about.hero.title": "🎄 Праздничный мир Mandarin",
+        "about.hero.subtitle": "Ручные деревянные игрушки, созданные с любовью с 2018 года",
+        "about.story.title": "Наша История",
+        "about.story.p1": "Добро пожаловать в праздничный мир Mandarin 🍊",
+        "about.story.p2": "Наша команда создает рождественские игрушки ручной работы с 2018 года — с любовью, преданностью и праздничным теплом.",
+        "about.story.p3": "До сих пор вы знали нас как Artworks и Souls of Art, и теперь мы открываем новую страницу в нашей истории под именем Mandarin — с новым духом и той же искренностью.",
+        "about.story.p4": "За эти годы наши маленькие деревянные чудеса стали частью тысяч домашних рождественских елок — более 5000 игрушек ручной работы нашли свое место в праздничных уголках наших любимых клиентов.",
+        "about.story.p5": "Каждая игрушка сделана вручную — от сердца, с любовью и вниманием к каждой детали.",
+        "about.story.p6": "Mandarin — это не просто бренд, а праздничное настроение, которое живет в каждой игрушке. Мы верим, что даже самый маленький подарок может передать большие эмоции — тепло, улыбки и воспоминания, которые остаются на годы 🎄",
+        "about.stats.years": "Лет Опыта",
+        "about.stats.toys": "Ручных Игрушек",
+        "about.stats.love": "Любовь & Забота",
+        "about.image.workshop": "Наша Мастерская",
+
+        // Work Process Section
+        "about.process.title": "Наш Творческий Путь",
+        "about.process.subtitle": "Как создаются чудеса Mandarin",
+        "about.process.step": "Шаг {number} — наша работа в деталях и с любовью 🧡",
+
+        // Feedback Section
+        "about.feedback.title": "Слова наших клиентов",
+        "about.feedback.subtitle": "Тёплые отзывы из социальных сетей",
+        "about.feedback.text1": "Пакет дошёл к нам с очень красивыми и приятными сюрпризами. Безмерно благодарна...",
+        "about.feedback.text2": "Очень хорошие игрушки, всем рекомендую ❤️",
+        "about.feedback.text3": "Доступные, но оооочень красивые игрушки ❤️",
+        "about.feedback.text4": "Большое спасибо за красивые игрушки ❤️👏",
+        "about.feedback.text5": "Очень классные ручные работы ❤️",
+
+        // Values Section
+        "about.values.title": "Наши Ценности",
+        "about.values.handcrafted": "Ручное Профессионализм",
+        "about.values.handcrafted.desc": "Каждая игрушка создается не только вручную, но от сердца и души.",
+        "about.values.nature": "Уважение к Природе",
+        "about.values.nature.desc": "Мы используем натуральную, экологичную древесину и высококачественные краски.",
+        "about.values.family": "Семейные Ценности",
+        "about.values.family.desc": "Наши дизайны созданы для семейного уюта и воспоминаний.",
+        "about.values.magic": "Праздничная Магия",
+        "about.values.magic.desc": "Мы верим, что каждый предмет может принести праздничное настроение.",
+
+        // CTA Section
+        "about.cta.title": "Наша Коллекция Здесь", 
+        "about.cta.button": "Открыть Магазин →",
+
+        // UI Elements
+        "about.scroll.hint": "← Прокрутите горизонтально → Или используйте стрелки"
     }
 };
 
@@ -710,7 +854,7 @@ class TranslationManager {
             this.updatePageContent();
             this.updateLanguageSwitcherUI();
             loadProducts(lang);
-            
+
 
         }
     }

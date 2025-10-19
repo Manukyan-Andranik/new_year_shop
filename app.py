@@ -97,13 +97,13 @@ def add_cors_headers(response):
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
-
+`
 @event.listens_for(Engine, "connect")
 def set_search_path(dbapi_connection, connection_record):
     cursor = dbapi_connection.cursor()
     cursor.execute(f"SET search_path TO {SCHEMA_NAME};")
     cursor.close()
-
+`
 
 # ===============================
 # Routes
@@ -125,15 +125,7 @@ def home():
 
 @app.route('/about')
 def about():
-    return render_template('about.html')
-
-@app.route('/toys/<category>', methods=['GET'])
-def get_toys_by_category_endpoint(category):
-    category = category.replace('-', '_').lower()
-    if category not in ['all', 'small', 'large', 'for_business']:
-        return jsonify({'error': 'Invalid category'}), 400
-    toys = get_toys_by_category(category)
-    return jsonify(toys)
+    return render_template('about.html') 
 
 @app.route('/shop', methods=['GET'])
 def shop():
