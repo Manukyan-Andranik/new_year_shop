@@ -23,13 +23,17 @@
     --btn-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
     --btn-press: 0 3px 8px rgba(0, 0, 0, 0.18);
   }
-  
-.footer {
+
+  .footer {
+    position: relative;
     background: var(--pine-green);
     color: var(--snow-white);
-    
+    padding: 60px 20px 30px;
+    overflow: hidden;
+    z-index: 0;
+    /* creates stacking context */
   }
-  
+
   .footer::before {
     content: "";
     position: absolute;
@@ -37,17 +41,21 @@
     left: 0;
     width: 100%;
     height: 40px;
-    background: url("https://png.pngtree.com/png-vector/20221123/ourmid/pngtree-snow-cap-border-decoration-png-image_6485173.png")
-      repeat-x;
+    background: url("https://png.pngtree.com/png-vector/20221123/ourmid/pngtree-snow-cap-border-decoration-png-image_6485173.png") repeat-x;
     background-size: contain;
     opacity: 0.9;
+    z-index: -1;
+    /* pushes it behind clickable content */
+    pointer-events: none;
+    /* ensures it never blocks clicks */
   }
-  
+
+
   .footer .container {
     max-width: 1200px;
     margin: 0 auto;
   }
-  
+
   .footer-content {
     display: flex;
     flex-wrap: wrap;
@@ -55,7 +63,7 @@
     gap: 30px;
     text-align: left;
   }
-  
+
   .footer-section {
     flex: 1 1 250px;
     background: var(--glass);
@@ -67,12 +75,12 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin-top: 40px;
   }
-  
+
   .footer-section:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
   }
-  
+
   .footer-section h3 {
     color: var(--festive-red);
     margin-bottom: 15px;
@@ -81,63 +89,148 @@
     display: inline-block;
     padding-bottom: 5px;
   }
-  
+
   .footer-section p,
   .footer-section a {
     color: var(--deep-brown);
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     margin: 6px 0;
     text-decoration: none;
     transition: color 0.3s ease;
   }
-  
+
   .footer-section a:hover {
     color: var(--festive-red-deep);
     text-decoration: underline;
   }
-  
+
   .footer-bottom {
-    text-align: center;
-    margin-top: 40px;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    padding-top: 15px;
-    font-size: 0.9rem;
-    color: var(--snow-white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  text-align: center;
+  margin-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 15px;
+  font-size: 0.9rem;
+  color: var(--snow-white);
+}
+.footer-bottom p {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+  .footer-link {
+    color: var(--deep-brown);
+    font-weight: 500;
   }
-  
+
+  .footer-link:hover {
+    color: var(--festive-red-deep);
+  }
+
+  @media (max-width: 768px) {
+    .footer-content {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .footer-section {
+      width: 90%;
+    }
+  }
+
+  .footer-bottom .footer-link {
+  color: var(--festive-gold);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.footer-bottom .footer-link:hover {
+  color: var(--snow-white);
+  text-decoration: underline;
+}
+
+/* Responsive stack for smaller screens */
+@media (max-width: 600px) {
+  .footer-bottom {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
 </style>
+
 <footer class="footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h3 data-translate="footer.title">🎁 Christmas Magic Shop</h3>
-          <p data-translate="footer.description">
-            Bringing holiday joy to homes since 2023. Our handpicked decorations
-            make every Christmas magical.
-          </p>
-        </div>
-  
-        <div class="footer-section">
-          <h3 data-translate="footer.contact.title">📞 Contact Info</h3>
-          <p data-translate="footer.contact.email">🎄 Email: hello@christmasmagic.com</p>
-          <p data-translate="footer.contact.phone">📞 Phone: (555) 123-CHRISTMAS</p>
-          <p data-translate="footer.contact.address">📍 123 Snowflake Lane, North Pole</p>
-        </div>
-  
-        <div class="footer-section">
-          <h3 data-translate="footer.links.title">🔗 Quick Links</h3>
-          <p><a href="{{ url_for('shop') }}" data-translate="footer.links.home">Home</a></p>
-          <p><a href="#products" data-translate="footer.links.shop">Shop Collection</a></p>
-          <p><a href="/admin/login" data-translate="footer.links.admin">Admin Dashboard</a></p>
-        </div>
-      </div>
-  
-      <div class="footer-bottom">
-        <p data-translate="footer.copyright">
-          &copy; 2023 Christmas Magic Shop. Spreading holiday cheer one
-          decoration at a time. 🎅
+  <div class="container">
+    <div class="footer-content">
+
+      <div class="footer-section">
+        <h3 data-translate="footer.title">🍊 Mandarin</h3>
+        <p data-translate="footer.description">
+          Bringing holiday joy to homes since 2023. Our handpicked decorations
+          make every Christmas magical.
         </p>
       </div>
+
+      <div class="footer-section">
+        <h3 data-translate="footer.contact.title">📞 Contact Info</h3>
+
+        <p>🎄 Email:
+          <a href="mailto:info.mandarin.toys@gmail.com" class="footer-link"
+            data-translate="footer.contact.email">info.mandarin.toys@gmail.com</a>
+        </p>
+
+        <p>📞 Phone:
+          <a href="tel:+37477722263" class="footer-link" data-translate="footer.contact.phone">(+374) 77 722263</a>
+        </p>
+
+        <p>
+          📍 Address:
+          <a href="https://yandex.com/maps/10262/yerevan/house/YE0YcwVhTkwHQFpqfX13eHxlZw==/?ll=44.521790%2C40.169063&z=17.12"
+            target="_blank" rel="noopener noreferrer" class="footer-link" data-translate="footer.contact.address">
+            Yerevan, Armenia
+          </a>
+        </p>
+      </div>
+
+      <div class="footer-section">
+        <h3 data-translate="footer.links.title">🔗 Quick Links</h3>
+        <p><a href="{{ url_for('home') }}" data-translate="footer.links.home">🏠 Home</a></p>
+        <p><a href="{{ url_for('about') }}" data-translate="footer.links.about">🎁 About</a></p>
+        <p><a href="{{ url_for('shop') }}" data-translate="footer.links.shop">🛍️ Shop</a></p>
+      </div>
+
     </div>
-  </footer>
-  
+
+    <div class="footer-bottom">
+      <p data-translate="footer.copyright">
+        All rights reserved © 2025 Mandarin. Designed with 🎅
+      </p>
+    
+      <p>
+        <a href="https://logiclab.am"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="footer-link"
+           data-translate="footer.logiclab">Logic Lab</a>
+      </p>
+    
+      <p>
+        <a href="https://www.instagram.com/viewbox_visual"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="footer-link"
+           data-translate="footer.viewbox">ViewBox</a>
+      </p>
+    </div>
+    
+    
+
+  </div>
+</footer>
