@@ -13,6 +13,23 @@ const translations = {
         'nav.admin': 'Admin',
         'logo.title': 'Christmas Magic',
 
+        // ===== Hero Section =====
+        'hero.title': 'The magic of New Year — in wood and art',
+        'hero.subtitle': 'Winter comes with the scent of Mandarin',
+        'loading.text': 'Loading the Magic...⏳',
+        // ===== Products Section =====
+        'products.title': '🎁 Our Collection',
+        'products.loading': 'Loading... ⏳',
+        'products.empty': 'No product types found 🎄',
+        'products.error': '⚠️ Failed to load',
+
+        // ===== Footer (optional) =====
+        'footer.rights': 'All rights reserved',
+        'footer.follow': 'Follow us',
+
+        // ===== Meta / Title =====
+        'product_types.title': 'Types — Wooden Gifts & Decorations',
+
         // Main Page
         'catalog.title': '🎁 Toy Catalog',
         'category.all': 'All Toys',
@@ -79,9 +96,9 @@ const translations = {
         'footer.links.home': 'Home',
         'footer.links.about': 'About',
         'footer.links.shop': 'Shop',
-        'footer.copyright': 'All rights reserved © 2025 Mandarin 🎅. Designed with',
+        'footer.copyright': 'All rights reserved © 2025 Mandarin . Designed with',
         'footer.logiclab': 'Logic Lab',
-        'footer.viewbox': 'ViewBox',   
+        'footer.viewbox': 'ViewBox',
         // Admin
         'admin.login.title': '🎄 Admin Login',
         'admin.login.username': 'Username',
@@ -279,7 +296,22 @@ const translations = {
         'nav.shop': 'Խանութ',
         'nav.admin': 'Ադմին',
         'logo.title': 'Ամանորյա Կախարդություն',
+        // ===== Hero Section =====
+        'hero.title': 'Ամանորի հմայքը՝ փայտի և արվեստի տեսքով',
+        'hero.subtitle': 'Ձմեռը գալիս է Mandarin-ի բույրով',
+        'loading.text': 'Բեռնում է Ամանորյա Կախարդանքը...⏳',
+        // ===== Products Section =====
+        'products.title': '🎁 Մեր Կոլեկցիա',
+        'products.loading': 'Բեռնում... ⏳',
+        'products.empty': 'Տեսակներ չեն գտնվել 🎄',
+        'products.error': '⚠️ Չհաջողվեց բեռնել',
 
+        // ===== Footer (optional) =====
+        'footer.rights': 'Բոլոր իրավունքները պաշտպանված են',
+        'footer.follow': 'Հետևեք մեզ',
+
+        // ===== Meta / Title =====
+        'product_types.title': 'Տեսակներ — Փայտյա Նվեր-զարդեր',
         // Main Page
         'catalog.title': '🎁 Խաղալիքների Կատալոգ',
         'category.all': 'Բոլոր Խաղալիքները',
@@ -342,14 +374,14 @@ const translations = {
         'footer.contact.title': '📞 Կապի Տվյալներ',
         'footer.contact.email': 'info.mandarin.toys@gmail.com',
         'footer.contact.phone': '(+374) 77 722263',
-        'footer.contact.address': 'Հյուսիսային բևեռ', 
+        'footer.contact.address': 'Հյուսիսային բևեռ',
         'footer.links.title': '🔗 Արագ Հղումներ',
         'footer.links.home': 'Գլխավոր',
         'footer.links.about': 'Մեր մասին',
         'footer.links.shop': 'Խանութ',
-        'footer.copyright': 'Բոլոր իրավունքները պաշտպանված են © 2025 Mandarin 🎅. Ստեղծված է',
+        'footer.copyright': 'Բոլոր իրավունքները պաշտպանված են © 2025 Mandarin . Ստեղծված է',
         'footer.logiclab': 'Logic Lab',
-        'footer.viewbox': 'ViewBox',  
+        'footer.viewbox': 'ViewBox',
         // Admin Pages
         'admin.login.title': '🎄 Ադմինի Մուտք',
         'admin.login.username': 'Օգտանուն',
@@ -548,7 +580,22 @@ const translations = {
         'nav.shop': 'Магазин',
         'nav.admin': 'Админ',
         'logo.title': 'Новогодное Волшебство',
+        // ===== Hero Section =====
+        'hero.title': 'Новогодняя магия — в дереве и искусстве',
+        'hero.subtitle': 'Зима приходит с ароматом Mandarin',
+        'loading.text': 'Загрузка Новогодней Магии...⏳',
+        // ===== Products Section =====
+        'products.title': '🎁 Наша коллекция',
+        'products.loading': 'Загрузка... ⏳',
+        'products.empty': 'Типы товаров не найдены 🎄',
+        'products.error': '⚠️ Не удалось загрузить',
 
+        // ===== Footer (optional) =====
+        'footer.rights': 'Все права защищены',
+        'footer.follow': 'Следите за нами',
+
+        // ===== Meta / Title =====
+        'product_types.title': 'Типы — Деревянные подарки и украшения',
         // Main Page
         'catalog.title': '🎁 Каталог Игрушек',
         'category.all': 'Все Игрушки',
@@ -620,10 +667,10 @@ const translations = {
         'footer.links.home': 'Главная',
         'footer.links.about': 'О нас',
         'footer.links.shop': 'Магазин',
-        'footer.copyright': 'Все права защищены © 2025 Mandarin 🎅. Разработано с помощью:',
+        'footer.copyright': 'Все права защищены © 2025 Mandarin . Разработано с помощью:',
         'footer.logiclab': 'Logic Lab',
-        'footer.viewbox': 'ViewBox',  
-        
+        'footer.viewbox': 'ViewBox',
+
         // Admin Pages
         'admin.login.title': '🎄 Вход Администратора',
         'admin.login.username': 'Имя пользователя',
@@ -806,7 +853,7 @@ const translations = {
         "about.values.magic.desc": "Мы верим, что каждый предмет может принести праздничное настроение.",
 
         // CTA Section
-        "about.cta.title": "Наша Коллекция Здесь", 
+        "about.cta.title": "Наша Коллекция Здесь",
         "about.cta.button": "Открыть Магазин →",
 
         // UI Elements
