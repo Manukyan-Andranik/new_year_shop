@@ -79,7 +79,7 @@ const translations = {
         'footer.links.home': 'Home',
         'footer.links.about': 'About',
         'footer.links.shop': 'Shop',
-        'footer.copyright': 'All rights reserved © 2025 Mandarin. Designed with',
+        'footer.copyright': 'All rights reserved © 2025 Mandarin 🎅. Designed with',
         'footer.logiclab': 'Logic Lab',
         'footer.viewbox': 'ViewBox',   
         // Admin
@@ -347,7 +347,7 @@ const translations = {
         'footer.links.home': 'Գլխավոր',
         'footer.links.about': 'Մեր մասին',
         'footer.links.shop': 'Խանութ',
-        'footer.copyright': 'Բոլոր իրավունքները պաշտպանված են © 2025 Mandarin. Ստեղծված է',
+        'footer.copyright': 'Բոլոր իրավունքները պաշտպանված են © 2025 Mandarin 🎅. Ստեղծված է',
         'footer.logiclab': 'Logic Lab',
         'footer.viewbox': 'ViewBox',  
         // Admin Pages
@@ -620,7 +620,7 @@ const translations = {
         'footer.links.home': 'Главная',
         'footer.links.about': 'О нас',
         'footer.links.shop': 'Магазин',
-        'footer.copyright': 'Все права защищены © 2025 Mandarin. Разработано с помощью:',
+        'footer.copyright': 'Все права защищены © 2025 Mandarin 🎅. Разработано с помощью:',
         'footer.logiclab': 'Logic Lab',
         'footer.viewbox': 'ViewBox',  
         
