@@ -65,8 +65,6 @@ function initUI(_products, _sceneFunctions) {
     updateCartUI();
 }
 
-
-
 // --- Event Listeners ---
 function addEventListeners() {
     // Checkout
@@ -464,9 +462,6 @@ async function handleOrderSubmit(event) {
         dom.paperConfirm.textContent = window.t ? window.t('order.buttons.send') : 'Send to Santa ✨';
     }
 }
-
-
-
 
 // --- Product Modal ---
 function openProductModal(product) {

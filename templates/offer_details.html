@@ -1,0 +1,1221 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ offer_title }} — Փայտյա Նվեր-զարդեր
+{% endblock %}
+
+{% block content %}
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        overflow-x: hidden;
+        min-height: 100vh;
+        color: white;
+        position: relative;
+    }
+
+    .global-animated-bg {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #0f3d1f 0%, #1a5a2d 50%, #0f3d1f 100%);
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .animated-toys-container,
+    #snowflakes-container {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .animated-toy {
+        position: absolute;
+        width: 180px;
+        opacity: 0.1;
+        animation: randomWalk 14s ease-in-out infinite;
+    }
+
+    @keyframes randomWalk {
+        0% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+
+        50% {
+            transform: translate(60px, 80px) rotate(30deg);
+        }
+
+        100% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+    }
+
+    .offer-details-container {
+        position: relative;
+        z-index: 10;
+        max-width: 1400px;
+        margin: 120px auto 60px;
+        padding: 40px 20px;
+    }
+
+    .back-btn {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.95);
+        color: #1a5a2d;
+        padding: 12px 24px;
+        border-radius: 25px;
+        text-decoration: none;
+        margin-bottom: 30px;
+        font-weight: 600;
+        transition: 0.3s;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .back-btn:hover {
+        transform: translateX(-5px);
+    }
+
+    .offer-header {
+        background: rgba(255, 255, 255, 0.97);
+        padding: 30px;
+        border-radius: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    }
+
+    .offer-title {
+        font-size: clamp(2rem, 5vw, 3rem);
+        color: #1a5a2d;
+        font-weight: 800;
+        margin-bottom: 15px;
+    }
+
+    .offer-description {
+        white-space: pre-wrap;
+        line-height: 1.8;
+        color: #1f2937;
+        font-size: 1.05rem;
+    }
+
+    .content-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    /* Product Catalog Section */
+    .catalog-section {
+        background: rgba(255, 255, 255, 0.97);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        max-height: 900px;
+        overflow-y: auto;
+    }
+
+    .catalog-title {
+        font-size: 1.6rem;
+        color: #1a5a2d;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        width: 100%;
+    }
+
+    .product-card {
+        background: rgba(255, 255, 255, 0.65);
+        border-radius: 12px;
+        padding: 10px;
+        cursor: pointer;
+        transition: transform .22s cubic-bezier(.2, .9, .3, 1), box-shadow .22s, border-color .22s;
+        position: relative;
+        border: 2px solid rgba(0, 0, 0, 0.05);
+        box-shadow: 0 4px 12px rgba(10, 20, 40, 0.06);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(10, 20, 40, 0.12);
+    }
+
+    .product-card.selected {
+        border-color: #1a5a2d;
+        box-shadow: 0 6px 20px rgba(26, 90, 45, 0.3);
+        background: rgba(26, 90, 45, 0.1);
+    }
+
+    .card-top {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .product-image {
+        width: 100%;
+        max-width: 180px;
+        height: 180px;
+        object-fit: contain;
+        border-radius: 10px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 1));
+        padding: 8px;
+        border: 1px solid rgba(0, 0, 0, 0.03);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .product-info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        width: 100%;
+    }
+
+    .product-name {
+        font-weight: 800;
+        font-size: 14px;
+        color: #222;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .product-price {
+        color: #1a5a2d;
+        font-weight: 900;
+        font-size: 13px;
+    }
+
+    .select-indicator {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #1a5a2d;
+        color: white;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+    }
+
+    .product-card.selected .select-indicator {
+        display: flex;
+    }
+
+    /* Image Gallery for christmas_together and seasons_best */
+    .image-gallery {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .gallery-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 12px;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+    }
+
+    .gallery-image:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .gallery-image.selected {
+        position: relative;
+        /* needed for the pseudo-element */
+        border: 5px solid #1a5a2d;
+        /* green border */
+        box-shadow: 0 6px 20px rgba(26, 90, 45, 0.4);
+        opacity: 0.7;
+        /* slightly transparent */
+        border-radius: 8px;
+        /* optional: rounded corners */
+    }
+
+    .gallery-image.selected::after {
+        content: "✓";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 2rem;
+        /* adjust size */
+        color: #1a5a2d;
+        font-weight: bold;
+        pointer-events: none;
+        /* allows clicks to pass through */
+    }
+
+
+    /* Order Form Section */
+    .form-section {
+        background: rgba(255, 255, 255, 0.97);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        max-height: 900px;
+        overflow-y: auto;
+    }
+
+    .form-title {
+        font-size: 1.6rem;
+        color: #1a5a2d;
+        font-weight: 700;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-label {
+        display: block;
+        font-size: 0.95rem;
+        color: #374151;
+        margin-bottom: 6px;
+        font-weight: 600;
+    }
+
+    .required {
+        color: #dc2626;
+    }
+
+    .form-input,
+    .form-textarea,
+    .form-select {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        background: white;
+        color: #1f2937;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus,
+    .form-select:focus {
+        outline: none;
+        border-color: #1a5a2d;
+        box-shadow: 0 0 0 3px rgba(26, 90, 45, 0.1);
+    }
+
+    .form-textarea {
+        min-height: 100px;
+        resize: vertical;
+        font-family: inherit;
+    }
+
+    .form-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 15px;
+    }
+
+    .form-checkbox input {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+
+    .form-checkbox label {
+        cursor: pointer;
+        color: #374151;
+        font-weight: 600;
+    }
+
+    .names-container {
+        display: none;
+        margin-top: 15px;
+    }
+
+    .names-container.show {
+        display: block;
+    }
+
+    .name-input-group {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+
+    .name-input-group input {
+        flex: 1;
+    }
+
+    .add-name-btn,
+    .remove-name-btn {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .add-name-btn {
+        background: #1a5a2d;
+        color: white;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .add-name-btn:hover {
+        background: #0f3d1f;
+    }
+
+    .remove-name-btn {
+        background: #dc2626;
+        color: white;
+    }
+
+    .remove-name-btn:hover {
+        background: #b91c1c;
+    }
+
+    .submit-btn {
+        background: linear-gradient(135deg, #1a5a2d 0%, #0f3d1f 100%);
+        color: white;
+        border: none;
+        padding: 16px;
+        width: 100%;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(26, 90, 45, 0.3);
+        margin-top: 20px;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 25px rgba(26, 90, 45, 0.4);
+    }
+
+    .submit-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .message {
+        padding: 14px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        font-weight: 600;
+        text-align: center;
+        display: none;
+    }
+
+    .message.success {
+        background: #d1fae5;
+        color: #065f46;
+        border: 2px solid #10b981;
+    }
+
+    .message.error {
+        background: #fee2e2;
+        color: #991b1b;
+        border: 2px solid #ef4444;
+    }
+
+    .message.show {
+        display: block;
+        animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .selected-products-list {
+        background: rgba(26, 90, 45, 0.05);
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border: 1px solid rgba(26, 90, 45, 0.2);
+    }
+
+    .selected-products-title {
+        font-weight: 700;
+        color: #1a5a2d;
+        margin-bottom: 10px;
+    }
+
+    .selected-product-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px;
+        background: white;
+        border-radius: 6px;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        color: var(--festive-green);
+    }
+
+    @media (max-width: 1024px) {
+        .content-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .catalog-section,
+        .form-section {
+            max-height: none;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .product-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .product-image {
+            max-width: 140px;
+            height: 140px;
+        }
+
+        .image-gallery {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="global-animated-bg">
+    <div class="animated-toys-container">
+        <img src="{{ url_for('static', filename='images/animated_toys/1.png') }}" class="animated-toy" alt="">
+        <img src="{{ url_for('static', filename='images/animated_toys/2.png') }}" class="animated-toy" alt="">
+        <img src="{{ url_for('static', filename='images/animated_toys/3.png') }}" class="animated-toy" alt="">
+    </div>
+    <div id="snowflakes-container"></div>
+</div>
+
+<div class="offer-details-container">
+    <a href="{{ url_for('home') }}#offers" class="back-btn">← Վերադառնալ</a>
+
+    <div class="offer-header">
+        <h1 id="offerTitle" class="offer-title"></h1>
+        <p id="offerDescription" class="offer-description"></p>
+    </div>
+
+    <div class="content-grid">
+        <!-- Left: Product Catalog or Image Gallery -->
+        <div class="catalog-section">
+            <h2 data-translate="offer.select_products" class="catalog-title" id="catalogTitle">Ընտրեք ապրանքներ</h2>
+            <div id="productGrid" class="product-grid"></div>
+            <div id="imageGallery" class="image-gallery" style="display: none;"></div>
+        </div>
+
+        <!-- Right: Order Form -->
+        <div class="form-section">
+            <h2 class="form-title">📝 Պատվիրել հիմա</h2>
+            <div class="message" id="formMessage"></div>
+
+            <div id="selectedProductsList" class="selected-products-list" style="display: none;">
+                <div class="selected-products-title">Ընտրված ապրանքներ:</div>
+                <div id="selectedProductsContent"></div>
+            </div>
+
+            <form id="orderForm"></form>
+        </div>
+    </div>
+</div>
+<script>
+    
+    const BASE_PREFIX = "{{ BASE_PREFIX }}";
+    const currentLang = window.translationManager ? window.translationManager.currentLanguage : 'hy';
+
+    const offerData = {
+        my_classroom: {
+            type: 'products',
+            fields: 'my_classroom',
+            translations: {
+                hy: {
+                    title: '🎓 Իմ դասարան',
+                    description: `Նվիրեք ձեր աշակերտներին կամ ուսանողներին փոքրիկ, բայց անկեղծ նվերներ՝ ձեր սիրով պատրաստված։
+
+Պատվիրեք ձեր դասարանի քանակով և ստացեք հատուկ զեղչեր 🎁
+
+Սա հիանալի տարբերակ է աշակերտներին շնորհակալություն հայտնելու, տոնական տրամադրություն ստեղծելու և միասին ժպտալու համար։
+
+Յուրաքանչյուր նվերի համար կարող եք ընտրել առանձին փաթեթավորում, իսկ մենք մեր կողմից յուրաքանչյուր տոպրակի մեջ կդնենք փոքրիկ անակնկալ և տոնական մաղթանքներ ձեր սաների համար ✨`
+                },
+                en: {
+                    title: '🎓 My Classroom',
+                    description: `Give your students or classmates small but heartfelt gifts made with love.
+
+Order in quantities for your class and receive special discounts 🎁
+
+It’s a wonderful way to thank your students, create a festive atmosphere, and share smiles together.
+
+Each gift can come with individual packaging, and we’ll include a small surprise and a festive wish for every student ✨`
+                },
+                ru: {
+                    title: '🎓 Мой класс',
+                    description: `Подарите своим ученикам или студентам небольшие, но искренние подарки, сделанные с любовью.
+
+Закажите по количеству вашего класса и получите специальные скидки 🎁
+
+Это отличный способ поблагодарить учеников, создать праздничное настроение и вместе улыбнуться.
+
+Для каждого подарка можно выбрать индивидуальную упаковку, а мы положим в каждый пакетик маленький сюрприз и праздничные пожелания ✨`
+                }
+            }
+        },
+
+        corporate: {
+            type: 'products',
+            fields: 'corporate',
+            translations: {
+                hy: {
+                    title: '💼 Կորպորատիվ',
+                    description: `Նվիրեք ձեր թիմին ջերմ մթնոլորտ և տոնական տրամադրություն 💫
+
+Գնեք ձեր աշխատակիցների կամ գործընկերների համար ձեռագործ փայտե խաղալիքներ՝ որպես շնորհակալության և հոգատարության նշան։
+
+Ամրապնդեք թիմային ոգին և զարդարեք ձեր գրասենյակի տոնածառը յուրահատուկ փայտե խաղալիքներով։
+
+Պատվերները կարող են լինել մեր տեսականուց կամ ձեր բրենդային պատկերներով։
+
+Մենք կփաթեթավորենք յուրաքանչյուր նվեր առանձին՝ ավելացնելով տոնական մաղթանքներ և փոքրիկ անակնկալներ յուրաքանչյուր տոպրակի մեջ 🎄`
+                },
+                en: {
+                    title: '💼 Corporate Gifts',
+                    description: `Bring warmth and a festive mood to your team 💫
+
+Give your employees or partners handcrafted wooden ornaments as a token of gratitude and care.
+
+Strengthen team spirit and decorate your office tree with unique wooden ornaments.
+
+Orders can be from our catalog or customized with your brand imagery.
+
+We’ll pack each gift individually, adding festive wishes and small surprises to every bag 🎄`
+                },
+                ru: {
+                    title: '💼 Корпоративные подарки',
+                    description: `Подарите своей команде тепло и праздничное настроение 💫
+
+Подарите сотрудникам или партнёрам деревянные игрушки ручной работы в знак благодарности и заботы.
+
+Укрепите командный дух и украсьте офисную ёлку уникальными деревянными украшениями.
+
+Заказы могут быть как из нашей коллекции, так и с вашим брендингом.
+
+Мы упакуем каждый подарок отдельно, добавив праздничные пожелания и маленькие сюрпризы 🎄`
+                }
+            }
+        },
+
+        special_for_you: {
+            type: 'products',
+            fields: 'special_for_you',
+            translations: {
+                hy: {
+                    title: '💖 Հատուկ քեզ համար',
+                    description: `Քո անունով հրաշք 💌
+
+Այս բաժնում յուրաքանչյուր նվեր կարող է դառնալ բացառիկ՝ քո անունով, պատմությամբ և ցանկությամբ։
+
+Պատվիրեք անվանական փայտե խաղալիքներ ձեր մտերիմների համար և դարձրեք ձեր նվերները իսկապես անձնական ու անկրկնելի։
+
+Սա այն մանրուքն է, որը սովորական նվերը դարձնում է հիշողություն՝ սիրով պատրաստված հենց քեզ համար։`
+                },
+                en: {
+                    title: '💖 Special for You',
+                    description: `A personalized miracle 💌
+
+Every gift here can become unique—with your name, story, and wishes.
+
+Order personalized wooden ornaments for your loved ones and make your gifts truly personal and unforgettable.
+
+It’s the little detail that turns an ordinary gift into a cherished memory made with love.`
+                },
+                ru: {
+                    title: '💖 Особенный для тебя',
+                    description: `Чудо с твоим именем 💌
+
+Каждый подарок здесь может стать уникальным — с твоим именем, историей и пожеланием.
+
+Закажите именные деревянные игрушки для своих близких и сделайте свои подарки по-настоящему личными и неповторимыми.
+
+Это та деталь, которая превращает обычный подарок в память, созданную с любовью.`
+                }
+            }
+        },
+
+        christmas_together: {
+            type: 'images',
+            imagesCount: 5,
+            folder: 'offers/christmas_together',
+            fields: 'christmas_together',
+            translations: {
+                hy: {
+                    title: '🏡 Ամանորը միասին',
+                    description: `Տոնեք ընտանիքի հետ՝ լի սիրով, ժպիտներով և փայտե հրաշքներով ❤️
+
+Նվիրեք ձեր սիրելիներին փոքրիկ խաղալիքներ կամ զարդարեք ընտանեկան տոնածառը մեր ձեռագործ հավաքածուներով։
+
+Մեր նախապես ընտրված հավաքածուների շնորհիվ դուք հեշտությամբ կընտրեք մի քանի գեղեցիկ խաղալիք՝ նախատեսված ձեր ընտանիքի յուրաքանչյուր անդամի համար։
+
+Ամանորը միասին՝ որտեղ յուրաքանչյուր խաղալիք պատմում է ձեր տան ջերմ պատմությունը 🌟`
+                },
+                en: {
+                    title: '🏡 Christmas Together',
+                    description: `Celebrate with your family—full of love, smiles, and wooden magic ❤️
+
+Give your loved ones small gifts or decorate your family tree with our handcrafted sets.
+
+With our pre-selected collections, you can easily choose several beautiful ornaments for each family member.
+
+Christmas together—where every ornament tells the warm story of your home 🌟`
+                },
+                ru: {
+                    title: '🏡 Новый год вместе',
+                    description: `Празднуйте с семьёй — с любовью, улыбками и деревянными чудесами ❤️
+
+Подарите близким небольшие игрушки или украсьте семейную ёлку нашими наборами ручной работы.
+
+Благодаря нашим готовым коллекциям вы легко подберёте красивые украшения для каждого члена семьи.
+
+Новый год вместе — где каждая игрушка рассказывает тёплую историю вашего дома 🌟`
+                }
+            }
+        },
+
+        seasons_best: {
+            type: 'images',
+            imagesCount: 10,
+            folder: 'offers/seasons_best',
+            fields: 'seasons_best',
+            translations: {
+                hy: {
+                    title: '🎁 Սեզոնի լավագույնները',
+                    description: `Յուրաքանչյուր տարի մենք ստեղծում ենք նոր, տոնական և սիրով լի խաղալիքներ, որոնք արագ դառնում են սեզոնի սիրելիներ։
+
+Այս բաժնում կգտնեք մեր ամենաթարմ, պահանջված և ոգեշնչող խաղալիքները՝ պատրաստված բարձրորակ փայտից և վառ գույներով։
+
+Հասցրեք ընտրել ձեր սիրելի տարբերակները, քանի դեռ դրանք հասանելի են, և զարդարեք ձեր տոնը մեզ հետ միասին ✨
+
+Այս սեզոնի լավագույնները այստեղ են՝ տաքության, ոճի և յուրահատկության միախառնմամբ։`
+                },
+                en: {
+                    title: '🎁 Season’s Best',
+                    description: `Every year we create new, festive, and love-filled ornaments that quickly become seasonal favorites.
+
+Here you’ll find our freshest, most popular, and inspiring wooden creations—crafted from high-quality wood and painted in bright colors.
+
+Choose your favorites while they’re available and make your celebration shine ✨
+
+The best of the season is here—a blend of warmth, style, and uniqueness.`
+                },
+                ru: {
+                    title: '🎁 Лучшее сезона',
+                    description: `Каждый год мы создаём новые, праздничные и наполненные любовью игрушки, которые быстро становятся фаворитами сезона.
+
+Здесь вы найдёте самые свежие, востребованные и вдохновляющие изделия из дерева — из качественного материала и ярких красок.
+
+Успейте выбрать свои любимые варианты, пока они доступны, и отпразднуйте вместе с нами ✨
+
+Лучшее этого сезона — это сочетание тепла, стиля и уникальности.`
+                }
+            }
+        }
+    };
+
+    const offerType = '{{ offer_type }}' || 'my_classroom';
+    const offer = offerData[offerType];
+
+    document.getElementById('offerTitle').textContent = offer.translations[currentLang].title;
+    document.getElementById('offerDescription').textContent = offer.translations[currentLang].description;
+
+    let selectedProducts = [];
+    let selectedImages = [];
+    let products = [];
+
+    // Load products or images based on offer type
+    async function loadCatalog() {
+        if (offer.type === 'products') {
+            try {
+                const response = await fetch(`/api/products?lang=${currentLang}&type=all`);
+                products = await response.json();
+                renderProducts();
+            } catch (error) {
+                console.error('Error loading products:', error);
+            }
+        } else if (offer.type === 'images') {
+            renderImageGallery();
+        }
+    }
+
+    function renderProducts() {
+        const grid = document.getElementById('productGrid');
+        grid.innerHTML = '';
+
+        products.forEach(product => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.setAttribute('data-product-id', product.id);
+            card.innerHTML = `
+            <div class="select-indicator">✓</div>
+            <div class="card-top">
+                <img src="{{BASE_PREFIX}}${product.images_url_list[0]}" alt="${product.name}" class="product-image">
+                <div class="product-info">
+                    <div class="product-name">${product.name}</div>
+                    <div class="product-price">${product.price} ֏</div>
+                </div>
+            </div>
+        `;
+
+            card.addEventListener('click', () => toggleProductSelection(product, card));
+            grid.appendChild(card);
+        });
+    }
+
+    function toggleProductSelection(product, card) {
+        const index = selectedProducts.findIndex(p => p.id === product.id);
+
+        if (index > -1) {
+            selectedProducts.splice(index, 1);
+            card.classList.remove('selected');
+        } else {
+            selectedProducts.push(product);
+            card.classList.add('selected');
+        }
+
+        updateSelectedProductsList();
+    }
+
+    function updateSelectedProductsList() {
+        const list = document.getElementById('selectedProductsList');
+        const content = document.getElementById('selectedProductsContent');
+
+        if (selectedProducts.length > 0) {
+            list.style.display = 'block';
+            content.innerHTML = selectedProducts.map(p => `
+            <div class="selected-product-item">
+                <span>${p.name}</span>
+                <span>${p.price} ֏</span>
+            </div>
+        `).join('');
+        } else {
+            list.style.display = 'none';
+        }
+    }
+
+    function renderImageGallery() {
+        document.getElementById('productGrid').style.display = 'none';
+        const gallery = document.getElementById('imageGallery');
+        gallery.style.display = 'grid';
+        document.getElementById('catalogTitle').textContent = 'Ընտրեք նկարներ';
+
+        const imageCount = offer.imagesCount;
+        for (let i = 1; i <= imageCount; i++) {
+            const img = document.createElement('img');
+            img.src = `{{BASE_PREFIX}}/static/images/${offer.folder}/${i}.jpg`;
+            img.className = 'gallery-image';
+            img.setAttribute('data-image-id', i);
+
+            img.addEventListener('click', () => {
+                const imageId = i;
+                const index = selectedImages.indexOf(imageId);
+
+                if (index > -1) {
+                    selectedImages.splice(index, 1);
+                    img.classList.remove('selected');
+                } else {
+                    selectedImages.push(imageId);
+                    img.classList.add('selected');
+                }
+            });
+
+            gallery.appendChild(img);
+        }
+    }
+
+    // Render form based on offer type
+    function renderForm() {
+        const form = document.getElementById('orderForm');
+        let formHTML = '';
+
+        if (offer.fields === 'my_classroom') {
+            formHTML = `
+            <div class="form-group">
+                <label class="form-label">Դպրոցի անուն <span class="required">*</span></label>
+                <input type="text" name="school_name" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Դասարանի համար <span class="required">*</span></label>
+                <input type="text" name="class_number" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Աշակերտների քանակ <span class="required">*</span></label>
+                <input type="number" name="student_count" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Տղաների/աղջիկների քանակ</label>
+                <input type="text" name="boys_girls" class="form-input" placeholder="Օրինակ: 15 տղա / 12 աղջիկ">
+            </div>
+            <div class="form-checkbox">
+                <input type="checkbox" id="nominal" name="nominal">
+                <label for="nominal">Անվանական (անունների հետ)</label>
+            </div>
+            <div id="namesContainer" class="names-container">
+                <label class="form-label">Աշակերտների անուններ</label>
+                <div id="namesList"></div>
+                <button type="button" class="add-name-btn" onclick="addNameField()">+ Ավելացնել անուն</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Փաթեթավորման տեսակ <span class="required">*</span></label>
+                <select name="packaging" class="form-select" required>
+                    <option value="">Ընտրել</option>
+                    <option value="bag">Տոպրակում</option>
+                    <option value="box">Տուփում</option>
+                    <option value="none">Առանց փաթեթավորման</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Այլ նշումներ</label>
+                <textarea name="notes" class="form-textarea" placeholder="Նկարագրեք ձեր ցանկությունները մանրամասն..."></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Ձեր անունը <span class="required">*</span></label>
+                <input type="text" name="customer_name" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Հեռախոս <span class="required">*</span></label>
+                <input type="tel" name="customer_phone" class="form-input" placeholder="+374 XX XXX XXX" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Ակնկալվող առաքման ամսաթիվ</label>
+                <input type="date" name="delivery_date" class="form-input">
+            </div>
+        `;
+        } else if (offer.fields === 'corporate') {
+            formHTML = `
+            <div class="form-group">
+                <label class="form-label">Բրենդի անուն <span class="required">*</span></label>
+                <input type="text" name="brand_name" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Խաղալիքի տեսակ <span class="required">*</span></label>
+                <select name="toy_type" class="form-select" required>
+                    <option value="">Ընտրել</option>
+                    <option value="your_brand">Ձեր բրենդով</option>
+                    <option value="our_range">Մեր տեսականուց</option>
+                    <option value="mixed">Մեր տեսականուց ձեր բրենդով</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Քանակ <span class="required">*</span></label>
+                <input type="number" name="count" class="form-input" required>
+            </div>
+            <div class="form-checkbox">
+                <input type="checkbox" id="nominal" name="nominal">
+                <label for="nominal">Անվանական (անունների հետ)</label>
+            </div>
+            <div id="namesContainer" class="names-container">
+                <label class="form-label">Աշխատակիցների անուններ</label>
+                <div id="namesList"></div>
+                <button type="button" class="add-name-btn" onclick="addNameField()">+ Ավելացնել անուն</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Փաթեթավորման տեսակ <span class="required">*</span></label>
+                <select name="packaging" class="form-select" required>
+                    <option value="">Ընտրել</option>
+                    <option value="bag">Տոպրակում</option>
+                    <option value="box">Տուփում</option>
+                    <option value="none">Առանց փաթեթավորման</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Այլ նշումներ</label>
+                <textarea name="notes" class="form-textarea" placeholder="Նկարագրեք ձեր ցանկությունները մանրամասն..."></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Ձեր անունը <span class="required">*</span></label>
+                <input type="text" name="customer_name" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Հեռախոս <span class="required">*</span></label>
+                <input type="tel" name="customer_phone" class="form-input" placeholder="+374 XX XXX XXX" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Ակնկալվող առաքման ամսաթիվ</label>
+                <input type="date" name="delivery_date" class="form-input">
+            </div>
+        `;
+        } else if (offer.fields === 'special_for_you') {
+            formHTML = `
+            <div class="form-group">
+                <label class="form-label">Քանակ <span class="required">*</span></label>
+                <input type="number" name="count" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Անուններ <span class="required">*</span></label>
+                <div id="namesList"></div>
+                <button type="button" class="add-name-btn" onclick="addNameField()">+ Ավելացնել անուն</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Փաթեթավորման տեսակ <span class="required">*</span></label>
+                <select name="packaging" class="form-select" required>
+                    <option value="">Ընտրել</option>
+                    <option value="bag">Տոպրակում</option>
+                    <option value="box">Տուփում</option>
+                    <option value="none">Առանց փաթեթավորման</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Այլ նշումներ</label>
+                <textarea name="notes" class="form-textarea" placeholder="Նկարագրեք ձեր ցանկությունները մանրամասն..."></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Ձեր անունը <span class="required">*</span></label>
+                <input type="text" name="customer_name" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Հեռախոս <span class="required">*</span></label>
+                <input type="tel" name="customer_phone" class="form-input" placeholder="+374 XX XXX XXX" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Ակնկալվող առաքման ամսաթիվ</label>
+                <input type="date" name="delivery_date" class="form-input">
+            </div>
+        `;
+        } else if (offer.fields === 'christmas_together' || offer.fields === 'seasons_best') {
+            formHTML = `
+            <div class="form-checkbox">
+                <input type="checkbox" id="nominal" name="nominal">
+                <label data-translate="form.nominal">Nominal (with names)</label>
+            </div>
+            <div id="namesContainer" class="names-container">
+                <label data-translate="form.names" class="form-label">Names</label>
+                <div id="namesList"></div>
+                <button data-translate="form.add_name" type="button" class="add-name-btn" onclick="addNameField()">+ Ավելացնել անուն</button>
+            </div>
+            <div class="form-group">
+                <label data-translate="form.packaging" class="form-label">Փաթեթավորման տեսակ <span class="required">*</span></label>
+                <select name="packaging" class="form-select" required>
+                    <option data-translate="form.packaging.bag" value="bag">Տոպրակում</option>
+                    <option data-translate="form.packaging.box" value="box">Տուփում</option>
+                    <option data-translate="form.packaging.none" value="none">Առանց փաթեթավորման</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label data-translate="form.notes" class="form-label">Այլ նշումներ</label>
+                <textarea name="notes" class="form-textarea" placeholder="Նկարագրեք ձեր ցանկությունները մանրամասն..."></textarea>
+            </div>
+            <div class="form-group">
+                <label data-translate="form.customer_name" class="form-label">Ձեր անունը <span class="required">*</span></label>
+                <input type="text" name="customer_name" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label data-translate="form.customer_phone" class="form-label">Հեռախոս <span class="required">*</span></label>
+                <input type="tel" name="customer_phone" class="form-input" placeholder="+374 XX XXX XXX" required>
+            </div>
+            <div class="form-group">
+                <label data-translate="form.delivery_date" class="form-label">Ակնկալվող առաքման ամսաթիվ</label>
+                <input type="date" name="delivery_date" class="form-input">
+            </div>
+        `;
+        }
+
+        formHTML += '<button data-translate="form.submit" type="submit" class="submit-btn" id="submitBtn">🎁 Ուղարկել պատվերը</button>';
+        form.innerHTML = formHTML;
+
+        // Setup nominal checkbox handler
+        const nominalCheckbox = document.getElementById('nominal');
+        if (nominalCheckbox) {
+            nominalCheckbox.addEventListener('change', (e) => {
+                const namesContainer = document.getElementById('namesContainer');
+                if (e.target.checked) {
+                    namesContainer.classList.add('show');
+                    if (offer.fields === 'special_for_you') {
+                        addNameField();
+                    }
+                } else {
+                    namesContainer.classList.remove('show');
+                }
+            });
+        }
+
+        // For special_for_you offer, always show names
+        if (offer.fields === 'special_for_you') {
+            addNameField();
+        }
+
+        // Form submission
+        form.addEventListener('submit', handleFormSubmit);
+    }
+
+    let nameCounter = 0;
+
+    function addNameField() {
+        const namesList = document.getElementById('namesList');
+        const nameGroup = document.createElement('div');
+        nameGroup.className = 'name-input-group';
+        nameGroup.innerHTML = `
+        <input type="text" name="names[]" class="form-input" placeholder="Անուն" required>
+        <button type="button" class="remove-name-btn" onclick="removeNameField(this)">✕</button>
+    `;
+        namesList.appendChild(nameGroup);
+        nameCounter++;
+    }
+
+    function removeNameField(btn) {
+        btn.parentElement.remove();
+    }
+
+    async function handleFormSubmit(e) {
+        e.preventDefault();
+
+        const submitBtn = document.getElementById('submitBtn');
+        const formMessage = document.getElementById('formMessage');
+
+        // Validate product/image selection for product-based offers
+        if (offer.type === 'products' && selectedProducts.length === 0 && offer.fields !== 'corporate') {
+            showMessage('Խնդրում ենք ընտրել առնվազն մեկ ապրանք', 'error');
+            return;
+        }
+
+        if (offer.type === 'images' && selectedImages.length === 0) {
+            showMessage('Խնդրում ենք ընտրել առնվազն մեկ նկար', 'error');
+            return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = '⏳ Ուղարկվում է...';
+
+        const formData = new FormData(e.target);
+        const data = {
+            offer_type: offerType,
+            selected_products: offer.type === 'products' ? selectedProducts.map(p => p.name) : [],
+            selected_images: offer.type === 'images' ? selectedImages : []
+        };
+
+        // Collect form fields
+        for (let [key, value] of formData.entries()) {
+            if (key === 'names[]') {
+                if (!data.names) data.names = [];
+                data.names.push(value);
+            } else {
+                data[key] = value;
+            }
+        }
+
+        // Handle checkbox
+        data.nominal = document.getElementById('nominal')?.checked || false;
+
+        try {
+            const response = await fetch('/api/order_offer', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+                showMessage('✅ Շնորհակալություն! Ձեր պատվերը հաջողությամբ ուղարկվել է։ Մենք շուտով կկապվենք ձեզ հետ։', 'success');
+                e.target.reset();
+                selectedProducts = [];
+                selectedImages = [];
+                document.querySelectorAll('.product-card.selected').forEach(card => card.classList.remove('selected'));
+                document.querySelectorAll('.gallery-image.selected').forEach(img => img.classList.remove('selected'));
+                updateSelectedProductsList();
+                document.getElementById('namesContainer')?.classList.remove('show');
+            } else {
+                showMessage('❌ Սխալ է տեղի ունեցել։ Խնդրում ենք փորձել կրկին։', 'error');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showMessage('❌ Կապի խնդիր։ Խնդրում ենք ստուգել ինտերնետ կապը և փորձել կրկին։', 'error');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = '🎁 Ուղարկել պատվերը';
+        }
+    }
+
+    function showMessage(message, type) {
+        const formMessage = document.getElementById('formMessage');
+        formMessage.textContent = message;
+        formMessage.className = `message ${type} show`;
+        setTimeout(() => {
+            formMessage.classList.remove('show');
+        }, 5000);
+    }
+
+    // Snowflake animation
+    function createSnowflake() {
+        const snowflake = document.createElement('div');
+        snowflake.style.cssText = `
+        position: fixed;
+        top: -10px;
+        left: ${Math.random() * 100}%;
+        color: white;
+        font-size: 1.5em;
+        opacity: 0.8;
+        pointer-events: none;
+        z-index: 1;
+        animation: snowfall ${5 + Math.random() * 5}s linear forwards;
+    `;
+        snowflake.textContent = ['❄️', '✨', '⛄'][Math.floor(Math.random() * 3)];
+        document.getElementById('snowflakes-container').appendChild(snowflake);
+        setTimeout(() => snowflake.remove(), 10000);
+    }
+
+    const style = document.createElement('style');
+    style.textContent = `
+    @keyframes snowfall {
+        0% { transform: translateY(-10vh); opacity: 1; }
+        100% { transform: translateY(100vh); opacity: 0; }
+    }
+`;
+    document.head.appendChild(style);
+
+    setInterval(createSnowflake, 400);
+
+    // Initialize
+    loadCatalog();
+    renderForm();
+</script>
+
+{% endblock %}

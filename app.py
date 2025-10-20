@@ -97,13 +97,13 @@ def add_cors_headers(response):
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
-`
+
 @event.listens_for(Engine, "connect")
 def set_search_path(dbapi_connection, connection_record):
     cursor = dbapi_connection.cursor()
     cursor.execute(f"SET search_path TO {SCHEMA_NAME};")
     cursor.close()
-`
+
 
 # ===============================
 # Routes
@@ -228,6 +228,26 @@ def get_toy_price(toy_id):
 def product_detail(product_id):
     product = Product.query.get_or_404(product_id)
     return render_template('product.html', product=product)
+
+@app.route('/offers/<offer_type>')
+def offer_detail(offer_type):
+    offer_titles = {
+        'my_classroom': 'Իմ դասարան',
+        'corporate': 'Կորպորատիվ',
+        'christmas_together': 'Ամանորը միասին',
+        'sesons_best': 'Սեզոնի լավագույնները',
+        'special_for_you': 'Հատուկ քեզ համար'
+    }
+    offer_title = offer_titles.get(offer_type, 'Առաջարկ')
+    print(BASE_PREFIX)
+    return render_template('offer_details.html', offer_type=offer_type, offer_title=offer_title,  BASE_PREFIX=BASE_PREFIX)
+
+@app.route('/api/order_offer', methods=['POST'])
+def order_offer():
+    data = request.json
+    print(data)
+    # Save to database or send email
+    return jsonify({'success': True, 'message': 'Order received'})
 
 # ===============================
 # API Routes

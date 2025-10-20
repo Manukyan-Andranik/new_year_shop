@@ -14,6 +14,10 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             overflow-x: hidden;
             min-height: 100vh;
@@ -31,24 +35,18 @@
             background: linear-gradient(135deg, #0f3d1f 0%, #1a5a2d 50%, #0f3d1f 100%);
         }
 
-        /* Make sure header & footer stay on top */
         header,
         footer {
             position: relative;
-            /* usually already relative */
             z-index: 10;
-            /* ABOVE animated background */
         }
 
-        /* Sections except header/footer stay transparent */
         section {
             background: transparent !important;
             position: relative;
             z-index: 5;
-            /* between header/footer and background */
         }
 
-        /* Snowflakes */
         @keyframes snowfall {
             0% {
                 transform: translateY(-10vh);
@@ -72,7 +70,6 @@
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
         }
 
-        /* Toys layer */
         .animated-toys-container {
             position: fixed;
             top: 0;
@@ -149,8 +146,6 @@
             animation: randomWalk 16s ease-in-out infinite;
         }
 
-
-        /* Hero */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -197,7 +192,6 @@
             }
         }
 
-        /* Product section */
         .products-section {
             padding: 100px 20px;
         }
@@ -265,11 +259,209 @@
             opacity: 0.8;
             padding: 40px;
         }
+
+        /* 🌟 Offers Section */
+        .offers-section {
+            padding: 80px 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            margin: 60px auto;
+            max-width: 1400px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .offers-title {
+            text-align: center;
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            color: var(--snow-white);
+            margin-bottom: 50px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .offers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
+        }
+
+        .offer-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(15, 61, 31, 0.12);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(26, 90, 45, 0.1);
+        }
+
+        .offer-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(15, 61, 31, 0.25);
+        }
+
+        .offer-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #1a5a2d 0%, #0f3d1f 100%);
+        }
+
+        .offer-content {
+            padding: 24px;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .offer-content h3 {
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            color: #dc2626;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .offer-content p {
+            font-size: 0.95rem;
+            color: #4b5563;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .offer-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #1a5a2d 0%, #0f3d1f 100%);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(26, 90, 45, 0.3);
+            align-self: center;
+            border: none;
+        }
+
+        .offer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(26, 90, 45, 0.4);
+            background: linear-gradient(135deg, #0f3d1f 0%, #051a0c 100%);
+        }
+
+        .offer-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .offers-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+            .offers-section {
+                padding: 60px 20px;
+                margin: 40px 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .offers-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+
+            .offer-card {
+                border-radius: 12px;
+            }
+
+            .offer-image {
+                height: 160px;
+            }
+
+            .offer-content {
+                padding: 18px;
+            }
+
+            .offer-content h3 {
+                font-size: 1.1rem;
+                margin-bottom: 8px;
+            }
+
+            .offer-content p {
+                font-size: 0.85rem;
+                margin-bottom: 14px;
+            }
+
+            .offer-btn {
+                padding: 10px 20px;
+                font-size: 0.85rem;
+            }
+
+            .offers-title {
+                margin-bottom: 30px;
+            }
+
+            .offers-section {
+                padding: 40px 16px;
+                margin: 30px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .offers-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .offer-card {
+                border-radius: 10px;
+            }
+
+            .offer-image {
+                height: 140px;
+            }
+
+            .offer-content {
+                padding: 14px;
+            }
+
+            .offer-content h3 {
+                font-size: 0.95rem;
+                margin-bottom: 6px;
+            }
+
+            .offer-content p {
+                font-size: 0.8rem;
+                margin-bottom: 10px;
+                line-height: 1.4;
+            }
+
+            .offer-btn {
+                padding: 8px 16px;
+                font-size: 0.8rem;
+            }
+
+            .offers-title {
+                font-size: 1.6rem;
+                margin-bottom: 20px;
+            }
+
+            .offers-section {
+                padding: 30px 12px;
+                margin: 20px 5px;
+                border-radius: 16px;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <!-- Fixed background toys & snow -->
     <div class="global-animated-bg">
         <div class="animated-toys-container">
             <img src="{{ url_for('static', filename='images/animated_toys/1.png') }}" class="animated-toy" alt="Toy 1">
@@ -281,7 +473,6 @@
         <div id="snowflakes-container"></div>
     </div>
 
-    <!-- Hero -->
     <section class="hero">
         <div class="hero-content">
             <div class="snowglobe">🎄</div>
@@ -290,23 +481,74 @@
         </div>
     </section>
 
-    <!-- Products -->
-    <section class="products-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 data-translate="products.title">🎁 Մեր Կոլեկցիա</h2>
+    <!-- 🎀 Offers Section -->
+    <section class="offers-section" id="offers">
+        <h2 class="offers-title">Մեր Առաջարկները 🎁</h2>
+        <div class="offers-grid">
+
+            <!-- Իմ դասարան -->
+            <div class="offer-card">
+                <img src="{{ url_for('static', filename='images/offers/placeholders/my_classroom.jpg') }}" alt="Իմ դասարան"
+                    class="offer-image">
+                <div class="offer-content">
+                    <h3>🎓 Իմ դասարան</h3>
+                    <p>Նվիրեք աշակերտներին անկեղծ նվերներ ձեր սիրով պատրաստված։ Պատվիրեք դասարանի քանակով և ստացեք
+                        հատուկ զեղչեր 🎁</p>
+                    <a href="/offers/my_classroom" class="offer-btn">Դիտել մանրամասն</a>
+                </div>
             </div>
-            <div id="grid" class="grid">
-                <div class="empty-state" data-translate="products.loading">Բեռնում... ⏳</div>
+
+            <!-- Կորպորատիվ -->
+            <div class="offer-card">
+                <img src="{{ url_for('static', filename='images/offers/placeholders/corporate.jpg') }}" alt="Կորպորատիվ"
+                    class="offer-image">
+                <div class="offer-content">
+                    <h3>💼 Կորպորատիվ</h3>
+                    <p>Նվիրեք ձեր թիմին տոնական մթնոլորտ և յուրահատուկ փայտե խաղալիքներ՝ շնորհակալության նշան։</p>
+                    <a href="/offers/corporate" class="offer-btn">Դիտել մանրամասն</a>
+                </div>
+            </div>
+
+            <!-- Ամանորը միասին -->
+            <div class="offer-card">
+                <img src="{{ url_for('static', filename='images/offers/placeholders/christmas_together.jpg') }}" alt="Ամանորը միասին"
+                    class="offer-image">
+                <div class="offer-content">
+                    <h3>🏡 Ամանորը միասին</h3>
+                    <p>Ընտանեկան տոնական հավաքածուներ՝ լի սիրով, ժպիտներով և ձեռագործ հրաշքներով ❤️</p>
+                    <a href="/offers/christmas_together" class="offer-btn">Դիտել մանրամասն</a>
+                </div>
+            </div>
+
+            <!-- Սեզոնի լավագույնները -->
+            <div class="offer-card">
+                <img src="{{ url_for('static', filename='images/offers/placeholders/seasons_best.jpg') }}" alt="Սեզոնի լավագույնները"
+                    class="offer-image">
+                <div class="offer-content">
+                    <h3>🎁 Սեզոնի լավագույնները</h3>
+                    <p>Ամենապահանջված և ոգեշնչող փայտե խաղալիքները՝ այս տարվա տոնական հավաքածուից ✨</p>
+                    <a href="/offers/seasons_best" class="offer-btn">Դիտել մանրամասն</a>
+                </div>
+            </div>
+
+            <!-- Հատուկ քեզ համար -->
+            <div class="offer-card">
+                <img src="{{ url_for('static', filename='images/offers/placeholders/special_for_you.jpg') }}" alt="Հատուկ քեզ համար"
+                    class="offer-image">
+                <div class="offer-content">
+                    <h3>💖 Հատուկ քեզ համար</h3>
+                    <p>Անհատական նվերներ քո անունով, պատմությամբ և ցանկությամբ՝ յուրահատուկ տոնական հիշողություն։</p>
+                    <a href="/offers/special_for_you" class="offer-btn">Դիտել մանրամասն</a>
+                </div>
             </div>
         </div>
     </section>
+
 </body>
 {% endblock %}
 
 {% block scripts %}
 <script>
-    // Snow animation
     function createSnowflake() {
         const snowflake = document.createElement('div');
         snowflake.classList.add('snowflake');
@@ -317,44 +559,5 @@
         setTimeout(() => snowflake.remove(), 10000);
     }
     setInterval(createSnowflake, 400);
-
-    // Dynamic products
-    const BASE_URL = (() => {
-    const path = window.location.pathname;
-    if (path.startsWith('/mandarin')) {
-        return '/mandarin';
-    }
-    return '';
-})();
-    const API_LIST = "{{ API_LIST or '/api/product-types' }}";
-    const IMAGE_PREFIX = "{{ IMAGE_PREFIX or '/static/' }}";
-    const SHOP_URL = "{{ SHOP_URL or '/shop' }}";
-    const grid = document.getElementById("grid");
-
-    async function fetchAndRender() {
-        grid.innerHTML = `<div class="empty-state">Բեռնում... ⏳</div>`;
-       try {
-            const res = await fetch("{{BASE_PREFIX}}"+`${API_LIST}`);
-            const arr = await res.json();
-            grid.innerHTML = arr.length
-                ? arr.map(pt => `
-                    <div class="card">
-                        <a href={{BASE_PREFIX}}"${SHOP_URL}?type=${encodeURIComponent(pt.type)}" style="text-decoration:none;color:inherit;">
-                            <div class="image-wrap">
-                                <img src="${pt.image_url?.startsWith('http') ? pt.image_url : IMAGE_PREFIX + pt.image_url}" alt="${pt.title_hy || ''}">
-                            </div>
-                            <div class="card-body">
-                                <div class="card-title">${pt.title_hy || pt.title_en || pt.title_ru}</div>
-                                <div class="card-desc">${pt.description_hy || ''}</div>
-                            </div>
-                        </a>
-                    </div>
-                `).join('')
-                : `<div class="empty-state">Տեսակներ չեն գտնվել 🎄</div>`;
-        } catch (err) {
-            grid.innerHTML = `<div class="empty-state">⚠️ Չհաջողվեց բեռնել</div>`;
-        }
-    }
-    document.addEventListener('DOMContentLoaded', fetchAndRender);
 </script>
 {% endblock %}

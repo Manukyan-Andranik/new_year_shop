@@ -285,6 +285,30 @@ const translations = {
         // UI Elements
         "about.scroll.hint": "← Scroll horizontally → Or use arrows",
 
+        'offer.back': '← Back',
+        'offer.select_products': 'Select products',
+        'offer.select_images': 'Select images',
+        'form.title': '📝 Order Now',
+        'form.school_name': 'School Name',
+        'form.class_number': 'Class Number',
+        'form.student_count': 'Number of Students',
+        'form.boys_girls': 'Boys/Girls Count',
+        'form.nominal': 'Nominal (with names)',
+        'form.packaging': 'Packaging Type',
+        'form.packaging.bag': 'In Bag',
+        'form.packaging.box': 'In Box',
+        'form.packaging.none': 'Without Packaging',
+        'form.notes': 'Other Notes',
+        'form.customer_name': 'Your Name',
+        'form.customer_phone': 'Phone',
+        'form.delivery_date': 'Expected Delivery Date',
+        'form.count': 'Quantity',
+        'form.names': 'Names',
+        'form.toy_type': 'Toy Type',
+        'form.submit': '🎁 Submit Order',
+        'message.select_product': 'Please select at least one product',
+        'message.select_image': 'Please select at least one image',
+        'message.success': '✅ Thank you! Your order has been sent successfully. We will contact you shortly.'
 
     },
 
@@ -569,7 +593,34 @@ const translations = {
         "about.cta.button": "Բացել Խանութը →",
 
         // UI Elements
-        "about.scroll.hint": "← Սահեցրեք հորիզոնական → Կամ օգտագործեք սլաքները"
+        "about.scroll.hint": "← Սահեցրեք հորիզոնական → Կամ օգտագործեք սլաքները",
+
+        'offer.back': '← Վերադառնալ',
+        'offer.select_products': 'Ընտրեք ապրանքներ',
+        'offer.select_images': 'Ընտրեք նկարներ',
+        'form.title': '📝 Պատվիրել հիմա',
+        'form.select': 'Ընտրել',
+
+        'form.school_name': 'Դպրոցի անուն',
+        'form.class_number': 'Դասարանի համար',
+        'form.student_count': 'Աշակերտների քանակ',
+        'form.boys_girls': 'Տղաների/աղջիկների քանակ',
+        'form.nominal': 'Անվանական (անունների հետ)',
+        'form.packaging': 'Փաթեթավորման տեսակ',
+        'form.packaging.bag': 'Տոպրակում',
+        'form.packaging.box': 'Տուփում',
+        'form.packaging.none': 'Առանց փաթեթավորման',
+        'form.notes': 'Այլ նշումներ',
+        'form.customer_name': 'Ձեր անունը',
+        'form.customer_phone': 'Հեռախոս',
+        'form.delivery_date': 'Ակնկալվող առաքման ամսաթիվ',
+        'form.count': 'Քանակ',
+        'form.names': 'Անուններ',
+        'form.toy_type': 'Խաղալիքի տեսակ',
+        'form.submit': '🎁 Ուղարկել պատվերը',
+        'message.select_product': 'Խնդրում ենք ընտրել առնվազն մեկ ապրանք',
+        'message.select_image': 'Խնդրում ենք ընտրել առնվազն մեկ նկար',
+        'message.success': '✅ Շնորհակալություն! Ձեր պատվերը հաջողությամբ ուղարկվել է։ Մենք շուտով կկապվենք ձեզ հետ։'
 
     },
 
@@ -857,12 +908,39 @@ const translations = {
         "about.cta.button": "Открыть Магазин →",
 
         // UI Elements
-        "about.scroll.hint": "← Прокрутите горизонтально → Или используйте стрелки"
+        "about.scroll.hint": "← Прокрутите горизонтально → Или используйте стрелки",
+        'offer.back': '← Назад',
+        'offer.select_products': 'Выбрать товары',
+        'offer.select_images': 'Выбрать изображения',
+        'form.title': '📝 Заказать сейчас',
+        'form.school_name': 'Название школы',
+        'form.class_number': 'Номер класса',
+        'form.student_count': 'Количество учеников',
+        'form.boys_girls': 'Количество мальчиков/девочек',
+        'form.nominal': 'Именная (с именами)',
+        'form.packaging': 'Тип упаковки',
+        'form.packaging.bag': 'В пакете',
+        'form.packaging.box': 'В коробке',
+        'form.packaging.none': 'Без упаковки',
+        'form.notes': 'Другие заметки',
+        'form.customer_name': 'Ваше имя',
+        'form.customer_phone': 'Телефон',
+        'form.delivery_date': 'Ожидаемая дата доставки',
+        'form.count': 'Количество',
+        'form.names': 'Имена',
+        'form.toy_type': 'Тип игрушки',
+        'form.submit': '🎁 Отправить заказ',
+        'message.select_product': 'Пожалуйста, выберите хотя бы один товар',
+        'message.select_image': 'Пожалуйста, выберите хотя бы одно изображение',
+        'message.success': '✅ Спасибо! Ваш заказ успешно отправлен. Мы свяжемся с вами в ближайшее время.'
     }
 };
 
 async function loadProducts(lang = 'en') {
-    const response = await fetch(`api/products?lang=${lang}`);
+    const response = await fetch(`${BASE_PREFIX}api/products?lang=${lang}`);
+
+
+
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const products = await response.json();
 
