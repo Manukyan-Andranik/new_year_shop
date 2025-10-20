@@ -775,7 +775,7 @@ The best of the season is here—a blend of warmth, style, and uniqueness.`
     async function loadCatalog() {
         if (offer.type === 'products') {
             try {
-                const response = await fetch(`/api/products?lang=${currentLang}&type=all`);
+                const response = await fetch(`${BASE_PREFIX}/api/products?lang=${currentLang}&type=all`);
                 products = await response.json();
                 renderProducts();
             } catch (error) {
@@ -1145,7 +1145,7 @@ The best of the season is here—a blend of warmth, style, and uniqueness.`
         data.nominal = document.getElementById('nominal')?.checked || false;
 
         try {
-            const response = await fetch('/api/order_offer', {
+            const response = await fetch(`${BASE_PREFIX}/api/order_offer`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
