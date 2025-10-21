@@ -483,7 +483,7 @@
 
     <!-- 🎀 Offers Section -->
     <section class="offers-section" id="offers">
-        <h2 class="offers-title">Մեր Առաջարկները 🎁</h2>
+        <h2 data-translate="offers.title" class="offers-title">Մեր Առաջարկները 🎁</h2>
         <div class="offers-grid">
 
             <!-- Իմ դասարան -->
@@ -491,10 +491,9 @@
                 <img src="{{ url_for('static', filename='images/offers/placeholders/my_classroom.jpg') }}" alt="Իմ դասարան"
                     class="offer-image">
                 <div class="offer-content">
-                    <h3>🎓 Իմ դասարան</h3>
-                    <p>Նվիրեք աշակերտներին անկեղծ նվերներ ձեր սիրով պատրաստված։ Պատվիրեք դասարանի քանակով և ստացեք
-                        հատուկ զեղչեր 🎁</p>
-                    <a href="{{BASE_PREFIX}}offers/my_classroom" class="offer-btn">Դիտել մանրամասն</a>
+                    <h3 data-translate="offers.my_classroom.title">🎓 Իմ դասարան</h3>
+                    <p data-translate="offers.my_classroom.description">Նվիրեք աշակերտներին անկեղծ նվերներ ձեր սիրով պատրաստված։ Պատվիրեք դասարանի քանակով և ստացեք հատուկ զեղչեր 🎁</p>
+                    <a data-translate="offers.show_more" href="{{BASE_PREFIX}}offers/my_classroom" class="offer-btn">Դիտել մանրամասն</a>
                 </div>
             </div>
 
@@ -503,9 +502,9 @@
                 <img src="{{ url_for('static', filename='images/offers/placeholders/corporate.jpg') }}" alt="Կորպորատիվ"
                     class="offer-image">
                 <div class="offer-content">
-                    <h3>💼 Կորպորատիվ</h3>
-                    <p>Նվիրեք ձեր թիմին տոնական մթնոլորտ և յուրահատուկ փայտե խաղալիքներ՝ շնորհակալության նշան։</p>
-                    <a href="{{BASE_PREFIX}}offers/corporate" class="offer-btn">Դիտել մանրամասն</a>
+                    <h3 data-translate="offers.corporate.title">💼 Կորպորատիվ</h3>
+                    <p data-translate="offers.corporate.description">Նվիրեք ձեր թիմին տոնական մթնոլորտ և յուրահատուկ փայտե խաղալիքներ՝ շնորհակալության նշան։</p>
+                    <a data-translate="offers.show_more" href="{{BASE_PREFIX}}offers/corporate" class="offer-btn">Դիտել մանրամասն</a>
                 </div>
             </div>
 
@@ -514,9 +513,9 @@
                 <img src="{{ url_for('static', filename='images/offers/placeholders/christmas_together.jpg') }}" alt="Ամանորը միասին"
                     class="offer-image">
                 <div class="offer-content">
-                    <h3>🏡 Ամանորը միասին</h3>
-                    <p>Ընտանեկան տոնական հավաքածուներ՝ լի սիրով, ժպիտներով և ձեռագործ հրաշքներով ❤️</p>
-                    <a href="{{BASE_PREFIX}}offers/christmas_together" class="offer-btn">Դիտել մանրամասն</a>
+                    <h3 data-translate="offers.christmas_together.title">🏡 Ամանորը միասին</h3>
+                    <p data-translate="offers.christmas_together.description">Ընտանեկան տոնական հավաքածուներ՝ լի սիրով, ժպիտներով և ձեռագործ հրաշքներով ❤️</p>
+                    <a data-translate="offers.show_more" href="{{BASE_PREFIX}}offers/christmas_together" class="offer-btn">Դիտել մանրամասն</a>
                 </div>
             </div>
 
@@ -525,9 +524,9 @@
                 <img src="{{ url_for('static', filename='images/offers/placeholders/seasons_best.jpg') }}" alt="Սեզոնի լավագույնները"
                     class="offer-image">
                 <div class="offer-content">
-                    <h3>🎁 Սեզոնի լավագույնները</h3>
-                    <p>Ամենապահանջված և ոգեշնչող փայտե խաղալիքները՝ այս տարվա տոնական հավաքածուից ✨</p>
-                    <a href="{{BASE_PREFIX}}offers/seasons_best" class="offer-btn">Դիտել մանրամասն</a>
+                    <h3 data-translate="offers.seasons_best.title">🎁 Սեզոնի լավագույնները</h3>
+                    <p data-translate="offers.seasons_best.description">Ամենապահանջված և ոգեշնչող փայտե խաղալիքները՝ այս տարվա տոնական հավաքածուից ✨</p>
+                    <a data-translate="offers.show_more" href="{{BASE_PREFIX}}offers/seasons_best" class="offer-btn">Դիտել մանրամասն</a>
                 </div>
             </div>
 
@@ -536,9 +535,9 @@
                 <img src="{{ url_for('static', filename='images/offers/placeholders/special_for_you.jpg') }}" alt="Հատուկ քեզ համար"
                     class="offer-image">
                 <div class="offer-content">
-                    <h3>💖 Հատուկ քեզ համար</h3>
-                    <p>Անհատական նվերներ քո անունով, պատմությամբ և ցանկությամբ՝ յուրահատուկ տոնական հիշողություն։</p>
-                    <a href="{{BASE_PREFIX}}offers/special_for_you" class="offer-btn">Դիտել մանրամասն</a>
+                    <h3 data-translate="offers.special_for_you.title">💖 Հատուկ քեզ համար</h3>
+                    <p data-translate="offers.special_for_you.description">Անհատական նվերներ քո անունով, պատմությամբ և ցանկությամբ՝ յուրահատուկ տոնական հիշողություն։</p>
+                    <a data-translate="offers.show_more" href="{{BASE_PREFIX}}offers/special_for_you" class="offer-btn">Դիտել մանրամասն</a>
                 </div>
             </div>
         </div>

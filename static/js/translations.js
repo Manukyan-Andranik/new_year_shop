@@ -285,6 +285,24 @@ const translations = {
         // UI Elements
         "about.scroll.hint": "← Scroll horizontally → Or use arrows",
 
+        // Offers section
+        "offers.title": "🎁 Special Holiday Offers",
+        "offers.my_classroom.title": "My Classroom",
+        "offers.my_classroom.description": "Gift your students heartfelt presents handmade with love. Order for your entire class and get special discounts 🎁",
+    
+        "offers.corporate.title": "Corporate",
+        "offers.corporate.description": "Bring a festive spirit to your team with unique wooden toys as a token of appreciation.",
+    
+        "offers.christmas_together.title": "Christmas Together",
+        "offers.christmas_together.description": "Family holiday sets filled with love, smiles, and handmade wonders ❤️",
+    
+        "offers.seasons_best.title": "Season’s Best",
+        "offers.seasons_best.description": "The most popular and inspiring wooden toys from this year’s festive collection ✨",
+    
+        "offers.special_for_you.title": "Special for You",
+        "offers.special_for_you.description": "Personalized gifts with your name, story, and wishes — a truly unique holiday memory.",
+        "offers.show_more": "View Details",
+
         'offer.back': '← Back',
         'offer.select_products': 'Select products',
         'offer.select_images': 'Select images',
@@ -297,6 +315,7 @@ const translations = {
         'form.packaging': 'Packaging Type',
         'form.packaging.bag': 'In Bag',
         'form.packaging.box': 'In Box',
+        'form.select': 'Select',
         'form.packaging.none': 'Without Packaging',
         'form.notes': 'Other Notes',
         'form.customer_name': 'Your Name',
@@ -308,7 +327,35 @@ const translations = {
         'form.submit': '🎁 Submit Order',
         'message.select_product': 'Please select at least one product',
         'message.select_image': 'Please select at least one image',
-        'message.success': '✅ Thank you! Your order has been sent successfully. We will contact you shortly.'
+        'message.success': '✅ Thank you! Your order has been sent successfully. We will contact you shortly.',
+        'form.boys_girls.placeholder': 'E.g. 15 boys / 12 girls',
+        'form.nominal': 'Nominal (with names)',
+        'form.packaging': 'Packaging Type',
+        'form.packaging.bag': 'In Bag',
+        'form.packaging.box': 'In Box',
+        'form.packaging.none': 'Without Packaging',
+        'form.notes': 'Other Notes',
+        'form.notes.placeholder': 'Describe your wishes in detail...',
+        'form.customer_name': 'Your Name',
+        'form.customer_phone': 'Phone',
+        'form.customer_phone.placeholder': '+374 XX XXX XXX',
+        'form.delivery_date': 'Expected Delivery Date',
+        'form.count': 'Quantity',
+        'form.names': 'Names',
+        'form.toy_type': 'Toy Type',
+        'form.toy_type.your_brand': 'With Your Brand',
+        'form.toy_type.our_range': 'From Our Range',
+        'form.toy_type.mixed': 'Mixed (Our Range + Your Brand)',
+        'form.brand_name': 'Brand Name',
+        'form.add_name': 'Add Name',
+        'form.remove_name': 'Remove',
+        'form.submit': '🎁 Submit Order',
+        'form.submit.sending': '⏳ Sending...',
+        'message.select_product': 'Please select at least one product',
+        'message.select_image': 'Please select at least one image',
+        'message.success': '✅ Thank you! Your order has been sent successfully. We will contact you shortly.',
+        'message.error': '❌ An error occurred. Please try again.',
+        'message.connection_error': '❌ Connection problem. Please check your internet connection and try again.'
 
     },
 
@@ -595,6 +642,23 @@ const translations = {
         // UI Elements
         "about.scroll.hint": "← Սահեցրեք հորիզոնական → Կամ օգտագործեք սլաքները",
 
+        // Offers section
+        "offers.title": "Մեր Առաջարկները 🎁",
+        "offers.my_classroom.title": "Իմ դասարան",
+        "offers.my_classroom.description": "Նվիրեք աշակերտներին անկեղծ նվերներ ձեր սիրով պատրաստված։ Պատվիրեք դասարանի քանակով և ստացեք հատուկ զեղչեր 🎁",
+        "offers.corporate.title": "Կորպորատիվ",
+        "offers.corporate.description": "Նվիրեք ձեր թիմին տոնական մթնոլորտ և յուրահատուկ փայտե խաղալիքներ՝ շնորհակալության նշան։",
+        
+        "offers.christmas_together.title": "Ամանորը միասին",
+        "offers.christmas_together.description": "Ընտանեկան տոնական հավաքածուներ՝ լի սիրով, ժպիտներով և ձեռագործ հրաշքներով ❤️",
+        
+        "offers.seasons_best.title": "Սեզոնի լավագույնները",
+        "offers.seasons_best.description": "Ամենապահանջված և ոգեշնչող փայտե խաղալիքները՝ այս տարվա տոնական հավաքածուից ✨",
+        
+        "offers.special_for_you.title": "Հատուկ քեզ համար",
+        "offers.special_for_you.description": "Անհատական նվերներ քո անունով, պատմությամբ և ցանկությամբ՝ յուրահատուկ տոնական հիշողություն։",
+        "offers.show_more": "Դիտել մանրամասն",
+
         'offer.back': '← Վերադառնալ',
         'offer.select_products': 'Ընտրեք ապրանքներ',
         'offer.select_images': 'Ընտրեք նկարներ',
@@ -620,7 +684,35 @@ const translations = {
         'form.submit': '🎁 Ուղարկել պատվերը',
         'message.select_product': 'Խնդրում ենք ընտրել առնվազն մեկ ապրանք',
         'message.select_image': 'Խնդրում ենք ընտրել առնվազն մեկ նկար',
-        'message.success': '✅ Շնորհակալություն! Ձեր պատվերը հաջողությամբ ուղարկվել է։ Մենք շուտով կկապվենք ձեզ հետ։'
+        'message.success': '✅ Շնորհակալություն! Ձեր պատվերը հաջողությամբ ուղարկվել է։ Մենք շուտով կկապվենք ձեզ հետ։',
+        'form.boys_girls.placeholder': 'Օրինակ: 15 տղա / 12 աղջիկ',
+        'form.nominal': 'Անվանական (անունների հետ)',
+        'form.packaging': 'Փաթեթավորման տեսակ',
+        'form.packaging.bag': 'Տոպրակում',
+        'form.packaging.box': 'Տուփում',
+        'form.packaging.none': 'Առանց փաթեթավորման',
+        'form.notes': 'Այլ նշումներ',
+        'form.notes.placeholder': 'Նկարագրեք ձեր ցանկությունները մանրամասն...',
+        'form.customer_name': 'Ձեր անունը',
+        'form.customer_phone': 'Հեռախոս',
+        'form.customer_phone.placeholder': '+374 XX XXX XXX',
+        'form.delivery_date': 'Ակնկալվող առաքման ամսաթիվ',
+        'form.count': 'Քանակ',
+        'form.names': 'Անուններ',
+        'form.toy_type': 'Խաղալիքի տեսակ',
+        'form.toy_type.your_brand': 'Ձեր բրենդով',
+        'form.toy_type.our_range': 'Մեր տեսականուց',
+        'form.toy_type.mixed': 'Մեր տեսականուց ձեր բրենդով',
+        'form.brand_name': 'Բրենդի անուն',
+        'form.add_name': 'Ավելացնել անուն',
+        'form.remove_name': 'Հեռացնել',
+        'form.submit': '🎁 Ուղարկել պատվերը',
+        'form.submit.sending': '⏳ Ուղարկվում է...',
+        'message.select_product': 'Խնդրում ենք ընտրել առնվազն մեկ ապրանք',
+        'message.select_image': 'Խնդրում ենք ընտրել առնվազն մեկ նկար',
+        'message.success': '✅ Շնորհակալություն! Ձեր պատվերը հաջողությամբ ուղարկվել է։ Մենք շուտով կկապվենք ձեզ հետ։',
+        'message.error': '❌ Սխալ է տեղի ունեցել։ Խնդրում ենք փորձել կրկին։',
+        'message.connection_error': '❌ Կապի խնդիր։ Խնդրում ենք ստուգել ինտերնետ կապը և փորձել կրկին։'
 
     },
 
@@ -907,6 +999,26 @@ const translations = {
         "about.cta.title": "Наша Коллекция Здесь",
         "about.cta.button": "Открыть Магазин →",
 
+        // Offers section
+        "offers.title": "🎁 Специальные Предложения",
+        "offers.my_classroom.title": "Мой класс",
+        "offers.my_classroom.description": "Подарите своим ученикам искренние подарки, сделанные с любовью. Закажите на весь класс и получите специальные скидки 🎁",
+    
+        "offers.corporate.title": "Корпоративные",
+        "offers.corporate.description": "Создайте праздничное настроение в команде с уникальными деревянными игрушками в знак благодарности.",
+    
+        "offers.christmas_together.title": "Новый год вместе",
+        "offers.christmas_together.description": "Семейные праздничные наборы, наполненные любовью, улыбками и ручными чудесами ❤️",
+    
+        "offers.seasons_best.title": "Лучшее сезона",
+        "offers.seasons_best.description": "Самые популярные и вдохновляющие деревянные игрушки из праздничной коллекции этого года ✨",
+    
+        "offers.special_for_you.title": "Особенно для тебя",
+        "offers.special_for_you.description": "Персональные подарки с твоим именем, историей и пожеланиями — уникальное праздничное воспоминание.",
+    
+        "offers.show_more": "Посмотреть подробнее",
+
+
         // UI Elements
         "about.scroll.hint": "← Прокрутите горизонтально → Или используйте стрелки",
         'offer.back': '← Назад',
@@ -932,7 +1044,44 @@ const translations = {
         'form.submit': '🎁 Отправить заказ',
         'message.select_product': 'Пожалуйста, выберите хотя бы один товар',
         'message.select_image': 'Пожалуйста, выберите хотя бы одно изображение',
-        'message.success': '✅ Спасибо! Ваш заказ успешно отправлен. Мы свяжемся с вами в ближайшее время.'
+        'message.success': '✅ Спасибо! Ваш заказ успешно отправлен. Мы свяжемся с вами в ближайшее время.',
+        'offer.back': '← Назад',
+        'offer.select_products': 'Выбрать товары',
+        'offer.select_images': 'Выбрать изображения',
+        'form.title': '📝 Заказать сейчас',
+        'form.select': 'Выбрать',
+        'form.school_name': 'Название школы',
+        'form.class_number': 'Номер класса',
+        'form.student_count': 'Количество учеников',
+        'form.boys_girls': 'Количество мальчиков/девочек',
+        'form.boys_girls.placeholder': 'Например: 15 мальчиков / 12 девочек',
+        'form.nominal': 'Именная (с именами)',
+        'form.packaging': 'Тип упаковки',
+        'form.packaging.bag': 'В пакете',
+        'form.packaging.box': 'В коробке',
+        'form.packaging.none': 'Без упаковки',
+        'form.notes': 'Другие заметки',
+        'form.notes.placeholder': 'Опишите ваши пожелания подробно...',
+        'form.customer_name': 'Ваше имя',
+        'form.customer_phone': 'Телефон',
+        'form.customer_phone.placeholder': '+374 XX XXX XXX',
+        'form.delivery_date': 'Ожидаемая дата доставки',
+        'form.count': 'Количество',
+        'form.names': 'Имена',
+        'form.toy_type': 'Тип игрушки',
+        'form.toy_type.your_brand': 'С вашим брендом',
+        'form.toy_type.our_range': 'Из нашего ассортимента',
+        'form.toy_type.mixed': 'Смешанный (наш ассортимент + ваш бренд)',
+        'form.brand_name': 'Название бренда',
+        'form.add_name': 'Добавить имя',
+        'form.remove_name': 'Удалить',
+        'form.submit': '🎁 Отправить заказ',
+        'form.submit.sending': '⏳ Отправляется...',
+        'message.select_product': 'Пожалуйста, выберите хотя бы один товар',
+        'message.select_image': 'Пожалуйста, выберите хотя бы одно изображение',
+        'message.success': '✅ Спасибо! Ваш заказ успешно отправлен. Мы свяжемся с вами в ближайшее время.',
+        'message.error': '❌ Произошла ошибка. Пожалуйста, попробуйте снова.',
+        'message.connection_error': '❌ Проблема с соединением. Пожалуйста, проверьте интернет-соединение и попробуйте снова.'
     }
 };
 

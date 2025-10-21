@@ -249,14 +249,10 @@
 
     .gallery-image.selected {
         position: relative;
-        /* needed for the pseudo-element */
         border: 5px solid #1a5a2d;
-        /* green border */
         box-shadow: 0 6px 20px rgba(26, 90, 45, 0.4);
         opacity: 0.7;
-        /* slightly transparent */
         border-radius: 8px;
-        /* optional: rounded corners */
     }
 
     .gallery-image.selected::after {
@@ -266,13 +262,10 @@
         left: 50%;
         transform: translate(-50%, -50%);
         font-size: 2rem;
-        /* adjust size */
         color: #1a5a2d;
         font-weight: bold;
         pointer-events: none;
-        /* allows clicks to pass through */
     }
-
 
     /* Order Form Section */
     .form-section {
@@ -519,7 +512,6 @@
         }
     }
 </style>
-
 <div class="global-animated-bg">
     <div class="animated-toys-container">
         <img src="{{ url_for('static', filename='images/animated_toys/1.png') }}" class="animated-toy" alt="">
@@ -530,7 +522,7 @@
 </div>
 
 <div class="offer-details-container">
-    <a href="{{ url_for('home') }}#offers" class="back-btn">← Վերադառնալ</a>
+    <a href="{{ url_for('home') }}#offers" class="back-btn" data-translate="offer.back">← Back</a>
 
     <div class="offer-header">
         <h1 id="offerTitle" class="offer-title"></h1>
@@ -540,18 +532,18 @@
     <div class="content-grid">
         <!-- Left: Product Catalog or Image Gallery -->
         <div class="catalog-section">
-            <h2 data-translate="offer.select_products" class="catalog-title" id="catalogTitle">Ընտրեք ապրանքներ</h2>
+            <h2 id="catalogTitle" class="catalog-title"></h2>
             <div id="productGrid" class="product-grid"></div>
             <div id="imageGallery" class="image-gallery" style="display: none;"></div>
         </div>
 
         <!-- Right: Order Form -->
         <div class="form-section">
-            <h2 class="form-title">📝 Պատվիրել հիմա</h2>
+            <h2 class="form-title" data-translate="form.title">📝 Order Now</h2>
             <div class="message" id="formMessage"></div>
 
             <div id="selectedProductsList" class="selected-products-list" style="display: none;">
-                <div class="selected-products-title">Ընտրված ապրանքներ:</div>
+                <div class="selected-products-title" data-translate="order.preview">Order Preview</div>
                 <div id="selectedProductsContent"></div>
             </div>
 
@@ -559,10 +551,10 @@
         </div>
     </div>
 </div>
+
 <script>
-    
     const BASE_PREFIX = "{{ BASE_PREFIX }}";
-    const currentLang = window.translationManager ? window.translationManager.currentLanguage : 'hy';
+    let currentLang = window.translationManager ? window.translationManager.currentLanguage : 'hy';
 
     const offerData = {
         my_classroom: {
@@ -571,33 +563,15 @@
             translations: {
                 hy: {
                     title: '🎓 Իմ դասարան',
-                    description: `Նվիրեք ձեր աշակերտներին կամ ուսանողներին փոքրիկ, բայց անկեղծ նվերներ՝ ձեր սիրով պատրաստված։
-
-Պատվիրեք ձեր դասարանի քանակով և ստացեք հատուկ զեղչեր 🎁
-
-Սա հիանալի տարբերակ է աշակերտներին շնորհակալություն հայտնելու, տոնական տրամադրություն ստեղծելու և միասին ժպտալու համար։
-
-Յուրաքանչյուր նվերի համար կարող եք ընտրել առանձին փաթեթավորում, իսկ մենք մեր կողմից յուրաքանչյուր տոպրակի մեջ կդնենք փոքրիկ անակնկալ և տոնական մաղթանքներ ձեր սաների համար ✨`
+                    description: `Նվիրեք ձեր աշակերտներին կամ ուսանողներին փոքրիկ, բայց անկեղծ նվերներ՝ ձեր սիրով պատրաստված։\n\nՊատվիրեք ձեր դասարանի քանակով և ստացեք հատուկ զեղչեր 🎁\n\nՍա հիանալի տարբերակ է աշակերտներին շնորհակալություն հայտնելու, տոնական տրամադրություն ստեղծելու և միասին ժպտալու համար։\n\nՅուրաքանչյուր նվերի համար կարող եք ընտրել առանձին փաթեթավորում, իսկ մենք մեր կողմից յուրաքանչյուր տոպրակի մեջ կդնենք փոքրիկ անակնկալ և տոնական մաղթանքներ ձեր սաների համար ✨`
                 },
                 en: {
                     title: '🎓 My Classroom',
-                    description: `Give your students or classmates small but heartfelt gifts made with love.
-
-Order in quantities for your class and receive special discounts 🎁
-
-It’s a wonderful way to thank your students, create a festive atmosphere, and share smiles together.
-
-Each gift can come with individual packaging, and we’ll include a small surprise and a festive wish for every student ✨`
+                    description: `Give your students or classmates small but heartfelt gifts made with love.\n\nOrder in quantities for your class and receive special discounts 🎁\n\nIt's a wonderful way to thank your students, create a festive atmosphere, and share smiles together.\n\nEach gift can come with individual packaging, and we'll include a small surprise and a festive wish for every student ✨`
                 },
                 ru: {
                     title: '🎓 Мой класс',
-                    description: `Подарите своим ученикам или студентам небольшие, но искренние подарки, сделанные с любовью.
-
-Закажите по количеству вашего класса и получите специальные скидки 🎁
-
-Это отличный способ поблагодарить учеников, создать праздничное настроение и вместе улыбнуться.
-
-Для каждого подарка можно выбрать индивидуальную упаковку, а мы положим в каждый пакетик маленький сюрприз и праздничные пожелания ✨`
+                    description: `Подарите своим ученикам или студентам небольшие, но искренние подарки, сделанные с любовью.\n\nЗакажите по количеству вашего класса и получите специальные скидки 🎁\n\nЭто отличный способ поблагодарить учеников, создать праздничное настроение и вместе улыбнуться.\n\nДля каждого подарка можно выбрать индивидуальную упаковку, а мы положим в каждый пакетик маленький сюрприз и праздничные пожелания ✨`
                 }
             }
         },
@@ -608,39 +582,15 @@ Each gift can come with individual packaging, and we’ll include a small surpri
             translations: {
                 hy: {
                     title: '💼 Կորպորատիվ',
-                    description: `Նվիրեք ձեր թիմին ջերմ մթնոլորտ և տոնական տրամադրություն 💫
-
-Գնեք ձեր աշխատակիցների կամ գործընկերների համար ձեռագործ փայտե խաղալիքներ՝ որպես շնորհակալության և հոգատարության նշան։
-
-Ամրապնդեք թիմային ոգին և զարդարեք ձեր գրասենյակի տոնածառը յուրահատուկ փայտե խաղալիքներով։
-
-Պատվերները կարող են լինել մեր տեսականուց կամ ձեր բրենդային պատկերներով։
-
-Մենք կփաթեթավորենք յուրաքանչյուր նվեր առանձին՝ ավելացնելով տոնական մաղթանքներ և փոքրիկ անակնկալներ յուրաքանչյուր տոպրակի մեջ 🎄`
+                    description: `Նվիրեք ձեր թիմին ջերմ մթնոլորտ և տոնական տրամադրություն 💫\n\nԳնեք ձեր աշխատակիցների կամ գործընկերների համար ձեռագործ փայտե խաղալիքներ՝ որպես շնորհակալության և հոգատարության նշան։\n\nԱմրապնդեք թիմային ոգին և զարդարեք ձեր գրասենյակի տոնածառը յուրահատուկ փայտե խաղալիքներով։\n\nՊատվերները կարող են լինել մեր տեսականուց կամ ձեր բրենդային պատկերներով։\n\nՄենք կփաթեթավորենք յուրաքանչյուր նվեր առանձին՝ ավելացնելով տոնական մաղթանքներ և փոքրիկ անակնկալներ յուրաքանչյուր տոպրակի մեջ 🎄`
                 },
                 en: {
                     title: '💼 Corporate Gifts',
-                    description: `Bring warmth and a festive mood to your team 💫
-
-Give your employees or partners handcrafted wooden ornaments as a token of gratitude and care.
-
-Strengthen team spirit and decorate your office tree with unique wooden ornaments.
-
-Orders can be from our catalog or customized with your brand imagery.
-
-We’ll pack each gift individually, adding festive wishes and small surprises to every bag 🎄`
+                    description: `Bring warmth and a festive mood to your team 💫\n\nGive your employees or partners handcrafted wooden ornaments as a token of gratitude and care.\n\nStrengthen team spirit and decorate your office tree with unique wooden ornaments.\n\nOrders can be from our catalog or customized with your brand imagery.\n\nWe'll pack each gift individually, adding festive wishes and small surprises to every bag 🎄`
                 },
                 ru: {
                     title: '💼 Корпоративные подарки',
-                    description: `Подарите своей команде тепло и праздничное настроение 💫
-
-Подарите сотрудникам или партнёрам деревянные игрушки ручной работы в знак благодарности и заботы.
-
-Укрепите командный дух и украсьте офисную ёлку уникальными деревянными украшениями.
-
-Заказы могут быть как из нашей коллекции, так и с вашим брендингом.
-
-Мы упакуем каждый подарок отдельно, добавив праздничные пожелания и маленькие сюрпризы 🎄`
+                    description: `Подарите своей команде тепло и праздничное настроение 💫\n\nПодарите сотрудникам или партнёрам деревянные игрушки ручной работы в знак благодарности и заботы.\n\nУкрепите командный дух и украсьте офисную ёлку уникальными деревянными украшениями.\n\nЗаказы могут быть как из нашей коллекции, так и с вашим брендингом.\n\nМы упакуем каждый подарок отдельно, добавив праздничные пожелания и маленькие сюрпризы 🎄`
                 }
             }
         },
@@ -651,33 +601,15 @@ We’ll pack each gift individually, adding festive wishes and small surprises t
             translations: {
                 hy: {
                     title: '💖 Հատուկ քեզ համար',
-                    description: `Քո անունով հրաշք 💌
-
-Այս բաժնում յուրաքանչյուր նվեր կարող է դառնալ բացառիկ՝ քո անունով, պատմությամբ և ցանկությամբ։
-
-Պատվիրեք անվանական փայտե խաղալիքներ ձեր մտերիմների համար և դարձրեք ձեր նվերները իսկապես անձնական ու անկրկնելի։
-
-Սա այն մանրուքն է, որը սովորական նվերը դարձնում է հիշողություն՝ սիրով պատրաստված հենց քեզ համար։`
+                    description: `Քո անունով հրաշք 💌\n\nԱյս բաժնում յուրաքանչյուր նվեր կարող է դառնալ բացառիկ՝ քո անունով, պատմությամբ և ցանկությամբ։\n\nՊատվիրեք անվանական փայտե խաղալիքներ ձեր մտերիմների համար և դարձրեք ձեր նվերները իսկապես անձնական ու անկրկնելի։\n\nՍա այն մանրուքն է, որը սովորական նվերը դարձնում է հիշողություն՝ սիրով պատրաստված հենց քեզ համար։`
                 },
                 en: {
                     title: '💖 Special for You',
-                    description: `A personalized miracle 💌
-
-Every gift here can become unique—with your name, story, and wishes.
-
-Order personalized wooden ornaments for your loved ones and make your gifts truly personal and unforgettable.
-
-It’s the little detail that turns an ordinary gift into a cherished memory made with love.`
+                    description: `A personalized miracle 💌\n\nEvery gift here can become unique—with your name, story, and wishes.\n\nOrder personalized wooden ornaments for your loved ones and make your gifts truly personal and unforgettable.\n\nIt's the little detail that turns an ordinary gift into a cherished memory made with love.`
                 },
                 ru: {
                     title: '💖 Особенный для тебя',
-                    description: `Чудо с твоим именем 💌
-
-Каждый подарок здесь может стать уникальным — с твоим именем, историей и пожеланием.
-
-Закажите именные деревянные игрушки для своих близких и сделайте свои подарки по-настоящему личными и неповторимыми.
-
-Это та деталь, которая превращает обычный подарок в память, созданную с любовью.`
+                    description: `Чудо с твоим именем 💌\n\nКаждый подарок здесь может стать уникальным — с твоим именем, историей и пожеланием.\n\nЗакажите именные деревянные игрушки для своих близких и сделайте свои подарки по-настоящему личными и неповторимыми.\n\nЭто та деталь, которая превращает обычный подарок в память, созданную с любовью.`
                 }
             }
         },
@@ -690,33 +622,15 @@ It’s the little detail that turns an ordinary gift into a cherished memory mad
             translations: {
                 hy: {
                     title: '🏡 Ամանորը միասին',
-                    description: `Տոնեք ընտանիքի հետ՝ լի սիրով, ժպիտներով և փայտե հրաշքներով ❤️
-
-Նվիրեք ձեր սիրելիներին փոքրիկ խաղալիքներ կամ զարդարեք ընտանեկան տոնածառը մեր ձեռագործ հավաքածուներով։
-
-Մեր նախապես ընտրված հավաքածուների շնորհիվ դուք հեշտությամբ կընտրեք մի քանի գեղեցիկ խաղալիք՝ նախատեսված ձեր ընտանիքի յուրաքանչյուր անդամի համար։
-
-Ամանորը միասին՝ որտեղ յուրաքանչյուր խաղալիք պատմում է ձեր տան ջերմ պատմությունը 🌟`
+                    description: `Տոնեք ընտանիքի հետ՝ լի սիրով, ժպիտներով և փայտե հրաշքներով ❤️\n\nՆվիրեք ձեր սիրելիներին փոքրիկ խաղալիքներ կամ զարդարեք ընտանեկան տոնածառը մեր ձեռագործ հավաքածուներով։\n\nՄեր նախապես ընտրված հավաքածուների շնորհիվ դուք հեշտությամբ կընտրեք մի քանի գեղեցիկ խաղալիք՝ նախատեսված ձեր ընտանիքի յուրաքանչյուր անդամի համար։\n\nԱմանորը միասին՝ որտեղ յուրաքանչյուր խաղալիք պատմում է ձեր տան ջերմ պատմությունը 🌟`
                 },
                 en: {
                     title: '🏡 Christmas Together',
-                    description: `Celebrate with your family—full of love, smiles, and wooden magic ❤️
-
-Give your loved ones small gifts or decorate your family tree with our handcrafted sets.
-
-With our pre-selected collections, you can easily choose several beautiful ornaments for each family member.
-
-Christmas together—where every ornament tells the warm story of your home 🌟`
+                    description: `Celebrate with your family—full of love, smiles, and wooden magic ❤️\n\nGive your loved ones small gifts or decorate your family tree with our handcrafted sets.\n\nWith our pre-selected collections, you can easily choose several beautiful ornaments for each family member.\n\nChristmas together—where every ornament tells the warm story of your home 🌟`
                 },
                 ru: {
                     title: '🏡 Новый год вместе',
-                    description: `Празднуйте с семьёй — с любовью, улыбками и деревянными чудесами ❤️
-
-Подарите близким небольшие игрушки или украсьте семейную ёлку нашими наборами ручной работы.
-
-Благодаря нашим готовым коллекциям вы легко подберёте красивые украшения для каждого члена семьи.
-
-Новый год вместе — где каждая игрушка рассказывает тёплую историю вашего дома 🌟`
+                    description: `Празднуйте с семьёй — с любовью, улыбками и деревянными чудесами ❤️\n\nПодарите близким небольшие игрушки или украсьте семейную ёлку нашими наборами ручной работы.\n\nБлагодаря нашим готовым коллекциям вы легко подберёте красивые украшения для каждого члена семьи.\n\nНовый год вместе — где каждая игрушка рассказывает тёплую историю вашего дома 🌟`
                 }
             }
         },
@@ -729,47 +643,48 @@ Christmas together—where every ornament tells the warm story of your home 🌟
             translations: {
                 hy: {
                     title: '🎁 Սեզոնի լավագույնները',
-                    description: `Յուրաքանչյուր տարի մենք ստեղծում ենք նոր, տոնական և սիրով լի խաղալիքներ, որոնք արագ դառնում են սեզոնի սիրելիներ։
-
-Այս բաժնում կգտնեք մեր ամենաթարմ, պահանջված և ոգեշնչող խաղալիքները՝ պատրաստված բարձրորակ փայտից և վառ գույներով։
-
-Հասցրեք ընտրել ձեր սիրելի տարբերակները, քանի դեռ դրանք հասանելի են, և զարդարեք ձեր տոնը մեզ հետ միասին ✨
-
-Այս սեզոնի լավագույնները այստեղ են՝ տաքության, ոճի և յուրահատկության միախառնմամբ։`
+                    description: `Յուրաքանչյուր տարի մենք ստեղծում ենք նոր, տոնական և սիրով լի խաղալիքներ, որոնք արագ դառնում են սեզոնի սիրելիներ։\n\nԱյս բաժնում կգտնեք մեր ամենաթարմ, պահանջված և ոգեշնչող խաղալիքները՝ պատրաստված բարձրորակ փայտից և վառ գույներով։\n\nՀասցրեք ընտրել ձեր սիրելի տարբերակները, քանի դեռ դրանք հասանելի են, և զարդարեք ձեր տոնը մեզ հետ միասին ✨\n\nԱյս սեզոնի լավագույնները այստեղ են՝ տաքության, ոճի և յուրահատկության միախառնմամբ։`
                 },
                 en: {
-                    title: '🎁 Season’s Best',
-                    description: `Every year we create new, festive, and love-filled ornaments that quickly become seasonal favorites.
-
-Here you’ll find our freshest, most popular, and inspiring wooden creations—crafted from high-quality wood and painted in bright colors.
-
-Choose your favorites while they’re available and make your celebration shine ✨
-
-The best of the season is here—a blend of warmth, style, and uniqueness.`
+                    title: "🎁 Season's Best",
+                    description: `Every year we create new, festive, and love-filled ornaments that quickly become seasonal favorites.\n\nHere you'll find our freshest, most popular, and inspiring wooden creations—crafted from high-quality wood and painted in bright colors.\n\nChoose your favorites while they're available and make your celebration shine ✨\n\nThe best of the season is here—a blend of warmth, style, and uniqueness.`
                 },
                 ru: {
                     title: '🎁 Лучшее сезона',
-                    description: `Каждый год мы создаём новые, праздничные и наполненные любовью игрушки, которые быстро становятся фаворитами сезона.
-
-Здесь вы найдёте самые свежие, востребованные и вдохновляющие изделия из дерева — из качественного материала и ярких красок.
-
-Успейте выбрать свои любимые варианты, пока они доступны, и отпразднуйте вместе с нами ✨
-
-Лучшее этого сезона — это сочетание тепла, стиля и уникальности.`
+                    description: `Каждый год мы создаём новые, праздничные и наполненные любовью игрушки, которые быстро становятся фаворитами сезона.\n\nЗдесь вы найдёте самые свежие, востребованные и вдохновляющие изделия из дерева — из качественного материала и ярких красок.\n\nУспейте выбрать свои любимые варианты, пока они доступны, и отпразднуйте вместе с нами ✨\n\nЛучшее этого сезона — это сочетание тепла, стиля и уникальности.`
                 }
             }
         }
     };
-
     const offerType = '{{ offer_type }}' || 'my_classroom';
     const offer = offerData[offerType];
 
-    document.getElementById('offerTitle').textContent = offer.translations[currentLang].title;
-    document.getElementById('offerDescription').textContent = offer.translations[currentLang].description;
+    // Flag to prevent recursive updates
+    let isUpdatingContent = false;
+
+    function updateOfferContent() {
+        if (isUpdatingContent) return;
+        isUpdatingContent = true;
+
+        currentLang = window.translationManager ? window.translationManager.currentLanguage : 'hy';
+
+        // Update offer title and description directly (without triggering translation system)
+        document.getElementById('offerTitle').textContent = offer.translations[currentLang].title;
+        document.getElementById('offerDescription').textContent = offer.translations[currentLang].description;
+
+        // Update catalog title directly
+        const catalogTitle = document.getElementById('catalogTitle');
+        if (offer.type === 'products') {
+            catalogTitle.textContent = window.t ? window.t('offer.select_products') : 'Ընտրեք ապրանքներ';
+        } else {
+            catalogTitle.textContent = window.t ? window.t('offer.select_images') : 'Ընտրեք նկարներ';
+        }
+
+        isUpdatingContent = false;
+    }
 
     let selectedProducts = [];
     let selectedImages = [];
-    let products = [];
 
     // Load products or images based on offer type
     async function loadCatalog() {
@@ -845,7 +760,6 @@ The best of the season is here—a blend of warmth, style, and uniqueness.`
         document.getElementById('productGrid').style.display = 'none';
         const gallery = document.getElementById('imageGallery');
         gallery.style.display = 'grid';
-        document.getElementById('catalogTitle').textContent = 'Ընտրեք նկարներ';
 
         const imageCount = offer.imagesCount;
         for (let i = 1; i <= imageCount; i++) {
@@ -873,150 +787,152 @@ The best of the season is here—a blend of warmth, style, and uniqueness.`
 
     // Render form based on offer type
     function renderForm() {
+        if (isUpdatingContent) return;
+
         const form = document.getElementById('orderForm');
         let formHTML = '';
 
         if (offer.fields === 'my_classroom') {
             formHTML = `
             <div class="form-group">
-                <label class="form-label">Դպրոցի անուն <span class="required">*</span></label>
+                <label class="form-label">${window.t ? window.t('form.school_name') : 'Դպրոցի անուն'} <span class="required">*</span></label>
                 <input type="text" name="school_name" class="form-input" required>
             </div>
             <div class="form-group">
-                <label class="form-label">Դասարանի համար <span class="required">*</span></label>
+                <label class="form-label">${window.t ? window.t('form.class_number') : 'Դասարանի համար'} <span class="required">*</span></label>
                 <input type="text" name="class_number" class="form-input" required>
             </div>
             <div class="form-group">
-                <label class="form-label">Աշակերտների քանակ <span class="required">*</span></label>
+                <label class="form-label">${window.t ? window.t('form.student_count') : 'Աշակերտների քանակ'} <span class="required">*</span></label>
                 <input type="number" name="student_count" class="form-input" required>
             </div>
             <div class="form-group">
-                <label class="form-label">Տղաների/աղջիկների քանակ</label>
-                <input type="text" name="boys_girls" class="form-input" placeholder="Օրինակ: 15 տղա / 12 աղջիկ">
+                <label class="form-label">${window.t ? window.t('form.boys_girls') : 'Տղաների/աղջիկների քանակ'}</label>
+                <input type="text" name="boys_girls" class="form-input" placeholder="${window.t ? window.t('form.boys_girls.placeholder') : 'Օրինակ: 15 տղա / 12 աղջիկ'}">
             </div>
             <div class="form-checkbox">
                 <input type="checkbox" id="nominal" name="nominal">
-                <label for="nominal">Անվանական (անունների հետ)</label>
+                <label for="nominal">${window.t ? window.t('form.nominal') : 'Անվանական (անունների հետ)'}</label>
             </div>
             <div id="namesContainer" class="names-container">
-                <label class="form-label">Աշակերտների անուններ</label>
+                <label class="form-label">${window.t ? window.t('form.names') : 'Անուններ'}</label>
                 <div id="namesList"></div>
-                <button type="button" class="add-name-btn" onclick="addNameField()">+ Ավելացնել անուն</button>
+                <button type="button" class="add-name-btn" onclick="addNameField()">+ ${window.t ? window.t('form.add_name') : 'Ավելացնել անուն'}</button>
             </div>
             <div class="form-group">
-                <label class="form-label">Փաթեթավորման տեսակ <span class="required">*</span></label>
+                <label class="form-label">${window.t ? window.t('form.packaging') : 'Փաթեթավորման տեսակ'} <span class="required">*</span></label>
                 <select name="packaging" class="form-select" required>
-                    <option value="">Ընտրել</option>
-                    <option value="bag">Տոպրակում</option>
-                    <option value="box">Տուփում</option>
-                    <option value="none">Առանց փաթեթավորման</option>
+
+                    <option value="bag">${window.t ? window.t('form.packaging.bag') : 'Տոպրակում'}</option>
+                    <option value="box">${window.t ? window.t('form.packaging.box') : 'Տուփում'}</option>
+                    <option value="none">${window.t ? window.t('form.packaging.none') : 'Առանց փաթեթավորման'}</option>
                 </select>
             </div>
             <div class="form-group">
-                <label class="form-label">Այլ նշումներ</label>
-                <textarea name="notes" class="form-textarea" placeholder="Նկարագրեք ձեր ցանկությունները մանրամասն..."></textarea>
+                <label class="form-label">${window.t ? window.t('form.notes') : 'Այլ նշումներ'}</label>
+                <textarea name="notes" class="form-textarea" placeholder="${window.t ? window.t('form.notes.placeholder') : 'Նկարագրեք ձեր ցանկությունները մանրամասն...'}"></textarea>
             </div>
             <div class="form-group">
-                <label class="form-label">Ձեր անունը <span class="required">*</span></label>
+                <label class="form-label">${window.t ? window.t('form.customer_name') : 'Ձեր անունը'} <span class="required">*</span></label>
                 <input type="text" name="customer_name" class="form-input" required>
             </div>
             <div class="form-group">
-                <label class="form-label">Հեռախոս <span class="required">*</span></label>
-                <input type="tel" name="customer_phone" class="form-input" placeholder="+374 XX XXX XXX" required>
+                <label class="form-label">${window.t ? window.t('form.customer_phone') : 'Հեռախոս'} <span class="required">*</span></label>
+                <input type="tel" name="customer_phone" class="form-input" placeholder="${window.t ? window.t('form.customer_phone.placeholder') : '+374 XX XXX XXX'}" required>
             </div>
             <div class="form-group">
-                <label class="form-label">Ակնկալվող առաքման ամսաթիվ</label>
+                <label class="form-label">${window.t ? window.t('form.delivery_date') : 'Ակնկալվող առաքման ամսաթիվ'}</label>
                 <input type="date" name="delivery_date" class="form-input">
             </div>
         `;
         } else if (offer.fields === 'corporate') {
             formHTML = `
             <div class="form-group">
-                <label class="form-label">Բրենդի անուն <span class="required">*</span></label>
+                <label class="form-label">${window.t ? window.t('form.brand_name') : 'Բրենդի անուն'} <span class="required">*</span></label>
                 <input type="text" name="brand_name" class="form-input" required>
             </div>
             <div class="form-group">
-                <label class="form-label">Խաղալիքի տեսակ <span class="required">*</span></label>
+                <label class="form-label">${window.t ? window.t('form.toy_type') : 'Խաղալիքի տեսակ'} <span class="required">*</span></label>
                 <select name="toy_type" class="form-select" required>
-                    <option value="">Ընտրել</option>
-                    <option value="your_brand">Ձեր բրենդով</option>
-                    <option value="our_range">Մեր տեսականուց</option>
-                    <option value="mixed">Մեր տեսականուց ձեր բրենդով</option>
+
+                    <option value="your_brand">${window.t ? window.t('form.toy_type.your_brand') : 'Ձեր բրենդով'}</option>
+                    <option value="our_range">${window.t ? window.t('form.toy_type.our_range') : 'Մեր տեսականուց'}</option>
+                    <option value="mixed">${window.t ? window.t('form.toy_type.mixed') : 'Մեր տեսականուց ձեր բրենդով'}</option>
                 </select>
             </div>
             <div class="form-group">
-                <label class="form-label">Քանակ <span class="required">*</span></label>
+                <label class="form-label">${window.t ? window.t('form.count') : 'Քանակ'} <span class="required">*</span></label>
                 <input type="number" name="count" class="form-input" required>
             </div>
             <div class="form-checkbox">
                 <input type="checkbox" id="nominal" name="nominal">
-                <label for="nominal">Անվանական (անունների հետ)</label>
+                <label for="nominal">${window.t ? window.t('form.nominal') : 'Անվանական (անունների հետ)'}</label>
             </div>
             <div id="namesContainer" class="names-container">
-                <label class="form-label">Աշխատակիցների անուններ</label>
+                <label class="form-label">${window.t ? window.t('form.names') : 'Անուններ'}</label>
                 <div id="namesList"></div>
-                <button type="button" class="add-name-btn" onclick="addNameField()">+ Ավելացնել անուն</button>
+                <button type="button" class="add-name-btn" onclick="addNameField()">+ ${window.t ? window.t('form.add_name') : 'Ավելացնել անուն'}</button>
             </div>
             <div class="form-group">
-                <label class="form-label">Փաթեթավորման տեսակ <span class="required">*</span></label>
+                <label class="form-label">${window.t ? window.t('form.packaging') : 'Փաթեթավորման տեսակ'} <span class="required">*</span></label>
                 <select name="packaging" class="form-select" required>
-                    <option value="">Ընտրել</option>
-                    <option value="bag">Տոպրակում</option>
-                    <option value="box">Տուփում</option>
-                    <option value="none">Առանց փաթեթավորման</option>
+
+                    <option value="bag">${window.t ? window.t('form.packaging.bag') : 'Տոպրակում'}</option>
+                    <option value="box">${window.t ? window.t('form.packaging.box') : 'Տուփում'}</option>
+                    <option value="none">${window.t ? window.t('form.packaging.none') : 'Առանց փաթեթավորման'}</option>
                 </select>
             </div>
             <div class="form-group">
-                <label class="form-label">Այլ նշումներ</label>
-                <textarea name="notes" class="form-textarea" placeholder="Նկարագրեք ձեր ցանկությունները մանրամասն..."></textarea>
+                <label class="form-label">${window.t ? window.t('form.notes') : 'Այլ նշումներ'}</label>
+                <textarea name="notes" class="form-textarea" placeholder="${window.t ? window.t('form.notes.placeholder') : 'Նկարագրեք ձեր ցանկությունները մանրամասն...'}"></textarea>
             </div>
             <div class="form-group">
-                <label class="form-label">Ձեր անունը <span class="required">*</span></label>
+                <label class="form-label">${window.t ? window.t('form.customer_name') : 'Ձեր անունը'} <span class="required">*</span></label>
                 <input type="text" name="customer_name" class="form-input" required>
             </div>
             <div class="form-group">
-                <label class="form-label">Հեռախոս <span class="required">*</span></label>
-                <input type="tel" name="customer_phone" class="form-input" placeholder="+374 XX XXX XXX" required>
+                <label class="form-label">${window.t ? window.t('form.customer_phone') : 'Հեռախոս'} <span class="required">*</span></label>
+                <input type="tel" name="customer_phone" class="form-input" placeholder="${window.t ? window.t('form.customer_phone.placeholder') : '+374 XX XXX XXX'}" required>
             </div>
             <div class="form-group">
-                <label class="form-label">Ակնկալվող առաքման ամսաթիվ</label>
+                <label class="form-label">${window.t ? window.t('form.delivery_date') : 'Ակնկալվող առաքման ամսաթիվ'}</label>
                 <input type="date" name="delivery_date" class="form-input">
             </div>
         `;
         } else if (offer.fields === 'special_for_you') {
             formHTML = `
             <div class="form-group">
-                <label class="form-label">Քանակ <span class="required">*</span></label>
+                <label class="form-label">${window.t ? window.t('form.count') : 'Քանակ'} <span class="required">*</span></label>
                 <input type="number" name="count" class="form-input" required>
             </div>
             <div class="form-group">
-                <label class="form-label">Անուններ <span class="required">*</span></label>
+                <label class="form-label">${window.t ? window.t('form.names') : 'Անուններ'} <span class="required">*</span></label>
                 <div id="namesList"></div>
-                <button type="button" class="add-name-btn" onclick="addNameField()">+ Ավելացնել անուն</button>
+                <button type="button" class="add-name-btn" onclick="addNameField()">+ ${window.t ? window.t('form.add_name') : 'Ավելացնել անուն'}</button>
             </div>
             <div class="form-group">
-                <label class="form-label">Փաթեթավորման տեսակ <span class="required">*</span></label>
+                <label class="form-label">${window.t ? window.t('form.packaging') : 'Փաթեթավորման տեսակ'} <span class="required">*</span></label>
                 <select name="packaging" class="form-select" required>
-                    <option value="">Ընտրել</option>
-                    <option value="bag">Տոպրակում</option>
-                    <option value="box">Տուփում</option>
-                    <option value="none">Առանց փաթեթավորման</option>
+
+                    <option value="bag">${window.t ? window.t('form.packaging.bag') : 'Տոպրակում'}</option>
+                    <option value="box">${window.t ? window.t('form.packaging.box') : 'Տուփում'}</option>
+                    <option value="none">${window.t ? window.t('form.packaging.none') : 'Առանց փաթեթավորման'}</option>
                 </select>
             </div>
             <div class="form-group">
-                <label class="form-label">Այլ նշումներ</label>
-                <textarea name="notes" class="form-textarea" placeholder="Նկարագրեք ձեր ցանկությունները մանրամասն..."></textarea>
+                <label class="form-label">${window.t ? window.t('form.notes') : 'Այլ նշումներ'}</label>
+                <textarea name="notes" class="form-textarea" placeholder="${window.t ? window.t('form.notes.placeholder') : 'Նկարագրեք ձեր ցանկությունները մանրամասն...'}"></textarea>
             </div>
             <div class="form-group">
-                <label class="form-label">Ձեր անունը <span class="required">*</span></label>
+                <label class="form-label">${window.t ? window.t('form.customer_name') : 'Ձեր անունը'} <span class="required">*</span></label>
                 <input type="text" name="customer_name" class="form-input" required>
             </div>
             <div class="form-group">
-                <label class="form-label">Հեռախոս <span class="required">*</span></label>
-                <input type="tel" name="customer_phone" class="form-input" placeholder="+374 XX XXX XXX" required>
+                <label class="form-label">${window.t ? window.t('form.customer_phone') : 'Հեռախոս'} <span class="required">*</span></label>
+                <input type="tel" name="customer_phone" class="form-input" placeholder="${window.t ? window.t('form.customer_phone.placeholder') : '+374 XX XXX XXX'}" required>
             </div>
             <div class="form-group">
-                <label class="form-label">Ակնկալվող առաքման ամսաթիվ</label>
+                <label class="form-label">${window.t ? window.t('form.delivery_date') : 'Ակնկալվող առաքման ամսաթիվ'}</label>
                 <input type="date" name="delivery_date" class="form-input">
             </div>
         `;
@@ -1024,41 +940,42 @@ The best of the season is here—a blend of warmth, style, and uniqueness.`
             formHTML = `
             <div class="form-checkbox">
                 <input type="checkbox" id="nominal" name="nominal">
-                <label data-translate="form.nominal">Nominal (with names)</label>
+                <label for="nominal">${window.t ? window.t('form.nominal') : 'Անվանական (անունների հետ)'}</label>
             </div>
             <div id="namesContainer" class="names-container">
-                <label data-translate="form.names" class="form-label">Names</label>
+                <label class="form-label">${window.t ? window.t('form.names') : 'Անուններ'}</label>
                 <div id="namesList"></div>
-                <button data-translate="form.add_name" type="button" class="add-name-btn" onclick="addNameField()">+ Ավելացնել անուն</button>
+                <button type="button" class="add-name-btn" onclick="addNameField()">+ ${window.t ? window.t('form.add_name') : 'Ավելացնել անուն'}</button>
             </div>
             <div class="form-group">
-                <label data-translate="form.packaging" class="form-label">Փաթեթավորման տեսակ <span class="required">*</span></label>
+                <label class="form-label">${window.t ? window.t('form.packaging') : 'Փաթեթավորման տեսակ'} <span class="required">*</span></label>
                 <select name="packaging" class="form-select" required>
-                    <option data-translate="form.packaging.bag" value="bag">Տոպրակում</option>
-                    <option data-translate="form.packaging.box" value="box">Տուփում</option>
-                    <option data-translate="form.packaging.none" value="none">Առանց փաթեթավորման</option>
+
+                    <option value="bag">${window.t ? window.t('form.packaging.bag') : 'Տոպրակում'}</option>
+                    <option value="box">${window.t ? window.t('form.packaging.box') : 'Տուփում'}</option>
+                    <option value="none">${window.t ? window.t('form.packaging.none') : 'Առանց փաթեթավորման'}</option>
                 </select>
             </div>
             <div class="form-group">
-                <label data-translate="form.notes" class="form-label">Այլ նշումներ</label>
-                <textarea name="notes" class="form-textarea" placeholder="Նկարագրեք ձեր ցանկությունները մանրամասն..."></textarea>
+                <label class="form-label">${window.t ? window.t('form.notes') : 'Այլ նշումներ'}</label>
+                <textarea name="notes" class="form-textarea" placeholder="${window.t ? window.t('form.notes.placeholder') : 'Նկարագրեք ձեր ցանկությունները մանրամասն...'}"></textarea>
             </div>
             <div class="form-group">
-                <label data-translate="form.customer_name" class="form-label">Ձեր անունը <span class="required">*</span></label>
+                <label class="form-label">${window.t ? window.t('form.customer_name') : 'Ձեր անունը'} <span class="required">*</span></label>
                 <input type="text" name="customer_name" class="form-input" required>
             </div>
             <div class="form-group">
-                <label data-translate="form.customer_phone" class="form-label">Հեռախոս <span class="required">*</span></label>
-                <input type="tel" name="customer_phone" class="form-input" placeholder="+374 XX XXX XXX" required>
+                <label class="form-label">${window.t ? window.t('form.customer_phone') : 'Հեռախոս'} <span class="required">*</span></label>
+                <input type="tel" name="customer_phone" class="form-input" placeholder="${window.t ? window.t('form.customer_phone.placeholder') : '+374 XX XXX XXX'}" required>
             </div>
             <div class="form-group">
-                <label data-translate="form.delivery_date" class="form-label">Ակնկալվող առաքման ամսաթիվ</label>
+                <label class="form-label">${window.t ? window.t('form.delivery_date') : 'Ակնկալվող առաքման ամսաթիվ'}</label>
                 <input type="date" name="delivery_date" class="form-input">
             </div>
         `;
         }
 
-        formHTML += '<button data-translate="form.submit" type="submit" class="submit-btn" id="submitBtn">🎁 Ուղարկել պատվերը</button>';
+        formHTML += `<button type="submit" class="submit-btn" id="submitBtn">${window.t ? window.t('form.submit') : '🎁 Ուղարկել պատվերը'}</button>`;
         form.innerHTML = formHTML;
 
         // Setup nominal checkbox handler
@@ -1093,8 +1010,8 @@ The best of the season is here—a blend of warmth, style, and uniqueness.`
         const nameGroup = document.createElement('div');
         nameGroup.className = 'name-input-group';
         nameGroup.innerHTML = `
-        <input type="text" name="names[]" class="form-input" placeholder="Անուն" required>
-        <button type="button" class="remove-name-btn" onclick="removeNameField(this)">✕</button>
+        <input type="text" name="names[]" class="form-input" placeholder="${window.t ? window.t('form.names') : 'Անուն'}" required>
+        <button type="button" class="remove-name-btn" onclick="removeNameField(this)">${window.t ? window.t('form.remove_name') : '✕'}</button>
     `;
         namesList.appendChild(nameGroup);
         nameCounter++;
@@ -1112,17 +1029,17 @@ The best of the season is here—a blend of warmth, style, and uniqueness.`
 
         // Validate product/image selection for product-based offers
         if (offer.type === 'products' && selectedProducts.length === 0 && offer.fields !== 'corporate') {
-            showMessage('Խնդրում ենք ընտրել առնվազն մեկ ապրանք', 'error');
+            showMessage(window.t ? window.t('message.select_product') : 'Խնդրում ենք ընտրել առնվազն մեկ ապրանք', 'error');
             return;
         }
 
         if (offer.type === 'images' && selectedImages.length === 0) {
-            showMessage('Խնդրում ենք ընտրել առնվազն մեկ նկար', 'error');
+            showMessage(window.t ? window.t('message.select_image') : 'Խնդրում ենք ընտրել առնվազն մեկ նկար', 'error');
             return;
         }
 
         submitBtn.disabled = true;
-        submitBtn.textContent = '⏳ Ուղարկվում է...';
+        submitBtn.innerHTML = window.t ? window.t('form.submit.sending') : '⏳ Ուղարկվում է...';
 
         const formData = new FormData(e.target);
         const data = {
@@ -1154,7 +1071,7 @@ The best of the season is here—a blend of warmth, style, and uniqueness.`
             const result = await response.json();
 
             if (response.ok && result.success) {
-                showMessage('✅ Շնորհակալություն! Ձեր պատվերը հաջողությամբ ուղարկվել է։ Մենք շուտով կկապվենք ձեզ հետ։', 'success');
+                showMessage(window.t ? window.t('message.success') : '✅ Շնորհակալություն! Ձեր պատվերը հաջողությամբ ուղարկվել է։ Մենք շուտով կկապվենք ձեզ հետ։', 'success');
                 e.target.reset();
                 selectedProducts = [];
                 selectedImages = [];
@@ -1163,14 +1080,14 @@ The best of the season is here—a blend of warmth, style, and uniqueness.`
                 updateSelectedProductsList();
                 document.getElementById('namesContainer')?.classList.remove('show');
             } else {
-                showMessage('❌ Սխալ է տեղի ունեցել։ Խնդրում ենք փորձել կրկին։', 'error');
+                showMessage(window.t ? window.t('message.error') : '❌ Սխալ է տեղի ունեցել։ Խնդրում ենք փորձել կրկին։', 'error');
             }
         } catch (error) {
             console.error('Error:', error);
-            showMessage('❌ Կապի խնդիր։ Խնդրում ենք ստուգել ինտերնետ կապը և փորձել կրկին։', 'error');
+            showMessage(window.t ? window.t('message.connection_error') : '❌ Կապի խնդիր։ Խնդրում ենք ստուգել ինտերնետ կապը և փորձել կրկին։', 'error');
         } finally {
             submitBtn.disabled = false;
-            submitBtn.textContent = '🎁 Ուղարկել պատվերը';
+            submitBtn.innerHTML = window.t ? window.t('form.submit') : '🎁 Ուղարկել պատվերը';
         }
     }
 
@@ -1213,9 +1130,24 @@ The best of the season is here—a blend of warmth, style, and uniqueness.`
 
     setInterval(createSnowflake, 400);
 
+    // Language change handler
+    function setupLanguageListener() {
+        console.log('Language listener set up');
+        window.addEventListener('languageChanged', function (event) {
+            updateOfferContent();
+            loadCatalog()
+            renderForm();
+        });
+    }
+
     // Initialize
-    loadCatalog();
-    renderForm();
+    document.addEventListener('DOMContentLoaded', function () {
+        updateOfferContent();
+        loadCatalog();
+        renderForm();
+        setupLanguageListener();
+    });
 </script>
 
 {% endblock %}
+[file content end]
