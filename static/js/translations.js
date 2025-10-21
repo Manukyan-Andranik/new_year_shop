@@ -150,8 +150,8 @@ const translations = {
         'category.lights': 'Lights',
         'category.stars': 'Stars',
         'category.figures': 'Figures',
-        'category.for_business': 'For Business',
-        'category.product_types': 'To Product Types',
+        'category.collections': 'Collections',
+        'category.offers_section': '🎄 Special Offers',
 
         "about.title": "About Our Christmas Magic Shop",
         "about.hero.title": "Our Christmas Story",
@@ -506,8 +506,8 @@ const translations = {
         'category.lights': 'Լույսեր',
         'category.stars': 'Աստղեր',
         'category.figures': 'Բնորդներ',
-        'category.for_business': 'Բիզնեսի համար',
-        'category.product_types': 'Ապրանքի Տեսակներ',
+        'category.collections': 'Հավաքածուներ',
+        'category.offers_section': '🎄 Հատուկ առաջարկներ',
         // About Page
 
         "about.title": "Մեր Ամանորյա Կախարդություն Խանութի Մասին",
@@ -867,8 +867,8 @@ const translations = {
         'category.lights': 'Огни',
         'category.stars': 'Звезды',
         'category.figures': 'Фигурки',
-        'category.for_business': 'Для Бизнеса',
-        'category.product_types': 'Типы Товаров',
+        'category.collections': 'Коллекции',
+        'category.offers_section': '🎄 Специальные Предложения',
         // About Page
         "about.title": "О Нашем Магазине новогодного Волшебства",
         "about.hero.title": "Наша новогодная История",
