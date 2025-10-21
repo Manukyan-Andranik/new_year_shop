@@ -303,6 +303,9 @@ const translations = {
         "offers.special_for_you.description": "Personalized gifts with your name, story, and wishes — a truly unique holiday memory.",
         "offers.show_more": "View Details",
 
+        "offers.collections.title": "Collections",
+        "offers.collections.description": "✨ Handcrafted wooden ornaments made with love for everyone. Create a festive atmosphere without overspending ❤️",
+
         'offer.back': '← Back',
         'offer.select_products': 'Select products',
         'offer.select_images': 'Select images',
@@ -658,6 +661,9 @@ const translations = {
         "offers.special_for_you.title": "Հատուկ քեզ համար",
         "offers.special_for_you.description": "Անհատական նվերներ քո անունով, պատմությամբ և ցանկությամբ՝ յուրահատուկ տոնական հիշողություն։",
         "offers.show_more": "Դիտել մանրամասն",
+
+        "offers.collections.title": "Հավաքածուներ",
+        "offers.collections.description": "✨ Փայտե ձեռագործ խաղալիքներ՝ սիրով պատրաստված բոլորի համար։ Ստեղծեք տոնական մթնոլորտ՝ առանց ավելորդ ծախսերի ❤️",
 
         'offer.back': '← Վերադառնալ',
         'offer.select_products': 'Ընտրեք ապրանքներ',
@@ -1017,6 +1023,9 @@ const translations = {
         "offers.special_for_you.description": "Персональные подарки с твоим именем, историей и пожеланиями — уникальное праздничное воспоминание.",
     
         "offers.show_more": "Посмотреть подробнее",
+
+        "offers.collections.title": "Коллекции",
+        "offers.collections.description": "✨ Деревянные игрушки ручной работы, созданные с любовью для всех. Создайте праздничное настроение без лишних затрат ❤️",
 
 
         // UI Elements

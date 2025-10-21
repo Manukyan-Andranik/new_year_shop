@@ -232,15 +232,6 @@
         gap: 15px;
     }
 
-    .gallery-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 12px;
-        cursor: pointer;
-        border: 2px solid transparent;
-        transition: all 0.3s ease;
-    }
 
     .gallery-image:hover {
         transform: scale(1.05);
@@ -511,6 +502,260 @@
             grid-template-columns: 1fr;
         }
     }
+
+    /* Image Gallery Cards for christmas_together and seasons_best */
+    /* Image Gallery Cards for christmas_together and seasons_best */
+    .image-gallery {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    .gallery-card {
+        background: rgba(255, 255, 255, 0.65);
+        border-radius: 16px;
+        padding: 20px;
+        cursor: pointer;
+        transition: transform .22s cubic-bezier(.2, .9, .3, 1), box-shadow .22s, border-color .22s;
+        position: relative;
+        border: 2px solid rgba(0, 0, 0, 0.05);
+        box-shadow: 0 4px 12px rgba(10, 20, 40, 0.06);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        min-height: 320px;
+    }
+
+    .gallery-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 25px rgba(10, 20, 40, 0.15);
+    }
+
+    .gallery-card.selected {
+        border-color: #1a5a2d;
+        box-shadow: 0 8px 25px rgba(26, 90, 45, 0.3);
+        background: rgba(26, 90, 45, 0.1);
+    }
+
+    .gallery-image {
+        width: 100%;
+        max-width: 280px;
+        height: 240px;
+        object-fit: contain;
+        border-radius: 12px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 1));
+        padding: 12px;
+        border: 1px solid rgba(0, 0, 0, 0.03);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        margin-bottom: 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .gallery-card:hover .gallery-image {
+        transform: scale(1.05);
+    }
+
+    .gallery-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .gallery-name {
+        font-weight: 800;
+        font-size: 16px;
+        color: #222;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-bottom: 5px;
+    }
+
+    .gallery-price {
+        color: #1a5a2d;
+        font-weight: 900;
+        font-size: 15px;
+        font-size: 1.1em;
+    }
+
+    .select-indicator {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: #1a5a2d;
+        color: white;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        z-index: 2;
+    }
+
+    .gallery-card.selected .select-indicator {
+        display: flex;
+    }
+
+    /* Make product cards bigger too for consistency */
+    .product-card {
+        background: rgba(255, 255, 255, 0.65);
+        border-radius: 16px;
+        padding: 20px;
+        cursor: pointer;
+        transition: transform .22s cubic-bezier(.2, .9, .3, 1), box-shadow .22s, border-color .22s;
+        position: relative;
+        border: 2px solid rgba(0, 0, 0, 0.05);
+        box-shadow: 0 4px 12px rgba(10, 20, 40, 0.06);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        min-height: 320px;
+    }
+
+    .product-image {
+        width: 100%;
+        max-width: 280px;
+        height: 240px;
+        object-fit: contain;
+        border-radius: 12px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 1));
+        padding: 12px;
+        border: 1px solid rgba(0, 0, 0, 0.03);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        margin-bottom: 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .product-image {
+        transform: scale(1.05);
+    }
+
+    .product-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .product-name {
+        font-weight: 800;
+        font-size: 16px;
+        color: #222;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-bottom: 5px;
+    }
+
+    .product-price {
+        color: #1a5a2d;
+        font-weight: 900;
+        font-size: 15px;
+        font-size: 1.1em;
+    }
+
+    .product-card .select-indicator {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: #1a5a2d;
+        color: white;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        z-index: 2;
+    }
+
+    .product-card.selected .select-indicator {
+        display: flex;
+    }
+
+    /* Update grid for larger cards */
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        width: 100%;
+    }
+
+    /* Responsive adjustments for larger cards */
+    @media (max-width: 1024px) {
+
+        .product-grid,
+        .image-gallery {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .gallery-card,
+        .product-card {
+            min-height: 300px;
+            padding: 15px;
+        }
+
+        .gallery-image,
+        .product-image {
+            max-width: 240px;
+            height: 200px;
+        }
+    }
+
+    @media (max-width: 768px) {
+
+        .product-grid,
+        .image-gallery {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .gallery-card,
+        .product-card {
+            min-height: 280px;
+            padding: 15px;
+        }
+
+        .gallery-image,
+        .product-image {
+            max-width: 220px;
+            height: 180px;
+        }
+
+        .gallery-name,
+        .product-name {
+            font-size: 15px;
+        }
+
+        .gallery-price,
+        .product-price {
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 480px) {
+
+        .gallery-card,
+        .product-card {
+            min-height: 260px;
+            padding: 12px;
+        }
+
+        .gallery-image,
+        .product-image {
+            max-width: 200px;
+            height: 160px;
+        }
+    }
 </style>
 <div class="global-animated-bg">
     <div class="animated-toys-container">
@@ -619,6 +864,33 @@
             imagesCount: 5,
             folder: 'offers/christmas_together',
             fields: 'christmas_together',
+            prices: [2950, 2950, 3950, 5200, 3950],
+
+            names: {
+                "hy": {
+                    1: "Տոնական Ընտանիք",
+                    2: "Հրաշքի Շրջանակում",
+                    3: "Ամանորյա Խաղաղություն",
+                    4: "Տան Ջերմություն",
+                    5: "Մեր Մեծ Հրաշքը"
+                },
+                "en": {
+                    1: "Festive Family",
+                    2: "In the Frame of a Miracle",
+                    3: "New Year Peace",
+                    4: "Warmth of Home",
+                    5: "Our Great Miracle"
+                },
+                "ru": {
+                    1: "Праздничная семья",
+                    2: "В объятиях чуда",
+                    3: "Новогодний покой",
+                    4: "Тепло дома",
+                    5: "Наше великое чудо"
+                }
+            }
+
+            ,
             translations: {
                 hy: {
                     title: '🏡 Ամանորը միասին',
@@ -638,6 +910,46 @@
         seasons_best: {
             type: 'images',
             imagesCount: 10,
+            prices: [3200, 3500, 6900, 7650, 8750, 8000, 8750, 7900, 10900, 8400],
+            names: {
+                "hy": {
+                    1: "Ձմեռային ժպիտներ",
+                    2: "Տոնական հրաշք",
+                    3: "Մոգական Ամանոր",
+                    4: "Տարվա հրաշքը",
+                    5: "Ձիուկների աշխարհ",
+                    6: "Տոնական շքերթ",
+                    7: "Ձմեռվա հրաշքը",
+                    8: "Ամանորյա Գլխարկ",
+                    9: "Ամանորյա անտառ",
+                    10: "Ձմեռվա գաղտնիքը"
+                },
+                "en": {
+                    1: "Winter Smiles",
+                    2: "Festive Miracle",
+                    3: "Magical New Year",
+                    4: "Miracle of the Year",
+                    5: "World of Horses",
+                    6: "Festive Parade",
+                    7: "Winter Wonder",
+                    8: "New Year Hat",
+                    9: "New Year Forest",
+                    10: "Winter Secret"
+                },
+                "ru": {
+                    1: "Зимние улыбки",
+                    2: "Праздничное чудо",
+                    3: "Волшебный Новый год",
+                    4: "Чудо года",
+                    5: "Мир лошадок",
+                    6: "Праздничный парад",
+                    7: "Зимнее чудо",
+                    8: "Новогодняя шапка",
+                    9: "Новогодний лес",
+                    10: "Зимняя тайна"
+                }
+            },
+
             folder: 'offers/seasons_best',
             fields: 'seasons_best',
             translations: {
@@ -654,7 +966,59 @@
                     description: `Каждый год мы создаём новые, праздничные и наполненные любовью игрушки, которые быстро становятся фаворитами сезона.\n\nЗдесь вы найдёте самые свежие, востребованные и вдохновляющие изделия из дерева — из качественного материала и ярких красок.\n\nУспейте выбрать свои любимые варианты, пока они доступны, и отпразднуйте вместе с нами ✨\n\nЛучшее этого сезона — это сочетание тепла, стиля и уникальности.`
                 }
             }
+        },
+
+        collections: {
+            type: 'images',
+            imagesCount: 7,
+            prices: [3500, 3500, 3500, 5300, 5300, 5750, 5750],
+            names: {
+                "hy": {
+                    1: "3+1 Հրաշք",
+                    2: "3+1 Մոգություն",
+                    3: "3+1 ժպիտ",
+                    4: "4+1 հեքիաթ",
+                    5: "4+1 անակնկալ",
+                    6: "5+1 երազանք",
+                    7: "5+1 նվեր"
+                },
+                "en": {
+                    1: "3+1 Miracle",
+                    2: "3+1 Magic",
+                    3: "3+1 Smile",
+                    4: "4+1 Fairy Tale",
+                    5: "4+1 Surprise",
+                    6: "5+1 Dream",
+                    7: "5+1 Gift"
+                },
+                "ru": {
+                    1: "3+1 Чудо",
+                    2: "3+1 Магия",
+                    3: "3+1 Улыбка",
+                    4: "4+1 Сказка",
+                    5: "4+1 Сюрприз",
+                    6: "5+1 Мечта",
+                    7: "5+1 Подарок"
+                }
+            },
+            folder: 'offers/collections',
+            fields: 'collections',
+            translations: {
+                hy: {
+                    title: '🎁 Հավաքածուներ',
+                    description: `💫 Տոնի կախարդանքը կարող է լինել նաև պարզ ու մատչելի 🎄 Մեր փայտե ձեռագործ խաղալիքները պատրաստված են սիրով՝ այնպես, որ յուրաքանչյուր գնով հասանելի լինեն բոլորին, բայց չկորցնեն իրենց ջերմությունն ու յուրահատկությունը։ Ընտրեք ձեր սիրելի հավաքածուն՝ առանց ավելորդ ծախսերի, և ստեղծեք հեքիաթային մթնոլորտ՝ առանց սահմանների։ Մեր նպատակն է, որ յուրաքանչյուր տուն ունենա իր փայտե հրաշքը — փոքրիկ, անկեղծ ու մատչելի ✨ Որովհետև տոնը գեղեցիկ է ոչ թե արժեքով, այլ զգացմունքով ❤️`
+                },
+                en: {
+                    title: "🎁 Collections",
+                    description: `💫 The magic of the holidays can be simple and affordable too 🎄 Our handcrafted wooden ornaments are made with love — designed to be accessible to everyone without losing their warmth and uniqueness. Choose your favorite collection without overspending, and create a fairy-tale atmosphere without limits. Our goal is for every home to have its own wooden miracle — small, sincere, and affordable ✨ Because the beauty of the holiday lies not in its price, but in its feeling ❤️`
+                },
+                ru: {
+                    title: '🎁 Коллекции',
+                    description: `💫 Магия праздника может быть простой и доступной 🎄 Наши деревянные игрушки ручной работы созданы с любовью — так, чтобы быть доступными каждому, не теряя тепла и уникальности. Выберите свою любимую коллекцию без лишних затрат и создайте сказочную атмосферу без границ. Наша цель — чтобы в каждом доме было своё деревянное чудо — маленькое, искреннее и доступное ✨ Ведь красота праздника — не в цене, а в чувствах ❤️`
+                }
+            }
         }
+
     };
     const offerType = '{{ offer_type }}' || 'my_classroom';
     const offer = offerData[offerType];
@@ -760,31 +1124,43 @@
         document.getElementById('productGrid').style.display = 'none';
         const gallery = document.getElementById('imageGallery');
         gallery.style.display = 'grid';
+        gallery.innerHTML = '';
 
         const imageCount = offer.imagesCount;
         for (let i = 1; i <= imageCount; i++) {
-            const img = document.createElement('img');
-            img.src = `{{BASE_PREFIX}}/static/images/${offer.folder}/${i}.jpg`;
-            img.className = 'gallery-image';
-            img.setAttribute('data-image-id', i);
+            const card = document.createElement('div');
+            card.className = 'gallery-card';
+            card.setAttribute('data-image-id', i);
 
-            img.addEventListener('click', () => {
+            // Get name and price for this image
+            const imageName = offer.names && offer.names[currentLang] ? offer.names[currentLang][i] : `Image ${i}`;
+            const imagePrice = offer.prices[i - 1] ? `${offer.prices[i - 1]} ֏` : 'Price not set';
+
+            card.innerHTML = `
+            <div class="select-indicator">✓</div>
+            <img src="{{BASE_PREFIX}}/static/images/${offer.folder}/${i}.jpg" alt="${imageName}" class="gallery-image">
+            <div class="gallery-info">
+                <div class="gallery-name">${imageName}</div>
+                <div class="gallery-price">${imagePrice}</div>
+            </div>
+        `;
+
+            card.addEventListener('click', () => {
                 const imageId = i;
                 const index = selectedImages.indexOf(imageId);
 
                 if (index > -1) {
                     selectedImages.splice(index, 1);
-                    img.classList.remove('selected');
+                    card.classList.remove('selected');
                 } else {
                     selectedImages.push(imageId);
-                    img.classList.add('selected');
+                    card.classList.add('selected');
                 }
             });
 
-            gallery.appendChild(img);
+            gallery.appendChild(card);
         }
     }
-
     // Render form based on offer type
     function renderForm() {
         if (isUpdatingContent) return;
@@ -936,7 +1312,7 @@
                 <input type="date" name="delivery_date" class="form-input">
             </div>
         `;
-        } else if (offer.fields === 'christmas_together' || offer.fields === 'seasons_best') {
+        } else if (offer.fields === 'christmas_together' || offer.fields === 'seasons_best' || offer.fields === 'collections') {
             formHTML = `
             <div class="form-checkbox">
                 <input type="checkbox" id="nominal" name="nominal">
