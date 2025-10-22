@@ -6,7 +6,7 @@
 let products = [];
 let cart = [];
 let sceneFunctions = {}; // To hold functions from scene.js
-BASE_PREFIX="127.0.0.1:5002/"
+BASE_PREFIX="https://logiclab.am/mandarin"
 
 // --- DOM Element Selectors ---
 const dom = {

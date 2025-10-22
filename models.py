@@ -1,5 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+from sqlalchemy.dialects.postgresql import JSONB
+
 from datetime import datetime, timezone
 import json
 import random
@@ -163,7 +165,6 @@ class Product(db.Model):
 
         return public_desc
 
-
 class Order(db.Model):
     __tablename__ = 'orders'
     __table_args__ = {'schema': 'newyear_shop_schema'}
@@ -195,6 +196,52 @@ class Order(db.Model):
             'total_amount': float(self.total_amount) if self.total_amount else 0.0,
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'updated_at': self.updated_at.isoformat() if self.updated_at else None
+        }
+
+class OfferOrder(db.Model):
+    __tablename__ = "offer_orders"
+    __table_args__ = {'schema': 'newyear_shop_schema'}
+
+    id = db.Column(db.Integer, primary_key=True)
+    offer_type = db.Column(db.String(50), nullable=False)
+
+    customer_name = db.Column(db.String(255), nullable=False)
+    phone = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    comment = db.Column(db.Text, nullable=True)
+
+    selected_products = db.Column(JSONB, nullable=True)
+    selected_images = db.Column(JSONB, nullable=True)
+    form_data = db.Column(JSONB, nullable=True)
+
+    status = db.Column(db.String(50), default="new")  # new, in_progress, done, canceled
+    created_at = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow)
+
+    # Helper setters
+    def set_selected_products(self, products):
+        self.selected_products = products or []
+
+    def set_selected_images(self, images):
+        self.selected_images = images or []
+
+    def set_form_data(self, data):
+        self.form_data = data or {}
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "offer_type": self.offer_type,
+            "customer_name": self.customer_name,
+            "phone": self.phone,
+            "email": self.email,
+            "comment": self.comment,
+            "selected_products": self.selected_products,
+            "selected_images": self.selected_images,
+            "form_data": self.form_data,
+            "status": self.status,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "updated_at": self.updated_at.isoformat() if self.updated_at else None,
         }
 
 class AdminUser(UserMixin, db.Model):

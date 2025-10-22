@@ -305,6 +305,7 @@ const translations = {
 
         "offers.collections.title": "Collections",
         "offers.collections.description": "✨ Handcrafted wooden ornaments made with love for everyone. Create a festive atmosphere without overspending ❤️",
+        "offer.examples": "Examples",
 
         'offer.back': '← Back',
         'offer.select_products': 'Select products',
@@ -664,6 +665,7 @@ const translations = {
 
         "offers.collections.title": "Հավաքածուներ",
         "offers.collections.description": "✨ Փայտե ձեռագործ խաղալիքներ՝ սիրով պատրաստված բոլորի համար։ Ստեղծեք տոնական մթնոլորտ՝ առանց ավելորդ ծախսերի ❤️",
+        "offer.examples": "Օրինակներ",
 
         'offer.back': '← Վերադառնալ',
         'offer.select_products': 'Ընտրեք ապրանքներ',
@@ -1026,7 +1028,7 @@ const translations = {
 
         "offers.collections.title": "Коллекции",
         "offers.collections.description": "✨ Деревянные игрушки ручной работы, созданные с любовью для всех. Создайте праздничное настроение без лишних затрат ❤️",
-
+        "offer.examples": "Примеры",
 
         // UI Elements
         "about.scroll.hint": "← Прокрутите горизонтально → Или используйте стрелки",

@@ -107,6 +107,91 @@
         font-size: 1.05rem;
     }
 
+    /* Example Gallery Styles */
+    .example-gallery-section {
+        background: rgba(255, 255, 255, 0.97);
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    }
+
+    .example-gallery-title {
+        font-size: 1.6rem;
+        color: #1a5a2d;
+        font-weight: 700;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    .example-gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        width: 100%;
+    }
+
+    .example-gallery-card {
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 16px;
+        padding: 20px;
+        transition: transform .22s cubic-bezier(.2, .9, .3, 1), box-shadow .22s;
+        border: 2px solid rgba(0, 0, 0, 0.05);
+        box-shadow: 0 4px 12px rgba(10, 20, 40, 0.06);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        min-height: 320px;
+    }
+
+    .example-gallery-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 25px rgba(10, 20, 40, 0.15);
+    }
+
+    .example-gallery-image {
+        width: 100%;
+        max-width: 280px;
+        height: 240px;
+        object-fit: contain;
+        border-radius: 12px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 1));
+        padding: 12px;
+        border: 1px solid rgba(0, 0, 0, 0.03);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        margin-bottom: 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .example-gallery-card:hover .example-gallery-image {
+        transform: scale(1.05);
+    }
+
+    .example-gallery-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .example-gallery-name {
+        font-weight: 800;
+        font-size: 16px;
+        color: #222;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-bottom: 5px;
+    }
+
+    .example-gallery-description {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
     .content-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -134,14 +219,14 @@
     .product-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
+        gap: 20px;
         width: 100%;
     }
 
     .product-card {
         background: rgba(255, 255, 255, 0.65);
-        border-radius: 12px;
-        padding: 10px;
+        border-radius: 16px;
+        padding: 20px;
         cursor: pointer;
         transition: transform .22s cubic-bezier(.2, .9, .3, 1), box-shadow .22s, border-color .22s;
         position: relative;
@@ -151,6 +236,7 @@
         flex-direction: column;
         align-items: center;
         text-align: center;
+        min-height: 320px;
     }
 
     .product-card:hover {
@@ -174,51 +260,61 @@
 
     .product-image {
         width: 100%;
-        max-width: 180px;
-        height: 180px;
+        max-width: 280px;
+        height: 240px;
         object-fit: contain;
-        border-radius: 10px;
+        border-radius: 12px;
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 1));
-        padding: 8px;
+        padding: 12px;
         border: 1px solid rgba(0, 0, 0, 0.03);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        margin-bottom: 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .product-image {
+        transform: scale(1.05);
     }
 
     .product-info {
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 8px;
         width: 100%;
+        padding: 0 10px;
     }
 
     .product-name {
         font-weight: 800;
-        font-size: 14px;
+        font-size: 16px;
         color: #222;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        margin-bottom: 5px;
     }
 
     .product-price {
         color: #1a5a2d;
         font-weight: 900;
-        font-size: 13px;
+        font-size: 15px;
+        font-size: 1.1em;
     }
 
     .select-indicator {
         position: absolute;
-        top: 8px;
-        right: 8px;
-        width: 24px;
-        height: 24px;
+        top: 12px;
+        right: 12px;
+        width: 28px;
+        height: 28px;
         border-radius: 50%;
         background: #1a5a2d;
         color: white;
         display: none;
         align-items: center;
         justify-content: center;
-        font-size: 14px;
+        font-size: 16px;
+        z-index: 2;
     }
 
     .product-card.selected .select-indicator {
@@ -229,33 +325,97 @@
     .image-gallery {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+        gap: 20px;
     }
 
-
-    .gallery-image:hover {
-        transform: scale(1.05);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .gallery-image.selected {
+    .gallery-card {
+        background: rgba(255, 255, 255, 0.65);
+        border-radius: 16px;
+        padding: 20px;
+        cursor: pointer;
+        transition: transform .22s cubic-bezier(.2, .9, .3, 1), box-shadow .22s, border-color .22s;
         position: relative;
-        border: 5px solid #1a5a2d;
-        box-shadow: 0 6px 20px rgba(26, 90, 45, 0.4);
-        opacity: 0.7;
-        border-radius: 8px;
+        border: 2px solid rgba(0, 0, 0, 0.05);
+        box-shadow: 0 4px 12px rgba(10, 20, 40, 0.06);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        min-height: 320px;
     }
 
-    .gallery-image.selected::after {
-        content: "✓";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 2rem;
+    .gallery-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 25px rgba(10, 20, 40, 0.15);
+    }
+
+    .gallery-card.selected {
+        border-color: #1a5a2d;
+        box-shadow: 0 8px 25px rgba(26, 90, 45, 0.3);
+        background: rgba(26, 90, 45, 0.1);
+    }
+
+    .gallery-image {
+        width: 100%;
+        max-width: 280px;
+        height: 240px;
+        object-fit: contain;
+        border-radius: 12px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 1));
+        padding: 12px;
+        border: 1px solid rgba(0, 0, 0, 0.03);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        margin-bottom: 15px;
+        transition: transform 0.3s ease;
+    }
+
+    .gallery-card:hover .gallery-image {
+        transform: scale(1.05);
+    }
+
+    .gallery-info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .gallery-name {
+        font-weight: 800;
+        font-size: 16px;
+        color: #222;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-bottom: 5px;
+    }
+
+    .gallery-price {
         color: #1a5a2d;
-        font-weight: bold;
-        pointer-events: none;
+        font-weight: 900;
+        font-size: 15px;
+        font-size: 1.1em;
+    }
+
+    .gallery-card .select-indicator {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: #1a5a2d;
+        color: white;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        z-index: 2;
+    }
+
+    .gallery-card.selected .select-indicator {
+        display: flex;
     }
 
     /* Order Form Section */
@@ -485,229 +645,10 @@
         .form-section {
             max-height: none;
         }
-    }
 
-    @media (max-width: 768px) {
-        .product-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-
-        .product-image {
-            max-width: 140px;
-            height: 140px;
-        }
-
-        .image-gallery {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    /* Image Gallery Cards for christmas_together and seasons_best */
-    /* Image Gallery Cards for christmas_together and seasons_best */
-    .image-gallery {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-
-    .gallery-card {
-        background: rgba(255, 255, 255, 0.65);
-        border-radius: 16px;
-        padding: 20px;
-        cursor: pointer;
-        transition: transform .22s cubic-bezier(.2, .9, .3, 1), box-shadow .22s, border-color .22s;
-        position: relative;
-        border: 2px solid rgba(0, 0, 0, 0.05);
-        box-shadow: 0 4px 12px rgba(10, 20, 40, 0.06);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        min-height: 320px;
-    }
-
-    .gallery-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 12px 25px rgba(10, 20, 40, 0.15);
-    }
-
-    .gallery-card.selected {
-        border-color: #1a5a2d;
-        box-shadow: 0 8px 25px rgba(26, 90, 45, 0.3);
-        background: rgba(26, 90, 45, 0.1);
-    }
-
-    .gallery-image {
-        width: 100%;
-        max-width: 280px;
-        height: 240px;
-        object-fit: contain;
-        border-radius: 12px;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 1));
-        padding: 12px;
-        border: 1px solid rgba(0, 0, 0, 0.03);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-        margin-bottom: 15px;
-        transition: transform 0.3s ease;
-    }
-
-    .gallery-card:hover .gallery-image {
-        transform: scale(1.05);
-    }
-
-    .gallery-info {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        width: 100%;
-        padding: 0 10px;
-    }
-
-    .gallery-name {
-        font-weight: 800;
-        font-size: 16px;
-        color: #222;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        margin-bottom: 5px;
-    }
-
-    .gallery-price {
-        color: #1a5a2d;
-        font-weight: 900;
-        font-size: 15px;
-        font-size: 1.1em;
-    }
-
-    .select-indicator {
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        background: #1a5a2d;
-        color: white;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        font-size: 16px;
-        z-index: 2;
-    }
-
-    .gallery-card.selected .select-indicator {
-        display: flex;
-    }
-
-    /* Make product cards bigger too for consistency */
-    .product-card {
-        background: rgba(255, 255, 255, 0.65);
-        border-radius: 16px;
-        padding: 20px;
-        cursor: pointer;
-        transition: transform .22s cubic-bezier(.2, .9, .3, 1), box-shadow .22s, border-color .22s;
-        position: relative;
-        border: 2px solid rgba(0, 0, 0, 0.05);
-        box-shadow: 0 4px 12px rgba(10, 20, 40, 0.06);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        min-height: 320px;
-    }
-
-    .product-image {
-        width: 100%;
-        max-width: 280px;
-        height: 240px;
-        object-fit: contain;
-        border-radius: 12px;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 1));
-        padding: 12px;
-        border: 1px solid rgba(0, 0, 0, 0.03);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-        margin-bottom: 15px;
-        transition: transform 0.3s ease;
-    }
-
-    .product-card:hover .product-image {
-        transform: scale(1.05);
-    }
-
-    .product-info {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        width: 100%;
-        padding: 0 10px;
-    }
-
-    .product-name {
-        font-weight: 800;
-        font-size: 16px;
-        color: #222;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        margin-bottom: 5px;
-    }
-
-    .product-price {
-        color: #1a5a2d;
-        font-weight: 900;
-        font-size: 15px;
-        font-size: 1.1em;
-    }
-
-    .product-card .select-indicator {
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        background: #1a5a2d;
-        color: white;
-        display: none;
-        align-items: center;
-        justify-content: center;
-        font-size: 16px;
-        z-index: 2;
-    }
-
-    .product-card.selected .select-indicator {
-        display: flex;
-    }
-
-    /* Update grid for larger cards */
-    .product-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-        width: 100%;
-    }
-
-    /* Responsive adjustments for larger cards */
-    @media (max-width: 1024px) {
-
-        .product-grid,
-        .image-gallery {
+        .example-gallery-grid {
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
-        }
-
-        .gallery-card,
-        .product-card {
-            min-height: 300px;
-            padding: 15px;
-        }
-
-        .gallery-image,
-        .product-image {
-            max-width: 240px;
-            height: 200px;
         }
     }
 
@@ -719,20 +660,28 @@
             gap: 15px;
         }
 
+        .example-gallery-grid {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
         .gallery-card,
-        .product-card {
+        .product-card,
+        .example-gallery-card {
             min-height: 280px;
             padding: 15px;
         }
 
         .gallery-image,
-        .product-image {
+        .product-image,
+        .example-gallery-image {
             max-width: 220px;
             height: 180px;
         }
 
         .gallery-name,
-        .product-name {
+        .product-name,
+        .example-gallery-name {
             font-size: 15px;
         }
 
@@ -745,18 +694,21 @@
     @media (max-width: 480px) {
 
         .gallery-card,
-        .product-card {
+        .product-card,
+        .example-gallery-card {
             min-height: 260px;
             padding: 12px;
         }
 
         .gallery-image,
-        .product-image {
+        .product-image,
+        .example-gallery-image {
             max-width: 200px;
             height: 160px;
         }
     }
 </style>
+
 <div class="global-animated-bg">
     <div class="animated-toys-container">
         <img src="{{ url_for('static', filename='images/animated_toys/1.png') }}" class="animated-toy" alt="">
@@ -772,6 +724,12 @@
     <div class="offer-header">
         <h1 id="offerTitle" class="offer-title"></h1>
         <p id="offerDescription" class="offer-description"></p>
+    </div>
+
+    <!-- Example Images Gallery for corporate and special_for_you offers -->
+    <div id="exampleGallerySection" class="example-gallery-section" style="display: none;">
+        <h2 class="example-gallery-title" data-translate="offer.examples">Օրինակներ</h2>
+        <div id="exampleGalleryGrid" class="example-gallery-grid"></div>
     </div>
 
     <div class="content-grid">
@@ -1044,7 +1002,56 @@
             catalogTitle.textContent = window.t ? window.t('offer.select_images') : 'Ընտրեք նկարներ';
         }
 
+        // Show/hide example gallery for corporate and special_for_you offers
+        const exampleGallerySection = document.getElementById('exampleGallerySection');
+        if (offer.fields === 'corporate' || offer.fields === 'special_for_you') {
+            exampleGallerySection.style.display = 'block';
+            renderExampleGallery();
+        } else {
+            exampleGallerySection.style.display = 'none';
+        }
+
         isUpdatingContent = false;
+    }
+
+    // Render example images gallery for corporate and special_for_you offers
+    function renderExampleGallery() {
+        const galleryGrid = document.getElementById('exampleGalleryGrid');
+        galleryGrid.innerHTML = '';
+
+        const exampleImages = {
+            corporate: [
+                { id: 1, name: { hy: "Բրենդային խաղալիքներ", en: "Branded Toys", ru: "Брендированные игрушки" }, description: { hy: "Ձեր լոգոտիպով փայտե խաղալիքներ", en: "Wooden toys with your logo", ru: "Деревянные игрушки с вашим логотипом" } },
+                { id: 2, name: { hy: "Գրասենյակի զարդարանք", en: "Office Decor", ru: "Офисный декор" }, description: { hy: "Տոնածառի զարդարանք գրասենյակի համար", en: "Christmas tree decorations for office", ru: "Украшения для офисной ёлки" } },
+                { id: 3, name: { hy: "Թիմային նվերներ", en: "Team Gifts", ru: "Командные подарки" }, description: { hy: "Անհատական նվերներ աշխատակիցների համար", en: "Personalized gifts for employees", ru: "Персональные подарки для сотрудников" } },
+                { id: 4, name: { hy: "Կորպորատիվ հավաքածու", en: "Corporate Set", ru: "Корпоративный набор" }, description: { hy: "Տարբեր խաղալիքների հավաքածու", en: "Collection of various toys", ru: "Коллекция различных игрушек" } }
+            ],
+            special_for_you: [
+                { id: 1, name: { hy: "Անվանական խաղալիքներ", en: "Personalized Toys", ru: "Именные игрушки" }, description: { hy: "Ձեր անունով փայտե խաղալիքներ", en: "Wooden toys with your name", ru: "Деревянные игрушки с вашим именем" } },
+                { id: 2, name: { hy: "Սիրո հաղորդագրություն", en: "Love Message", ru: "Сообщение любви" }, description: { hy: "Հատուկ հաղորդագրությամբ խաղալիքներ", en: "Toys with special messages", ru: "Игрушки с особыми посланиями" } },
+                { id: 3, name: { hy: "Անհատական դիզայն", en: "Custom Design", ru: "Индивидуальный дизайн" }, description: { hy: "Ձեր նախասիրություններին համապատասխան", en: "According to your preferences", ru: "Согласно вашим предпочтениям" } },
+                { id: 4, name: { hy: "Հիշատակի նվեր", en: "Memory Gift", ru: "Подарок на память" }, description: { hy: "Անմոռանալի պահերի համար", en: "For unforgettable moments", ru: "Для незабываемых моментов" } }
+            ]
+        };
+
+        const images = exampleImages[offer.fields] || [];
+
+        images.forEach(image => {
+            const card = document.createElement('div');
+            card.className = 'example-gallery-card';
+
+            card.innerHTML = `
+                <img src="{{BASE_PREFIX}}/static/images/offers/${offer.fields}/examples/${image.id}.jpg" 
+                     alt="${image.name[currentLang]}" 
+                     class="example-gallery-image">
+                <div class="example-gallery-info">
+                    <div class="example-gallery-name">${image.name[currentLang]}</div>
+                    <div class="example-gallery-description">${image.description[currentLang]}</div>
+                </div>
+            `;
+
+            galleryGrid.appendChild(card);
+        });
     }
 
     let selectedProducts = [];
@@ -1109,12 +1116,19 @@
 
         if (selectedProducts.length > 0) {
             list.style.display = 'block';
+            const totalPrice = selectedProducts.reduce((sum, p) => sum + p.price, 0);
+
             content.innerHTML = selectedProducts.map(p => `
             <div class="selected-product-item">
                 <span>${p.name}</span>
                 <span>${p.price} ֏</span>
             </div>
-        `).join('');
+        `).join('') + `
+          <div class="selected-product-item" style="font-weight: bold; border-top: 1px solid rgba(26, 90, 45, 0.3); padding-top: 10px; font-size: 0.7rem;">
+                <span>Ընդհանուր</span>
+                <span>${totalPrice} ֏</span>
+            </div>
+        `;
         } else {
             list.style.display = 'none';
         }
@@ -1145,22 +1159,57 @@
             </div>
         `;
 
-            card.addEventListener('click', () => {
-                const imageId = i;
-                const index = selectedImages.indexOf(imageId);
-
-                if (index > -1) {
-                    selectedImages.splice(index, 1);
-                    card.classList.remove('selected');
-                } else {
-                    selectedImages.push(imageId);
-                    card.classList.add('selected');
-                }
-            });
-
+            card.addEventListener('click', () => toggleImageSelection(i, card));
             gallery.appendChild(card);
         }
     }
+
+    // FIXED: Proper toggle function for image selection/deselection
+    function toggleImageSelection(imageId, card) {
+        const existingIndex = selectedImages.findIndex(img => img.id === imageId);
+
+        if (existingIndex > -1) {
+            // Deselect - remove from selectedImages
+            selectedImages.splice(existingIndex, 1);
+            card.classList.remove('selected');
+        } else {
+            // Select - add to selectedImages
+            const imageName = offer.names && offer.names[currentLang] ? offer.names[currentLang][imageId] : `Image ${imageId}`;
+            selectedImages.push({
+                "id": imageId,
+                "name": imageName,
+                "price": offer.prices[imageId - 1] ? offer.prices[imageId - 1] : 0
+            });
+            card.classList.add('selected');
+        }
+
+        updateSelectedImagesList();
+    }
+
+    function updateSelectedImagesList() {
+        const list = document.getElementById('selectedProductsList');
+        const content = document.getElementById('selectedProductsContent');
+
+        if (selectedImages.length > 0) {
+            list.style.display = 'block';
+            const totalPrice = selectedImages.reduce((sum, img) => sum + img.price, 0);
+
+            content.innerHTML = selectedImages.map(img => `
+            <div class="selected-product-item">
+                <span>${img.name}</span>
+                <span>${img.price} ֏</span>
+            </div>
+        `).join('') + `
+         <div class="selected-product-item" style="font-weight: bold; border-top: 1px solid rgba(26, 90, 45, 0.3); padding-top: 10px; font-size: 0.7rem;">
+                <span>Ընդհանուր</span>
+                <span>${totalPrice} ֏</span>
+            </div>
+        `;
+        } else {
+            list.style.display = 'none';
+        }
+    }
+
     // Render form based on offer type
     function renderForm() {
         if (isUpdatingContent) return;
@@ -1350,6 +1399,11 @@
             </div>
         `;
         }
+        formHTML += `
+        <div class="form-group">
+            <label class="form-label">${window.t ? window.t('form.customer_email') : 'Էլ․ փոստ'} <span class="required">*</span></label>
+            <input type="email" name="customer_email" class="form-input" placeholder="${window.t ? window.t('form.customer_email.placeholder') : 'your@email.com'}" required>
+        </div>`;
 
         formHTML += `<button type="submit" class="submit-btn" id="submitBtn">${window.t ? window.t('form.submit') : '🎁 Ուղարկել պատվերը'}</button>`;
         form.innerHTML = formHTML;
@@ -1403,7 +1457,7 @@
         const submitBtn = document.getElementById('submitBtn');
         const formMessage = document.getElementById('formMessage');
 
-        // Validate product/image selection for product-based offers
+        // Validate product/image selection
         if (offer.type === 'products' && selectedProducts.length === 0 && offer.fields !== 'corporate') {
             showMessage(window.t ? window.t('message.select_product') : 'Խնդրում ենք ընտրել առնվազն մեկ ապրանք', 'error');
             return;
@@ -1420,28 +1474,68 @@
         const formData = new FormData(e.target);
         const data = {
             offer_type: offerType,
-            selected_products: offer.type === 'products' ? selectedProducts.map(p => p.name) : [],
-            selected_images: offer.type === 'images' ? selectedImages : []
+            selected_images: offer.type === 'images' ? selectedImages : [],
+            selected_products: offer.type === 'products' ? selectedProducts.map(p => ({
+                id: p.id,
+                name: p.name,
+                price: p.price
+            })) : selectedImages,
         };
 
         // Collect form fields
+        let hasEmail = false;
         for (let [key, value] of formData.entries()) {
             if (key === 'names[]') {
                 if (!data.names) data.names = [];
                 data.names.push(value);
             } else {
                 data[key] = value;
+                if (key === 'customer_email') hasEmail = true;
             }
         }
 
+        // Validate required fields
+        if (!data.customer_name || !data.customer_phone || !hasEmail) {
+            showMessage(window.t ? window.t('message.required_fields') : 'Խնդրում ենք լրացնել բոլոր պարտադիր դաշտերը', 'error');
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = window.t ? window.t('form.submit') : '🎁 Ուղարկել պատվերը';
+            return;
+        }
+
+        // Map field names to match API expectations
+        const apiData = {
+            customer_name: data.customer_name,
+            phone: data.customer_phone,
+            email: data.customer_email, // This is the required field
+            comment: data.notes || data.comment || '',
+            offer_type: data.offer_type,
+            selected_products: data.selected_products,
+            selected_images: data.selected_images,
+            // Include all other form data
+            form_data: {
+                school_name: data.school_name,
+                class_number: data.class_number,
+                student_count: data.student_count,
+                boys_girls: data.boys_girls,
+                nominal: data.nominal || false,
+                names: data.names || [],
+                packaging: data.packaging,
+                delivery_date: data.delivery_date,
+                brand_name: data.brand_name,
+                toy_type: data.toy_type,
+                count: data.count
+                // Add other fields as needed
+            }
+        };
+
         // Handle checkbox
-        data.nominal = document.getElementById('nominal')?.checked || false;
+        apiData.form_data.nominal = document.getElementById('nominal')?.checked || false;
 
         try {
             const response = await fetch(`${BASE_PREFIX}/api/order_offer`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
+                body: JSON.stringify(apiData)
             });
 
             const result = await response.json();
@@ -1452,11 +1546,12 @@
                 selectedProducts = [];
                 selectedImages = [];
                 document.querySelectorAll('.product-card.selected').forEach(card => card.classList.remove('selected'));
-                document.querySelectorAll('.gallery-image.selected').forEach(img => img.classList.remove('selected'));
+                document.querySelectorAll('.gallery-card.selected').forEach(card => card.classList.remove('selected'));
                 updateSelectedProductsList();
+                updateSelectedImagesList();
                 document.getElementById('namesContainer')?.classList.remove('show');
             } else {
-                showMessage(window.t ? window.t('message.error') : '❌ Սխալ է տեղի ունեցել։ Խնդրում ենք փորձել կրկին։', 'error');
+                showMessage(result.error || (window.t ? window.t('message.error') : '❌ Սխալ է տեղի ունեցել։ Խնդրում ենք փորձել կրկին։'), 'error');
             }
         } catch (error) {
             console.error('Error:', error);
@@ -1526,4 +1621,3 @@
 </script>
 
 {% endblock %}
-[file content end]

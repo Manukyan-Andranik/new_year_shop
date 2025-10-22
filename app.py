@@ -11,16 +11,21 @@ from flask_login import login_user, logout_user, login_required, current_user
 from flask_migrate import Migrate
 from sqlalchemy import event
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.dialects.postgresql import JSONB
+
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
+import logging
 
 from sqlalchemy.engine import Engine
 
 # Local imports
-from models import db, Product, Order, ProductType, ProductTypesSamples
+from models import db, Product, Order, ProductType, ProductTypesSamples, OfferOrder
 from admin_auth import login_manager, init_admin_user, verify_admin
 from data.toys import get_toys_by_category
 
 load_dotenv()
+# Configure logging
+logger = logging.getLogger(__name__)
 
 # ===============================
 # App setup
@@ -242,13 +247,6 @@ def offer_detail(offer_type):
     print(BASE_PREFIX)
     return render_template('offer_details.html', offer_type=offer_type, offer_title=offer_title,  BASE_PREFIX=BASE_PREFIX)
 
-@app.route('/api/order_offer', methods=['POST'])
-def order_offer():
-    data = request.json
-    print(data)
-    # Save to database or send email
-    return jsonify({'success': True, 'message': 'Order received'})
-
 # ===============================
 # API Routes
 # ===============================
@@ -369,6 +367,105 @@ def create_order():
         db.session.rollback()
         app.logger.exception("Failed creating order")
         return jsonify({'error': str(e)}), 500
+
+
+
+
+
+# ===============================
+# Routes
+# ===============================
+@app.route('/api/order_offer', methods=['POST'])
+def create_offer_order():
+    try:
+        data = request.get_json(force=True)
+        print(data)
+        # Validate fields
+        required_fields = ['offer_type', 'customer_name', 'phone', 'email']
+        missing = [f for f in required_fields if not data.get(f)]
+        if missing:
+            return jsonify({"success": False, "error": f"Missing fields: {', '.join(missing)}"}), 400
+
+        if not re.match(EMAIL_REGEX, data.get('email', '')):
+            return jsonify({"success": False, "error": "Invalid email address"}), 400
+
+        order = OfferOrder(
+            offer_type=data['offer_type'],
+            customer_name=data['customer_name'],
+            phone=data['phone'],
+            email=data['email'],
+            comment=data.get('comment')
+        )
+
+        order.set_selected_products(data.get('selected_products'))
+        order.set_selected_images([])
+        order.set_form_data(data.get('form_data'))
+
+        db.session.add(order)
+        db.session.commit()
+
+        # Send confirmation
+        subject = "🎁 Offer Order Received"
+        body = (
+            f"Dear {order.customer_name},\n\n"
+            f"Your order for offer '{order.offer_type}' was received successfully.\n"
+            f"We will contact you at {order.phone}.\n\n"
+            f"Order ID: {order.id}\n\nMerry Christmas! 🎅"
+        )
+        send_email(order.email, subject, body)
+
+        if ADMIN_NOTIFICATION_EMAIL:
+            admin_body = f"New offer order #{order.id} from {order.customer_name} ({order.email})"
+            send_email(ADMIN_NOTIFICATION_EMAIL, f"New Offer Order #{order.id}", admin_body)
+
+        return jsonify({
+            "success": True,
+            "message": "Order created successfully",
+            "order": order.to_dict()
+        }), 201
+
+    except Exception as e:
+        db.session.rollback()
+        app.logger.exception("Error creating order")
+        return jsonify({"success": False, "error": str(e)}), 500
+
+
+@app.route('/api/offer_orders/<int:order_id>', methods=['GET'])
+def get_offer_order(order_id):
+    """Get a single offer order"""
+    order = OfferOrder.query.get_or_404(order_id)
+    return jsonify({"success": True, "order": order.to_dict()})
+
+@app.route('/api/admin/offer_orders', methods=['GET'])
+@login_required
+def admin_offer_orders_():
+    try:
+        orders = OfferOrder.query.order_by(OfferOrder.created_at.desc()).all()
+        orders_list = [order.to_dict() for order in orders]
+        return jsonify({
+            "success": True,
+            "orders": orders_list
+        })
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+@app.route('/api/admin/offer_orders/<int:order_id>/status', methods=['PUT'])
+def update_offer_order_status(order_id):
+    data = request.get_json()
+    order = OfferOrder.query.get_or_404(order_id)
+    order.status = data.get('status', order.status)
+    db.session.commit()
+    return jsonify({'success': True})
+
+
+
+
+@app.route('/admin/offer_orders')
+def admin_offer_orders():
+    return render_template('admin/offer_orders.html', BASE_PREFIX='')
 
 
 # ===============================

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{% block title %}Admin — Dashboard{% endblock %}</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Global admin CSS (kept compact so child templates can extend) -->
+  <style>
+    :root{
+      --bg:#f4f6f8;
+      --card:#ffffff;
+      --accent:#2d8a43;
+      --muted:#6b7280;
+      --shadow: 0 8px 20px rgba(0,0,0,0.08);
+      --radius:12px;
+      --gold:#f0ad4e;
+      --danger:#d9534f;
+      --text:#222;
+    }
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+    .admin-wrap{max-width:1300px;margin:28px auto;padding:18px}
+    .admin-panel{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+    /* header */
+    .admin-top{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid #f3f4f6}
+    .admin-top .logo{font-weight:700;color:var(--accent);display:flex;gap:10px;align-items:center}
+    .admin-top .controls{display:flex;gap:10px;align-items:center}
+    .btn{background:var(--accent);color:#fff;padding:8px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:600;text-decoration:none}
+    .btn.secondary{background:#1976d2}
+    .small-muted{color:var(--muted);font-size:13px}
+    /* tables */
+    .table{width:100%;border-collapse:collapse;margin:10px 0}
+    thead th{background:var(--accent);color:#fff;font-weight:600;padding:12px 14px;text-align:left;font-size:14px}
+    tbody td{padding:12px 14px;border-bottom:1px solid #f0f0f0;font-size:14px;vertical-align:middle}
+    tbody tr:hover{background:#fbfff9}
+    .status-badge{padding:6px 10px;border-radius:10px;color:#fff;font-weight:700;text-transform:capitalize;font-size:12px}
+    .status-new{background:#03a9f4}
+    .status-in_progress{background:#ff9800}
+    .status-done{background:#4caf50}
+    .status-canceled{background:#f44336}
+    .action-select{padding:6px 8px;border-radius:8px;border:1px solid #e5e7eb}
+    .details-btn{padding:8px 10px;border-radius:8px;border:none;background:#0ea5a1;color:#fff;cursor:pointer;font-weight:600}
+    /* cards & lists */
+    .panel-body{padding:18px}
+    .panel-head{padding:18px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;justify-content:space-between}
+    .panel-head h1{margin:0;font-size:18px;color:var(--accent)}
+    .panel-foot{padding:14px;border-top:1px solid #f3f4f6;text-align:center;color:var(--muted);font-size:13px}
+    /* modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.45);z-index:1200;padding:20px}
+    .modal.open{display:flex}
+    .modal-card{background:var(--card);width:100%;max-width:920px;border-radius:12px;box-shadow:0 18px 40px rgba(0,0,0,0.25);overflow:hidden;max-height:90vh;display:flex;flex-direction:column}
+    .modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid #f3f4f6}
+    .modal-body{padding:18px 20px;overflow:auto}
+    .close-x{font-size:22px;cursor:pointer;color:#444}
+    /* products list used by both pages */
+    .product-list{display:flex;flex-direction:column;gap:10px}
+    .product-row{display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:10px;background:#fff;border:1px solid #f1f5f9}
+    .prod-left{display:flex;gap:12px;align-items:center}
+    .prod-thumb{width:72px;height:72px;border-radius:8px;object-fit:cover;border:1px solid #e6e6e6}
+    .prod-meta{font-size:14px}
+    .prod-meta .name{font-weight:700}
+    .prod-meta .meta{color:var(--muted);font-size:13px;margin-top:4px}
+    .prod-qty{font-weight:700;color:var(--accent);min-width:64px;text-align:right}
+    /* utility */
+    .muted{color:var(--muted)}
+    @media (max-width:920px){ .admin-wrap{padding:10px} .prod-thumb{width:64px;height:64px} }
+  </style>
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <div class="admin-wrap">
+    <div class="admin-panel">
+      <div class="admin-top">
+        <div class="logo">
+          <span style="font-size:20px">📦</span>
+          <div>
+            <div style="font-size:16px">Admin Panel</div>
+            <div class="small-muted" style="font-size:12px">Manage orders & offers</div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <a href="{{ url_for('admin_dashboard') }}" class="btn">Dashboard</a>
+          <a href="{{ url_for('admin_orders') }}" class="btn secondary">Orders</a>
+          <a href="{{ url_for('admin_offer_orders') }}" class="btn secondary">Offer Orders</a>
+
+          <a href="{{ url_for('admin_logout') }}" class="btn" style="background:var(--danger)">Logout</a>
+        </div>
+      </div>
+
+      {% block content %}{% endblock %}
+
+      <div class="panel-foot">Admin Dashboard © {{ current_year if current_year is defined else "2025" }}</div>
+    </div>
+  </div>
+
+  <!-- place for global scripts -->
+  <script>
+    // small helper available globally
+    function safeDate(ts){
+      try{ return ts ? new Date(ts).toLocaleString() : '—' }catch(e){ return '—' }
+    }
+  </script>
+
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

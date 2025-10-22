@@ -1,292 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "admin/admin_base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-translate="admin.orders.title">📦 Orders - Admin Dashboard</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <style>
-        :root {
-            --pine-green: #2d8a43;
-            --gold: #f0ad4e;
-            --icy-blue: #87CEEB;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            --border-radius: 12px;
-            --festive-red: #d9534f;
-        }
+{% block title %}📦 Orders - Admin Dashboard{% endblock %}
 
-        .admin-dashboard {
-            min-height: 100vh;
-            background: #f5f5f5;
-        }
+{% block content %}
+<div class="panel-body">
+  <main style="padding:18px">
+    <h1>Customer Orders</h1>
 
-        .admin-header {
-            background: var(--pine-green);
-            color: white;
-            padding: 1rem 0;
-            box-shadow: var(--shadow);
-        }
+    <div id="ordersList" style="display:grid;gap:1.25rem"></div>
+  </main>
+</div>
+{% endblock %}
 
-        .admin-nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+{% block extra_scripts %}
+<script>
+  (function(){
+    const BASE_PREFIX = "{{ BASE_PREFIX if BASE_PREFIX is defined else '' }}";
 
-        .admin-title {
-            font-family: 'Cinzel', serif;
-            font-size: 1.5rem;
-            color: var(--gold);
-        }
+    async function loadOrders() {
+      try {
+        const res = await fetch(`${BASE_PREFIX}/api/admin/orders`, { credentials:'include' })
+        const orders = await res.json()
+        displayOrders(Array.isArray(orders) ? orders : (orders.orders || []))
+      } catch (error) {
+        console.error('Error loading orders:', error);
+        document.getElementById('ordersList').innerHTML = `<p class="small-muted">Failed to load orders.</p>`
+      }
+    }
 
-        .admin-actions {
-            display: flex;
-            gap: 1rem;
-        }
+    function displayOrders(orders) {
+      const container = document.getElementById('ordersList');
 
-        .admin-btn {
-            background: var(--gold);
-            color: var(--pine-green);
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-            text-decoration: none;
-            display: inline-block;
-        }
+      if (!orders || orders.length === 0) {
+        container.innerHTML = `<p class="small-muted">No orders found.</p>`;
+        return;
+      }
 
-        .admin-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .orders-list {
-            display: grid;
-            gap: 1.5rem;
-        }
-
-        .order-card {
-            background: white;
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-        }
-
-        .order-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid var(--icy-blue);
-        }
-
-        .order-id {
-            font-weight: 600;
-            color: var(--pine-green);
-        }
-
-        .order-status {
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .status-new {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .status-processed {
-            background: #d1ecf1;
-            color: #0c5460;
-        }
-
-        .status-shipped {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .order-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .order-items {
-            margin-top: 1rem;
-        }
-
-        /* Beautiful order items styling */
-        .order-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.6rem 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .item-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .product-image {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-        }
-
-        .item-name {
-            font-weight: 500;
-        }
-
-        .item-price {
-            font-weight: 500;
-            color: var(--festive-red);
-        }
-
-        .order-total {
-            display: flex;
-            justify-content: space-between;
-            font-weight: 600;
-            border-top: 2px solid var(--gold);
-            padding-top: 10px;
-            margin-top: 10px;
-        }
-
-        .status-select {
-            padding: 0.3rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="admin-dashboard">
-        <header class="admin-header">
-            <nav class="admin-nav">
-                <h1 class="admin-title" data-translate="admin.orders.title">📦 Order Management</h1>
-                <div class="admin-actions">
-                    <a href="{{ url_for('admin_dashboard') }}" class="admin-btn" data-translate="admin.orders.products">Products</a>
-                    <a href="{{ url_for('shop') }}" class="admin-btn" data-translate="admin.orders.shop">View Shop</a>
-                    <a href="{{ url_for('admin_logout') }}" class="admin-btn" data-translate="admin.orders.logout">Logout</a>
-                </div>
-            </nav>
-        </header>
-
-        <main class="admin-content">
-            <h2 data-translate="admin.orders.customers">Customer Orders</h2>
-
-            <div class="orders-list" id="ordersList">
-                <!-- Orders will be loaded here -->
+      container.innerHTML = orders.map(order => {
+        const itemsHtml = (order.items || []).map(item => `
+          <div class="order-item" style="display:flex;justify-content:space-between;align-items:center;padding:0.6rem 0;border-bottom:1px solid #eee">
+            <div style="display:flex;align-items:center;gap:10px">
+              <img class="product-image" src="${BASE_PREFIX}${item.image || ''}" style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:1px solid #ddd">
+              <span style="font-weight:500">${item.name} x${item.qty}</span>
             </div>
-        </main>
-    </div>
+            <span style="font-weight:500;color:var(--danger)">\$${((item.price||0) * (item.qty||1)).toFixed(2)}</span>
+          </div>
+        `).join('')
 
-    <script>
-        document.addEventListener('DOMContentLoaded', loadOrders);
+        const total = (order.items || []).reduce((sum, item) => sum + ((item.price||0) * (item.qty||1)), 0).toFixed(2)
 
-        async function loadOrders() {
-            try {
-                const response = await fetch('{{BASE_PREFIX}}/api/admin/orders');
-                const orders = await response.json();
-                displayOrders(orders);
-            } catch (error) {
-                console.error('Error loading orders:', error);
-            }
+        return `
+          <div class="order-card" style="background:white;border-radius:12px;padding:1.25rem;box-shadow:var(--shadow)">
+            <div class="order-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;padding-bottom:1rem;border-bottom:2px solid #87CEEB">
+              <div><span style="font-weight:600;color:var(--accent)">Order #${order.id}</span> - ${new Date(order.created_at).toLocaleDateString()}</div>
+              <select class="status-select" onchange="updateOrderStatus(${order.id}, this.value)">
+                <option value="new" ${order.status === 'new' ? 'selected' : ''}>New</option>
+                <option value="processed" ${order.status === 'processed' ? 'selected' : ''}>Processed</option>
+                <option value="shipped" ${order.status === 'shipped' ? 'selected' : ''}>Shipped</option>
+              </select>
+            </div>
+
+            <div class="order-details" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+              <div>
+                <strong>Customer:</strong> ${order.customer_name || '—'}<br>
+                <strong>Phone:</strong> ${order.phone || '—'}<br>
+                <strong>Email:</strong> ${order.email || '—'}
+              </div>
+              <div>
+                <strong>Status:</strong> <span style="padding:0.3rem 0.8rem;border-radius:15px;font-weight:600">${(order.status||'').toUpperCase()}</span><br>
+                ${order.comment ? `<strong>Comment:</strong> ${order.comment}` : ''}
+              </div>
+            </div>
+
+            <div class="order-items">
+              <strong>Items:</strong>
+              ${itemsHtml}
+              <div class="order-total" style="display:flex;justify-content:space-between;font-weight:600;border-top:2px solid var(--gold);padding-top:10px;margin-top:10px">
+                <span>Total:</span>
+                <span>$${total}</span>
+              </div>
+            </div>
+          </div>
+        `
+      }).join('');
+    }
+
+    window.updateOrderStatus = async function(orderId, newStatus) {
+      try {
+        const response = await fetch(`${BASE_PREFIX}/api/admin/orders/${orderId}/status`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+          body: JSON.stringify({ status: newStatus })
+        });
+
+        if (response.ok) {
+          loadOrders();
+        } else {
+          alert('Error updating order status');
         }
+      } catch (error) {
+        alert('Failed to update order status');
+      }
+    }
 
-        function displayOrders(orders) {
-            const container = document.getElementById('ordersList');
-
-            if (orders.length === 0) {
-                container.innerHTML = `<p>${window.t ? window.t('admin.orders.empty') : 'No orders found.'}</p>`;
-                return;
-            }
-
-            container.innerHTML = orders.map(order => `
-                <div class="order-card">
-                    <div class="order-header">
-                        <div>
-                            <span class="order-id">${window.t ? window.t('admin.orders.order', {id: order.id}) : `Order #${order.id}`}</span>
-                            <span> - ${new Date(order.created_at).toLocaleDateString()}</span>
-                        </div>
-                        <select class="status-select" onchange="updateOrderStatus(${order.id}, this.value)">
-                            <option value="new" ${order.status === 'new' ? 'selected' : ''}>${window.t ? window.t('admin.orders.status.new') : 'New'}</option>
-                            <option value="processed" ${order.status === 'processed' ? 'selected' : ''}>${window.t ? window.t('admin.orders.status.processed') : 'Processed'}</option>
-                            <option value="shipped" ${order.status === 'shipped' ? 'selected' : ''}>${window.t ? window.t('admin.orders.status.shipped') : 'Shipped'}</option>
-                        </select>
-                    </div>
-
-                    <div class="order-details">
-                        <div>
-                            <strong>${window.t ? window.t('admin.orders.customer') : 'Customer:'}</strong> ${order.customer_name}<br>
-                            <strong>${window.t ? window.t('admin.orders.phone') : 'Phone:'}</strong> ${order.phone}<br>
-                            <strong>${window.t ? window.t('admin.orders.email') : 'Email:'}</strong> ${order.email}
-                        </div>
-                        <div>
-                            <strong>${window.t ? window.t('admin.orders.status') : 'Status:'}</strong> 
-                            <span class="order-status status-${order.status}">${order.status.toUpperCase()}</span><br>
-                            ${order.comment ? `<strong>${window.t ? window.t('admin.orders.comment') : 'Comment:'}</strong> ${order.comment}` : ''}
-                        </div>
-                    </div>
-
-                    <div class="order-items">
-                        <strong>${window.t ? window.t('admin.orders.items') : 'Items:'}</strong>
-                        ${order.items.map(item => `
-                        <div class="order-item">
-                            <div class="item-info">
-                                <img class="product-image" src="{{BASE_PREFIX}}${item.image}" alt="${item.name}">
-                                <span class="item-name">${item.name} x${item.qty}</span>
-                            </div>
-                            <span class="item-price">$${(item.price * item.qty).toFixed(2)}</span>
-                        </div>
-                        `).join('')}
-                        <div class="order-total">
-                            <span>${window.t ? window.t('admin.orders.total') : 'Total:'}</span>
-                            <span>$${order.items.reduce((sum, item) => sum + (item.price * item.qty), 0).toFixed(2)}</span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        async function updateOrderStatus(orderId, newStatus) {
-            try {
-                const response = await fetch(`/api/admin/orders/${orderId}/status`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ status: newStatus })
-                });
-
-                if (response.ok) {
-                    loadOrders(); // Reload to show updated status
-                } else {
-                    alert(window.t ? window.t('admin.orders.error.update') : 'Error updating order status');
-                }
-            } catch (error) {
-                alert(window.t ? window.t('admin.orders.error.failed') : 'Failed to update order status');
-            }
-        }
-    </script>
-</body>
-
-</html>
+    document.addEventListener('DOMContentLoaded', loadOrders);
+  })();
+</script>
+{% endblock %}

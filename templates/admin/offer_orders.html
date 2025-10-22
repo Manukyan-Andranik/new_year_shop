@@ -1,0 +1,325 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}📦 Offer Orders — Admin{% endblock %}
+
+{% block content %}
+<div class="panel-body">
+  <div style="padding:18px">
+    <table class="table" id="ordersTable" aria-describedby="ordersList">
+        <h1 id="ordersList" class="sr-only">Offer Orders List</h1>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Offer Type</th>
+          <th>Customer</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Created</th>
+          <th>Updated</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div id="errorBox" class="small-muted" style="margin-top:12px;"></div>
+  </div>
+</div>
+
+<!-- Details Modal (reuses base modal styles) -->
+<div id="detailsModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal-card" role="document">
+    <div class="modal-head">
+      <div>
+        <strong id="modalTitle">Order Details</strong>
+        <div id="modalSub" class="muted" style="font-size:13px;margin-top:4px"></div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <button id="statusQuickBtn" class="btn" style="padding:6px 10px;font-size:13px;display:none">Change Status</button>
+        <span class="close-x" id="modalClose">&times;</span>
+      </div>
+    </div>
+
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 340px;gap:18px">
+        <div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+            <h3 style="margin:0">Selected Products</h3>
+            <div class="small-muted" id="productsCount">0 items</div>
+          </div>
+          <div class="product-list" id="productList">
+            <!-- product rows injected here -->
+          </div>
+
+          <div class="totals" id="totalsBlock" style="display:none;margin-top:12px;padding-top:12px;border-top:2px dashed #f3f4f6;display:flex;justify-content:space-between;align-items:center">
+            <div class="muted">Payment Method: <span id="paymentMethod">—</span></div>
+            <div class="grand" id="grandTotal" style="font-weight:800;font-size:18px;color:var(--accent)">Total: $0.00</div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="background:#f8fafb;padding:12px;border-radius:10px;border-left:4px solid var(--accent)">
+            <p><strong id="custName">Customer Name</strong></p>
+            <p class="muted" id="custPhone">Phone</p>
+            <p class="muted" id="custEmail">Email</p>
+            <p style="margin-top:8px"><strong>Comment</strong><br><span id="custComment" class="muted">—</span></p>
+          </div>
+
+          <div style="background:#f8fafb;padding:12px;border-radius:10px">
+            <strong style="display:block;margin-bottom:8px">Form Data</strong>
+            <table id="formDataTable" style="width:100%;border-collapse:collapse"></table>
+          </div>
+
+          <div style="margin-top:auto;font-size:13px;color:var(--muted)">
+            <div><strong>Order ID:</strong> <span id="orderIdVal">#0</span></div>
+            <div style="margin-top:6px"><strong>Offer Type:</strong> <span id="orderOfferType">—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  (function(){
+    const BASE_PREFIX = "{{ BASE_PREFIX if BASE_PREFIX is defined else '' }}";
+
+    function el(q){ return document.querySelector(q) }
+    const tableBody = el('#ordersTable tbody')
+    const errorBox = el('#errorBox')
+    const modal = el('#detailsModal')
+    const modalClose = el('#modalClose')
+    const productList = el('#productList')
+    const productsCount = el('#productsCount')
+    const totalsBlock = el('#totalsBlock')
+    const grandTotal = el('#grandTotal')
+    const paymentMethod = el('#paymentMethod')
+    const custName = el('#custName'), custPhone = el('#custPhone'), custEmail = el('#custEmail'), custComment = el('#custComment')
+    const formDataTable = el('#formDataTable')
+    const orderIdVal = el('#orderIdVal'), orderOfferType = el('#orderOfferType')
+    const modalSub = el('#modalSub')
+    const statusQuickBtn = el('#statusQuickBtn')
+
+    const OFFER_IMAGE_TYPES = ["christmas_together", "collections", "season_bests"];
+
+    async function safeFetchJSON(url, opts = {}) {
+      try {
+        const res = await fetch(url, { credentials: 'include', ...opts })
+        const text = await res.text()
+        try { return JSON.parse(text) } catch(e){ console.error('Non-JSON response', text); errorBox.textContent = 'Server returned non-JSON. Check auth or route.'; return { success:false } }
+      } catch(e){ console.error('Fetch error', e); errorBox.textContent = 'Failed to connect to server.'; return { success:false } }
+    }
+
+    async function loadOrders(){
+      const data = await safeFetchJSON(`${BASE_PREFIX}/api/admin/offer_orders`)
+      if(!data.success || !Array.isArray(data.orders)){
+        tableBody.innerHTML = `<tr><td colspan="9" style="text-align:center;color:${data.success===false ? 'red' : '#666'}">Error loading orders</td></tr>`
+        return
+      }
+      tableBody.innerHTML = ''
+      data.orders.forEach(order=>{
+        const tr = document.createElement('tr')
+        tr.innerHTML = `
+          <td>${order.id}</td>
+          <td>${order.offer_type}</td>
+          <td>${order.customer_name || '—'}</td>
+          <td>${order.phone || '—'}</td>
+          <td>${order.email || '—'}</td>
+          <td><span class="status-badge status-${order.status}">${order.status}</span></td>
+          <td>${order.created_at ? new Date(order.created_at).toLocaleString() : '—'}</td>
+          <td>${order.updated_at ? new Date(order.updated_at).toLocaleString() : '—'}</td>
+          <td>
+            <button class="details-btn" data-id="${order.id}">Details</button>
+            <select class="action-select" data-id="${order.id}">
+              <option value="">Change status</option>
+              <option value="new">New</option>
+              <option value="in_progress">In Progress</option>
+              <option value="done">Done</option>
+              <option value="canceled">Canceled</option>
+            </select>
+          </td>`
+        tableBody.appendChild(tr)
+      })
+
+      document.querySelectorAll('.action-select').forEach(s=>{
+        s.addEventListener('change', async (e)=>{
+          const id = e.target.dataset.id
+          const status = e.target.value
+          if(!status) return
+          const res = await safeFetchJSON(`${BASE_PREFIX}/api/admin/offer_orders/${id}/status`, {
+            method: 'PUT',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({status})
+          })
+          if(res.success) loadOrders()
+        })
+      })
+
+      document.querySelectorAll('.details-btn').forEach(btn=>{
+        btn.addEventListener('click', ()=>openDetails(btn.dataset.id))
+      })
+    }
+
+    async function fetchProductById(id){
+      try {
+        const res = await fetch(`${BASE_PREFIX}/api/products/${id}`, { credentials:'include' })
+        if(!res.ok) return null
+        const json = await res.json()
+        return json.product || json
+      } catch(e){ return null }
+    }
+
+    async function openDetails(id){
+      productList.innerHTML = ''
+      formDataTable.innerHTML = ''
+      if(totalsBlock) totalsBlock.style.display = 'none'
+      grandTotal.textContent = 'Total: $0.00'
+      productsCount.textContent = '0 items'
+      paymentMethod.textContent = '—'
+      custName.textContent = 'Loading...'
+      custPhone.textContent = ''
+      custEmail.textContent = ''
+      custComment.textContent = '—'
+      orderIdVal.textContent = `#${id}`
+      orderOfferType.textContent = '—'
+      modalSub.textContent = ''
+
+      const data = await safeFetchJSON(`${BASE_PREFIX}/api/offer_orders/${id}`)
+      if(!data.success || !data.order){
+        errorBox.textContent = 'Failed to load order details'
+        return
+      }
+      const order = data.order
+
+      orderIdVal.textContent = `#${order.id}`
+      orderOfferType.textContent = order.offer_type || '—'
+      modalSub.textContent = `Created: ${order.created_at ? new Date(order.created_at).toLocaleString() : '—'}`
+
+      custName.textContent = order.customer_name || '—'
+      custPhone.textContent = order.phone || '—'
+      custEmail.textContent = order.email || '—'
+      custComment.textContent = order.comment || '—'
+
+      const formData = order.form_data || {}
+      if(Object.keys(formData).length === 0){
+        formDataTable.innerHTML = `<tr><td class="muted">No extra form data provided</td></tr>`
+      } else {
+        formDataTable.innerHTML = ''
+        for(const key of Object.keys(formData)){
+          const tr = document.createElement('tr')
+          tr.innerHTML = `<td style="width:170px;color:var(--muted);font-weight:600">${escapeHtml(key)}</td><td>${escapeHtml(String(formData[key]))}</td>`
+          formDataTable.appendChild(tr)
+        }
+      }
+
+      const sel = Array.isArray(order.selected_products) ? order.selected_products : []
+      let items = []
+      const hasFull = sel.every(it => it.name && (it.price !== undefined))
+      if(hasFull){
+        items = sel.map(it => ({
+          id: it.id || null,
+          name: it.name,
+          image: it.image || '',
+          price: parseFloat(it.price || 0),
+          qty: parseInt(it.qty || 1)
+        }))
+      } else {
+        const promises = sel.map(async it => {
+          if(it.id && (!it.name || !it.price)){
+            const prod = await fetchProductById(it.id)
+            if(prod){
+              return {
+                id: it.id,
+                name: prod.name || prod.title || `Product ${it.id}`,
+                image: prod.image || prod.thumbnail || prod.img || '',
+                price: parseFloat(prod.price || prod.unit_price || 0),
+                qty: parseInt(it.qty || it.quantity || 1)
+              }
+            } else {
+              return { id: it.id, name: it.name || `Product ${it.id}`, image:'', price: parseFloat(it.price||0), qty: parseInt(it.qty||1) }
+            }
+          } else {
+            return {
+              id: it.id || null,
+              name: it.name || `Product ${it.id || '—'}`,
+              image: it.image || '',
+              price: parseFloat(it.price || 0),
+              qty: parseInt(it.qty || 1)
+            }
+          }
+        })
+        items = await Promise.all(promises)
+      }
+
+      let total = 0
+      if(items.length === 0){
+        productList.innerHTML = `<div class="muted">No products selected for this order.</div>`
+        productsCount.textContent = '0 items'
+      } else {
+        productList.innerHTML = ''
+        items.forEach(it=>{
+          const row = document.createElement('div')
+          row.className = 'product-row'
+          
+          // ✅ Updated image logic
+          let imgSrc = ''
+          if(order.offer_type && OFFER_IMAGE_TYPES.includes(order.offer_type) && it.id){
+            imgSrc = `/static/images/offers/${order.offer_type}/${it.id}.jpg`
+          } else if(it.id){
+            imgSrc = `/static/images/products/all/${it.id}.jpg`
+          }
+
+          const subtotal = (Number(it.price)||0) * (Number(it.qty)||1)
+          total += subtotal
+          row.innerHTML = `
+            <div class="prod-left">
+              ${ imgSrc ? `<img class="prod-thumb" src="${escapeHtml(imgSrc)}" alt="${escapeHtml(it.name)}">` : `<div style="width:72px;height:72px;border-radius:8px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;color:var(--muted);font-weight:700">No<br>Image</div>`}
+              <div class="prod-meta">
+                <div class="name">${escapeHtml(it.name)}</div>
+                <div class="meta">Unit: $${Number(it.price||0).toFixed(2)} • ID: ${it.id || '—'}</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+              <div class="prod-qty">x${it.qty}</div>
+              <div style="font-weight:700;color:#111">$${subtotal.toFixed(2)}</div>
+            </div>
+          `
+          productList.appendChild(row)
+        })
+        productsCount.textContent = `${items.reduce((s,i)=>s+i.qty,0)} items • ${items.length} products`
+        if(totalsBlock) totalsBlock.style.display = 'flex'
+        grandTotal.textContent = `$${total.toFixed(2)}`
+      }
+
+      paymentMethod.textContent = order.payment_method || (order.form_data && order.form_data.payment_method) || '—'
+
+      statusQuickBtn.style.display = 'inline-block'
+      statusQuickBtn.onclick = async ()=>{
+        const newStatus = prompt('Enter new status (new, in_progress, done, canceled):', order.status || 'new')
+        if(!newStatus) return
+        const res = await safeFetchJSON(`${BASE_PREFIX}/api/admin/offer_orders/${order.id}/status`, {
+          method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ status: newStatus })
+        })
+        if(res.success){ alert('Status updated'); modal.classList.remove('open'); loadOrders() } else alert('Failed to update status')
+      }
+
+      modal.classList.add('open')
+      modal.setAttribute('aria-hidden','false')
+    }
+
+    modalClose.addEventListener('click', ()=>{ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true') })
+    window.addEventListener('click', (e)=>{ if(e.target === modal) { modal.classList.remove('open'); modal.setAttribute('aria-hidden','true') } })
+
+    function escapeHtml(str){
+      if(typeof str !== 'string') return str
+      return str.replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]))
+    }
+
+    loadOrders()
+  })();
+</script>
+{% endblock %}
