@@ -11,7 +11,7 @@ const translations = {
         'nav.about': 'About',
         'nav.shop': 'Shop',
         'nav.admin': 'Admin',
-        'logo.title': 'Christmas Magic',
+        'logo.title': 'Mandarin',
 
         // ===== Hero Section =====
         'hero.title': 'The magic of New Year — in wood and art',
@@ -370,7 +370,7 @@ const translations = {
         'nav.about': 'Մեր Մասին',
         'nav.shop': 'Խանութ',
         'nav.admin': 'Ադմին',
-        'logo.title': 'Ամանորյա Կախարդություն',
+        'logo.title': 'Mandarin',
         // ===== Hero Section =====
         'hero.title': 'Ամանորի հմայքը՝ փայտի և արվեստի տեսքով',
         'hero.subtitle': 'Ձմեռը գալիս է Mandarin-ի բույրով',
@@ -730,7 +730,7 @@ const translations = {
         'nav.about': 'О нас',
         'nav.shop': 'Магазин',
         'nav.admin': 'Админ',
-        'logo.title': 'Новогодное Волшебство',
+        'logo.title': 'Mandarin',
         // ===== Hero Section =====
         'hero.title': 'Новогодняя магия — в дереве и искусстве',
         'hero.subtitle': 'Зима приходит с ароматом Mandarin',

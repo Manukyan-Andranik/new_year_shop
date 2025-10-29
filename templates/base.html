@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}Christmas Magic{% endblock %}</title>
+    <title data-translate="logo.title">{% block title %}Mandarin{% endblock %}</title>
+
+    <!-- 🧩 Favicon (Fixed and Cross-Browser Compatible) -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
 
     <!-- Web Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -11,14 +14,42 @@
     <!-- SEO/OG Meta -->
     <meta name="description" content="{% block description %}Discover magical Christmas tree decorations and toys.{% endblock %}">
     <meta property="og:title" content="{% block og_title %}Christmas Magic Shop{% endblock %}">
+    
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 
     <style>
         /* Loading overlay */
-        #loading-overlay { position: fixed; inset: 0; background: #fff; display:flex;align-items:center;justify-content:center; z-index:9999; transition: opacity .4s, visibility .4s; }
+        #loading-overlay { 
+            position: fixed; inset: 0; 
+            background: #fff; 
+            display:flex;align-items:center;justify-content:center; 
+            z-index:9999; 
+            transition: opacity .4s, visibility .4s; 
+        }
         #loading-overlay.hidden { opacity:0; visibility:hidden; }
-        .spinner { border:5px solid #f3f3f3; border-top:5px solid #e74c3c; border-radius:50%; width:48px; height:48px; animation: spin 1s linear infinite; margin-bottom:12px;}
+        .spinner { 
+            border:5px solid #f3f3f3; 
+            border-top:5px solid #e74c3c; 
+            border-radius:50%; 
+            width:48px; height:48px; 
+            animation: spin 1s linear infinite; 
+            margin-bottom:12px;
+        }
         @keyframes spin { to { transform: rotate(360deg);} }
+
+        /* Favicon in navbar logo */
+        .logo img {
+            width: 28px;
+            height: 28px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        .logo span {
+            vertical-align: middle;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -29,7 +60,9 @@
     <div id="loading-overlay">
         <div style="text-align:center">
             <div class="spinner"></div>
-            <div id="loading-text" style="font-family:'Cinzel', serif; color:#e74c3c;" data-translate="loading.text">Loading Christmas Magic...</div>
+            <div id="loading-text" style="font-family:'Cinzel', serif; color:#e74c3c;" data-translate="loading.text">
+                Loading Christmas Magic...
+            </div>
         </div>
     </div>
 
@@ -39,16 +72,14 @@
     </main>
 
     {% include 'components/footer.html' %}
-
     {% block scripts %}{% endblock %}
 
-    <!-- translation script (if you rely on it) -->
+    <!-- translation script -->
     <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
 
-    <!-- Hamburger / Nav script (must run after header is in DOM) -->
+    <!-- Hamburger / Nav script -->
     <script>
     (function () {
-        // Run after DOM is ready
         function ready(fn) {
             if (document.readyState !== 'loading') fn();
             else document.addEventListener('DOMContentLoaded', fn);
@@ -59,7 +90,6 @@
             const navLinks = document.getElementById('nav-links');
 
             if (!hamburger || !navLinks) {
-                // Debug info if something went wrong
                 console.warn('Hamburger or nav-links not found in DOM.');
                 return;
             }
@@ -68,7 +98,6 @@
                 navLinks.classList.add('active');
                 hamburger.classList.add('active');
                 hamburger.setAttribute('aria-expanded', 'true');
-                // disable page scroll when menu open
                 document.documentElement.style.overflow = 'hidden';
                 document.body.style.overflow = 'hidden';
             }
@@ -81,27 +110,21 @@
                 document.body.style.overflow = '';
             }
 
-            hamburger.addEventListener('click', function (e) {
+            hamburger.addEventListener('click', function () {
                 const isOpen = navLinks.classList.contains('active');
                 if (isOpen) closeMenu(); else openMenu();
             });
 
-            // Close when clicking any nav link (mobile)
             navLinks.querySelectorAll('a').forEach(a => {
                 a.addEventListener('click', function () {
-                    // only close if menu is visible (mobile)
                     if (navLinks.classList.contains('active')) closeMenu();
                 });
             });
 
-            // Close on Escape key
             document.addEventListener('keydown', function (e) {
-                if (e.key === 'Escape' && navLinks.classList.contains('active')) {
-                    closeMenu();
-                }
+                if (e.key === 'Escape' && navLinks.classList.contains('active')) closeMenu();
             });
 
-            // Optional: close when clicking outside menu on mobile
             document.addEventListener('click', function (e) {
                 if (!navLinks.classList.contains('active')) return;
                 const clickInside = navLinks.contains(e.target) || hamburger.contains(e.target);
