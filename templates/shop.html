@@ -102,7 +102,7 @@
         <!-- Customer Form -->
         <div class="paper-footer" style="border-top:1px dashed #e0c497;padding-top:12px;">
           <div class="paper-total" style="font-weight:bold;font-size:17px; margin-bottom: 12px;">
-            <span data-translate="order.total">Total:</span> <span id="paper-total" style="color:#b83232;">$0.00</span>
+            <span data-translate="order.total">Total:</span> <span id="paper-total" style="color:#b83232;">0.00֏</span>
           </div>
           <form id="order-form" style="width:100%; display:flex; flex-direction:column; gap:10px;">
             <input type="text" id="customer-name" placeholder="Your Name" required data-translate="order.form.name">
@@ -110,6 +110,43 @@
             <input type="text" id="customer-phone" placeholder="Your Phone" required data-translate="order.form.phone">
             <textarea id="santa-message" placeholder="Your Message to Santa" required
               data-translate="order.form.message"></textarea>
+
+            <!-- 🚚 Delivery Options -->
+            <div class="delivery-section" style="border-top:1px dashed #e0c497; padding-top:12px;">
+              <div style="font-weight:bold; margin-bottom:6px;" data-translate="delivery.title">🚚 Delivery Options:
+              </div>
+
+              <label style="display:flex; align-items:center; gap:8px;">
+                <input type="radio" name="delivery" value="0" data-label="Free delivery in Yerevan center" checked>
+                <span data-translate="delivery.option.center">Free delivery in Yerevan center</span>
+              </label>
+
+              <label style="display:flex; align-items:center; gap:8px;">
+                <input type="radio" name="delivery" value="2000" data-label="Outside Yerevan center - 2000 AMD">
+                <span data-translate="delivery.option.outside">Outside Yerevan center - 2000 AMD</span>
+              </label>
+
+              <label style="display:flex; align-items:center; gap:8px;">
+                <input type="radio" name="delivery" value="0" data-label='Regions via "HayPost"'>
+                <span data-translate="delivery.option.regions">Regions via "HayPost" (Delivery to all regions of
+                  Armenia)</span>
+              </label>
+
+              <label style="display:flex; align-items:center; gap:8px;">
+                <input type="radio" name="delivery" value="custom" data-label="Your suggested delivery method">
+                <span data-translate="delivery.option.custom">Your suggested delivery method (Throughout Armenia)</span>
+              </label>
+
+              <div id="delivery-message" style="margin-top:6px; color:#b83232; font-size:13px;"
+                data-translate="delivery.message">
+                Be sure to specify the delivery address.
+              </div>
+
+              <input type="text" id="delivery-address" placeholder="Delivery Address" style="display:none;"
+                data-translate="delivery.address">
+            </div>
+
+
             <div class="paper-actions" style="display:flex; justify-content:flex-end; gap:12px; margin-top:8px;">
               <button type="button" class="btn-secondary" id="paper-cancel"
                 style="background:#e4d4b7;color:#5a3d1a;border:none;border-radius:20px;padding:8px 16px;font-size:14px;cursor:pointer;transition:0.3s;"
@@ -146,7 +183,8 @@
           <div class="product-price" id="product-modal-price" data-translate="product.modal.price">0 ֏</div>
           <p id="product-modal-shape" data-translate="product.modal.shape">Product shape.</p>
           <p id="product-modal-description" data-translate="product.modal.description">Product description.</p>
-          <p id="product-modal-public-description" data-translate="product.modal.public_description">Product public description.</p>
+          <p id="product-modal-public-description" data-translate="product.modal.public_description">Product public
+            description.</p>
         </div>
 
         <div style="margin-top:auto;display:flex;gap:8px;">

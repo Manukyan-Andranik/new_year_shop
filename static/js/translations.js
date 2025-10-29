@@ -364,13 +364,23 @@ const translations = {
         'delivery.toggle': 'Delivery',
         'delivery.title': 'Delivery Information',
         'delivery.item1.title': 'Free in Yerevan center',
-        'delivery.item1.desc': 'Free delivery in Yerevan center',
-        'delivery.item2.title': 'Outside Yerevan center - 2000 AMD',
+        'delivery.option.center': 'Free delivery in Yerevan center',
+        'delivery.option.outside': 'Outside Yerevan center - 2000 AMD',
         'delivery.item2.desc': 'Delivery outside Yerevan center',
-        'delivery.item3.title': 'Regions via "HayPost"',
+        'delivery.option.regions': 'Regions via "HayPost"',
         'delivery.item3.desc': 'Delivery to all regions of Armenia',
-        'delivery.item4.title': 'Your suggested delivery method',
-        'delivery.item4.desc': 'Throughout Armenia'
+        'delivery.option.custom': 'Your suggested delivery method',
+        'delivery.item4.desc': 'Throughout Armenia',
+        'delivery.item1.title': 'Free in Yerevan center',
+        'delivery.option.center': 'Free delivery in Yerevan center',
+        'delivery.option.outside': 'Outside Yerevan center - 2000 AMD',
+        'delivery.item2.desc': 'Delivery outside Yerevan center',
+        'delivery.option.regions': 'Regions via "HayPost"',
+        'delivery.item3.desc': 'Delivery to all regions of Armenia',
+        'delivery.option.custom': 'Your suggested delivery method',
+        'delivery.item4.desc': 'Throughout Armenia',
+        'delivery.message': 'Be sure to specify the delivery address.',
+        'delivery.address': 'Delivery Address'
 
     },
 
@@ -736,13 +746,23 @@ const translations = {
         'delivery.toggle': 'Առաքում',
         'delivery.title': 'Առաքման Պայմաններ',
         'delivery.item1.title': 'Երևանի կենտրոնում անվճար',
-        'delivery.item1.desc': 'Անվճար առաքում Երևանի կենտրոնում',
-        'delivery.item2.title': 'Երևանի կենտրոնից դուրս 2000 դրամ',
+        
+        'delivery.option.center': 'Անվճար առաքում Երևանի կենտրոնում',
+        'delivery.option.outside': 'Երևանի կենտրոնից դուրս 2000 դրամ',
         'delivery.item2.desc': 'Առաքում Երևանի կենտրոնից դուրս',
-        'delivery.item3.title': 'ՀՀ մարզեր "հայՓոստով"',
+        'delivery.option.regions': 'ՀՀ մարզեր "հայՓոստով"',
         'delivery.item3.desc': 'Առաքում Հայաստանի բոլոր մարզերում',
-        'delivery.item4.title': 'Ձեր կողմից առաջարկվող առաքման եղանակ',
-        'delivery.item4.desc': 'ՀՀ ամբողջ տարածքում'
+        'delivery.option.custom': 'Ձեր կողմից առաջարկվող առաքման եղանակ',
+        'delivery.item4.desc': 'ՀՀ ամբողջ տարածքում',
+        
+        'delivery.option.outside': 'Երևանի կենտրոնից դուրս՝ 2000 դրամ',
+        'delivery.item2.desc': 'Առաքում Երևանի կենտրոնից դուրս',
+        'delivery.option.regions': 'Մարզեր՝ «ՀայՓոստ»-ով',
+        'delivery.item3.desc': 'Առաքում Հայաստանի բոլոր մարզեր',
+        'delivery.option.custom': 'Ձեր առաջարկած առաքման ձևը',
+        'delivery.item4.desc': 'Ամբողջ Հայաստանով',
+        'delivery.message': 'Խնդրում ենք նշել առաքման հասցեն։',
+        'delivery.address': 'Առաքման հասցե'
 
     },
 
@@ -1119,13 +1139,23 @@ const translations = {
         'delivery.toggle': 'Доставка',
         'delivery.title': 'Условия Доставки',
         'delivery.item1.title': 'Бесплатно в центре Еревана',
-        'delivery.item1.desc': 'Бесплатная доставка в центре Еревана',
-        'delivery.item2.title': 'За пределами центра Еревана - 2000 драм',
+        'delivery.option.center': 'Бесплатная доставка в центре Еревана',
+        'delivery.option.outside': 'За пределами центра Еревана - 2000 драм',
         'delivery.item2.desc': 'Доставка за пределами центра Еревана',
-        'delivery.item3.title': 'Регионы через "ՀայՓոստ"',
+        'delivery.option.regions': 'Регионы через "ՀայՓոստ"',
         'delivery.item3.desc': 'Доставка во все регионы Армении',
-        'delivery.item4.title': 'Предложенный вами способ доставки',
-        'delivery.item4.desc': 'По всей территории Армении'
+        'delivery.option.custom': 'Предложенный вами способ доставки',
+        'delivery.item4.desc': 'По всей территории Армении',
+        'delivery.item1.title': 'Бесплатно в центре Еревана',
+        'delivery.option.center': 'Бесплатная доставка в центре Еревана',
+        'delivery.option.outside': 'За пределами центра Еревана — 2000 драм',
+        'delivery.item2.desc': 'Доставка за пределами центра Еревана',
+        'delivery.option.regions': 'Регионы через "HayPost"',
+        'delivery.item3.desc': 'Доставка по всем регионам Армении',
+        'delivery.option.custom': 'Ваш предложенный способ доставки',
+        'delivery.item4.desc': 'По всей Армении',
+        'delivery.message': 'Пожалуйста, укажите адрес доставки.',
+        'delivery.address': 'Адрес доставки'
     }
 };
 

@@ -6,7 +6,7 @@
 let products = [];
 let cart = [];
 let sceneFunctions = {}; // To hold functions from scene.js
-BASE_PREFIX="https://logiclab.am/mandarin"
+BASE_PREFIX = "https://logiclab.am/mandarin"
 
 // --- DOM Element Selectors ---
 const dom = {
@@ -49,7 +49,7 @@ let currentImageIndex = 0;
 function initUI(_products, _sceneFunctions) {
     products = _products;
     sceneFunctions = _sceneFunctions;
-    
+
     if (!dom.productGrid) {
         console.error('Product grid not found');
         return;
@@ -59,7 +59,7 @@ function initUI(_products, _sceneFunctions) {
         return;
     }
     gsap.to(sceneFunctions.treeGroup.scale, { x: 1.55, y: 1.55, z: 1.55, duration: 0.2, ease: 'power1.out' });
-    
+
     renderProducts();
     initCategoryFilter(); // ← initialize category filter here
     addEventListeners();
@@ -93,14 +93,14 @@ function addEventListeners() {
             if (dom.successOverlay) dom.successOverlay.style.display = 'none';
         });
     }
-    
+
     // Product Modal
     if (dom.modalClose) {
         dom.modalClose.addEventListener('click', closeProductModal);
     }
     if (dom.productModal) {
-        dom.productModal.addEventListener('click', (e) => { 
-            if (e.target === dom.productModal) closeProductModal(); 
+        dom.productModal.addEventListener('click', (e) => {
+            if (e.target === dom.productModal) closeProductModal();
         });
     }
     if (dom.modalAddBtn) {
@@ -119,12 +119,12 @@ function addEventListeners() {
 
     // Global listeners
     window.addEventListener('keydown', handleGlobalKeys);
-    
+
     // Language change listener
     window.addEventListener('languageChanged', (event) => {
         updateDynamicContent();
     });
-    
+
     // Canvas drag-and-drop
     if (sceneFunctions.renderer && sceneFunctions.renderer.domElement) {
         const canvasContainer = sceneFunctions.renderer.domElement.parentElement;
@@ -149,7 +149,7 @@ function addEventListeners() {
                 }
             });
             window.addEventListener('pointerup', () => {
-                if(isDragging) {
+                if (isDragging) {
                     isDragging = false;
                     gsap.to(sceneFunctions.treeGroup.scale, { x: 1.5, y: 1.5, z: 1.5, duration: 0.4, ease: 'elastic.out(1,0.6)' });
                 }
@@ -197,7 +197,7 @@ function initCategoryFilter() {
                     </div>
                 </div>
                 <div class="card-bottom">
-                    <button class="add-btn" aria-label="${window.t ? window.t('product.add.aria', {name: product.name}) : `Add ${product.name} to cart`}"><span class="icon">🎁</span>${window.t ? window.t('product.add') : 'Add to Tree'}</button>
+                    <button class="add-btn" aria-label="${window.t ? window.t('product.add.aria', { name: product.name }) : `Add ${product.name} to cart`}"><span class="icon">🎁</span>${window.t ? window.t('product.add') : 'Add to Tree'}</button>
                 </div>`;
 
             card.querySelector('.add-btn').addEventListener('click', e => { e.stopPropagation(); handleAdd(product, card); });
@@ -225,40 +225,40 @@ function renderProducts() {
         ? products
         : products.filter(p => p.category === activeCategory);
 
-        filteredProducts.forEach(product => {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.dataset.productId = product.id;
-            card.draggable = true;
-          
-            card.innerHTML = `
+    filteredProducts.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.dataset.productId = product.id;
+        card.draggable = true;
+
+        card.innerHTML = `
               <img src="${product.images_url_list[0]}" alt="${product.name}" class="product-image" draggable="false">
               <div class="product-info">
                 <div class="product-name">${product.name}</div>
                 <div class="product-price">${product.price}  ֏</div>
               </div>
-              <button class="add-btn" aria-label="${window.t ? window.t('product.add.aria', {name: product.name}) : `Add ${product.name} to cart`}">
+              <button class="add-btn" aria-label="${window.t ? window.t('product.add.aria', { name: product.name }) : `Add ${product.name} to cart`}">
                 🎁 ${window.t ? window.t('product.add') : 'Add'}
               </button>`;
-          
-            card.querySelector('.add-btn').addEventListener('click', e => {
-              e.stopPropagation();
-              handleAdd(product, card);
-            });
-          
-            card.querySelector('.product-image').addEventListener('click', e => {
-              e.stopPropagation();
-              openProductModal(product);
-            });
-          
-            card.addEventListener('dragstart', e => {
-              e.dataTransfer.setData('application/json', JSON.stringify(product));
-              card.classList.add('dragging');
-            });
-            card.addEventListener('dragend', () => card.classList.remove('dragging'));
-          
-            grid.appendChild(card);
-          });
+
+        card.querySelector('.add-btn').addEventListener('click', e => {
+            e.stopPropagation();
+            handleAdd(product, card);
+        });
+
+        card.querySelector('.product-image').addEventListener('click', e => {
+            e.stopPropagation();
+            openProductModal(product);
+        });
+
+        card.addEventListener('dragstart', e => {
+            e.dataTransfer.setData('application/json', JSON.stringify(product));
+            card.classList.add('dragging');
+        });
+        card.addEventListener('dragend', () => card.classList.remove('dragging'));
+
+        grid.appendChild(card);
+    });
 }
 
 function handleAdd(product, cardElement) {
@@ -270,7 +270,7 @@ function handleAdd(product, cardElement) {
     }
     updateCartUI();
     animateToyToTree(product, cardElement);
-    announce(window.t ? window.t('announcement.added', {name: product.name}) : `${product.name} added to the tree`);
+    announce(window.t ? window.t('announcement.added', { name: product.name }) : `${product.name} added to the tree`);
 }
 
 function handleDropOnTree(e) {
@@ -283,7 +283,7 @@ function handleDropOnTree(e) {
         else cart.push({ productId: product.id, name: product.name, price: product.price, image: product.images_url_list[0], qty: 1 });
         updateCartUI();
         sceneFunctions.add3DToyToTree(product);
-        announce(window.t ? window.t('announcement.added', {name: product.name}) : `${product.name} added to the tree`);
+        announce(window.t ? window.t('announcement.added', { name: product.name }) : `${product.name} added to the tree`);
     } catch (err) { console.error('Drop error', err); }
 }
 
@@ -315,7 +315,7 @@ function updateCartUI() {
     const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
     dom.cartCount.textContent = totalItems;
     dom.checkoutBtn.disabled = totalItems === 0;
-    dom.modalItemsCount.textContent = window.t ? window.t('order.items', {count: totalItems}) : `${totalItems} item${totalItems !== 1 ? 's' : ''}`;
+    dom.modalItemsCount.textContent = window.t ? window.t('order.items', { count: totalItems }) : `${totalItems} item${totalItems !== 1 ? 's' : ''}`;
 }
 
 function announce(msg) {
@@ -326,17 +326,17 @@ function announce(msg) {
 // Update dynamic content when language changes
 function updateDynamicContent() {
     if (!window.t) return;
-    
+
     // Update checkout button text
     if (dom.checkoutBtn && dom.checkoutBtn.querySelector('#checkout-text')) {
         dom.checkoutBtn.querySelector('#checkout-text').textContent = window.t('checkout.button');
     }
-    
+
     // Update cart count badge
     if (dom.cartCount && dom.cartCount.nextElementSibling) {
         dom.cartCount.nextElementSibling.textContent = window.t('cert.badge');
     }
-    
+
     // Update category buttons
     const categoryBtns = document.querySelectorAll('.category-btn');
     categoryBtns.forEach(btn => {
@@ -345,12 +345,12 @@ function updateDynamicContent() {
             btn.textContent = window.t(`category.${category}`);
         }
     });
-    
+
     // Update modal content if open
     if (dom.orderModal && dom.orderModal.style.display === 'flex') {
         renderOrderModal();
     }
-    
+
     // Update product modal if open
     if (dom.productModal && dom.productModal.style.display === 'flex' && modalProduct) {
         openProductModal(modalProduct);
@@ -376,12 +376,36 @@ function renderOrderModal() {
             </div>
             <div class="qty-controls">
               <button data-id="${item.productId}" class="qty-decrease" aria-label="${window.t ? window.t('qty.decrease') : 'Decrease quantity'}">-</button>
-              <input type="number" min="0" value="${item.qty}" data-id="${item.productId}" aria-label="${window.t ? window.t('qty.label', {name: item.name}) : `Quantity for ${item.name}`}">
+              <input type="number" min="0" value="${item.qty}" data-id="${item.productId}" aria-label="${window.t ? window.t('qty.label', { name: item.name }) : `Quantity for ${item.name}`}">
               <button data-id="${item.productId}" class="qty-increase" aria-label="${window.t ? window.t('qty.increase') : 'Increase quantity'}">+</button>
             </div>
         `;
         dom.orderList.appendChild(row);
     });
+    let selectedDeliveryPrice = 0;
+
+    // 🧮 Update delivery and total dynamically
+    document.addEventListener('change', (event) => {
+        if (event.target.name === 'delivery') {
+            const value = event.target.value;
+            const message = document.getElementById('delivery-message');
+
+            if (value === 'custom') {
+                selectedDeliveryPrice = 0;
+            } else {
+                selectedDeliveryPrice = Number(value);
+            }
+
+            updateModalTotals();
+        }
+    });
+
+    function updateModalTotals() {
+        const baseTotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+        const total = baseTotal + selectedDeliveryPrice;
+        document.getElementById('paper-total').textContent = `${total.toFixed(2)}֏`;
+    }
+
     updateModalTotals();
 
     // Add event listeners for new controls
@@ -399,13 +423,13 @@ function setQuantity(productId, newQty) {
     newQty = Math.max(0, newQty);
     const itemIndex = cart.findIndex(i => i.productId === productId);
     if (itemIndex === -1) return;
-    
+
     const item = cart[itemIndex];
     const diff = newQty - item.qty;
 
     if (diff > 0) {
         const product = products.find(p => p.id === productId);
-        for(let i=0; i<diff; i++) sceneFunctions.add3DToyToTree(product);
+        for (let i = 0; i < diff; i++) sceneFunctions.add3DToyToTree(product);
     } else if (diff < 0) {
         sceneFunctions.removeToyMeshesFromScene(productId, -diff);
     }
@@ -476,7 +500,7 @@ function openProductModal(product) {
     dom.modalPublicDesc.textContent = product.public_description || '';
 
     const imgs = product.images_url_list;
-    dom.galleryThumbs.innerHTML = imgs.map((src, i) => `<img src="${src}" alt="${product.name} thumbnail ${i+1}" data-index="${i}">`).join('');
+    dom.galleryThumbs.innerHTML = imgs.map((src, i) => `<img src="${src}" alt="${product.name} thumbnail ${i + 1}" data-index="${i}">`).join('');
     dom.galleryThumbs.querySelectorAll('img').forEach(img => img.addEventListener('click', e => updateGallery(Number(e.target.dataset.index))));
     updateGallery(0);
 
@@ -502,7 +526,7 @@ function handleGlobalKeys(e) {
         if (dom.successOverlay.style.display === 'flex') dom.successOverlay.style.display = 'none';
         if (dom.productModal.style.display === 'flex') closeProductModal();
     }
-     if (dom.productModal.style.display === 'flex') {
+    if (dom.productModal.style.display === 'flex') {
         if (e.key === 'ArrowLeft') updateGallery(currentImageIndex - 1);
         if (e.key === 'ArrowRight') updateGallery(currentImageIndex + 1);
     }
