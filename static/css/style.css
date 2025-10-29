@@ -305,7 +305,7 @@
   
   #checkout-btn {
     position: fixed;
-    bottom: 22px;
+    bottom: 70px;
     right: 22px;
     background: linear-gradient(145deg, var(--festive-green), var(--festive-green-deep));
     color: white;

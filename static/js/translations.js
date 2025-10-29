@@ -289,16 +289,16 @@ const translations = {
         "offers.title": "🎁 Special Holiday Offers",
         "offers.my_classroom.title": "My Classroom",
         "offers.my_classroom.description": "Gift your students heartfelt presents handmade with love. Order for your entire class and get special discounts 🎁",
-    
+
         "offers.corporate.title": "Corporate",
         "offers.corporate.description": "Bring a festive spirit to your team with unique wooden toys as a token of appreciation.",
-    
+
         "offers.christmas_together.title": "Christmas Together",
         "offers.christmas_together.description": "Family holiday sets filled with love, smiles, and handmade wonders ❤️",
-    
+
         "offers.seasons_best.title": "Season’s Best",
         "offers.seasons_best.description": "The most popular and inspiring wooden toys from this year’s festive collection ✨",
-    
+
         "offers.special_for_you.title": "Special for You",
         "offers.special_for_you.description": "Personalized gifts with your name, story, and wishes — a truly unique holiday memory.",
         "offers.show_more": "View Details",
@@ -359,7 +359,18 @@ const translations = {
         'message.select_image': 'Please select at least one image',
         'message.success': '✅ Thank you! Your order has been sent successfully. We will contact you shortly.',
         'message.error': '❌ An error occurred. Please try again.',
-        'message.connection_error': '❌ Connection problem. Please check your internet connection and try again.'
+        'message.connection_error': '❌ Connection problem. Please check your internet connection and try again.',
+        // ===== Delivery Widget =====
+        'delivery.toggle': 'Delivery',
+        'delivery.title': 'Delivery Information',
+        'delivery.item1.title': 'Free in Yerevan center',
+        'delivery.item1.desc': 'Free delivery in Yerevan center',
+        'delivery.item2.title': 'Outside Yerevan center - 2000 AMD',
+        'delivery.item2.desc': 'Delivery outside Yerevan center',
+        'delivery.item3.title': 'Regions via "HayPost"',
+        'delivery.item3.desc': 'Delivery to all regions of Armenia',
+        'delivery.item4.title': 'Your suggested delivery method',
+        'delivery.item4.desc': 'Throughout Armenia'
 
     },
 
@@ -652,13 +663,13 @@ const translations = {
         "offers.my_classroom.description": "Նվիրեք աշակերտներին անկեղծ նվերներ ձեր սիրով պատրաստված։ Պատվիրեք դասարանի քանակով և ստացեք հատուկ զեղչեր 🎁",
         "offers.corporate.title": "Կորպորատիվ",
         "offers.corporate.description": "Նվիրեք ձեր թիմին տոնական մթնոլորտ և յուրահատուկ փայտե խաղալիքներ՝ շնորհակալության նշան։",
-        
+
         "offers.christmas_together.title": "Ամանորը միասին",
         "offers.christmas_together.description": "Ընտանեկան տոնական հավաքածուներ՝ լի սիրով, ժպիտներով և ձեռագործ հրաշքներով ❤️",
-        
+
         "offers.seasons_best.title": "Սեզոնի լավագույնները",
         "offers.seasons_best.description": "Ամենապահանջված և ոգեշնչող փայտե խաղալիքները՝ այս տարվա տոնական հավաքածուից ✨",
-        
+
         "offers.special_for_you.title": "Հատուկ քեզ համար",
         "offers.special_for_you.description": "Անհատական նվերներ քո անունով, պատմությամբ և ցանկությամբ՝ յուրահատուկ տոնական հիշողություն։",
         "offers.show_more": "Դիտել մանրամասն",
@@ -720,7 +731,18 @@ const translations = {
         'message.select_image': 'Խնդրում ենք ընտրել առնվազն մեկ նկար',
         'message.success': '✅ Շնորհակալություն! Ձեր պատվերը հաջողությամբ ուղարկվել է։ Մենք շուտով կկապվենք ձեզ հետ։',
         'message.error': '❌ Սխալ է տեղի ունեցել։ Խնդրում ենք փորձել կրկին։',
-        'message.connection_error': '❌ Կապի խնդիր։ Խնդրում ենք ստուգել ինտերնետ կապը և փորձել կրկին։'
+        'message.connection_error': '❌ Կապի խնդիր։ Խնդրում ենք ստուգել ինտերնետ կապը և փորձել կրկին։',
+        // ===== Delivery Widget =====
+        'delivery.toggle': 'Առաքում',
+        'delivery.title': 'Առաքման Պայմաններ',
+        'delivery.item1.title': 'Երևանի կենտրոնում անվճար',
+        'delivery.item1.desc': 'Անվճար առաքում Երևանի կենտրոնում',
+        'delivery.item2.title': 'Երևանի կենտրոնից դուրս 2000 դրամ',
+        'delivery.item2.desc': 'Առաքում Երևանի կենտրոնից դուրս',
+        'delivery.item3.title': 'ՀՀ մարզեր "հայՓոստով"',
+        'delivery.item3.desc': 'Առաքում Հայաստանի բոլոր մարզերում',
+        'delivery.item4.title': 'Ձեր կողմից առաջարկվող առաքման եղանակ',
+        'delivery.item4.desc': 'ՀՀ ամբողջ տարածքում'
 
     },
 
@@ -1011,19 +1033,19 @@ const translations = {
         "offers.title": "🎁 Специальные Предложения",
         "offers.my_classroom.title": "Мой класс",
         "offers.my_classroom.description": "Подарите своим ученикам искренние подарки, сделанные с любовью. Закажите на весь класс и получите специальные скидки 🎁",
-    
+
         "offers.corporate.title": "Корпоративные",
         "offers.corporate.description": "Создайте праздничное настроение в команде с уникальными деревянными игрушками в знак благодарности.",
-    
+
         "offers.christmas_together.title": "Новый год вместе",
         "offers.christmas_together.description": "Семейные праздничные наборы, наполненные любовью, улыбками и ручными чудесами ❤️",
-    
+
         "offers.seasons_best.title": "Лучшее сезона",
         "offers.seasons_best.description": "Самые популярные и вдохновляющие деревянные игрушки из праздничной коллекции этого года ✨",
-    
+
         "offers.special_for_you.title": "Особенно для тебя",
         "offers.special_for_you.description": "Персональные подарки с твоим именем, историей и пожеланиями — уникальное праздничное воспоминание.",
-    
+
         "offers.show_more": "Посмотреть подробнее",
 
         "offers.collections.title": "Коллекции",
@@ -1092,7 +1114,18 @@ const translations = {
         'message.select_image': 'Пожалуйста, выберите хотя бы одно изображение',
         'message.success': '✅ Спасибо! Ваш заказ успешно отправлен. Мы свяжемся с вами в ближайшее время.',
         'message.error': '❌ Произошла ошибка. Пожалуйста, попробуйте снова.',
-        'message.connection_error': '❌ Проблема с соединением. Пожалуйста, проверьте интернет-соединение и попробуйте снова.'
+        'message.connection_error': '❌ Проблема с соединением. Пожалуйста, проверьте интернет-соединение и попробуйте снова.',
+        // ===== Delivery Widget =====
+        'delivery.toggle': 'Доставка',
+        'delivery.title': 'Условия Доставки',
+        'delivery.item1.title': 'Бесплатно в центре Еревана',
+        'delivery.item1.desc': 'Бесплатная доставка в центре Еревана',
+        'delivery.item2.title': 'За пределами центра Еревана - 2000 драм',
+        'delivery.item2.desc': 'Доставка за пределами центра Еревана',
+        'delivery.item3.title': 'Регионы через "ՀայՓոստ"',
+        'delivery.item3.desc': 'Доставка во все регионы Армении',
+        'delivery.item4.title': 'Предложенный вами способ доставки',
+        'delivery.item4.desc': 'По всей территории Армении'
     }
 };
 
