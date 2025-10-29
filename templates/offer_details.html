@@ -407,6 +407,72 @@
         background: rgba(26, 90, 45, 0.1);
     }
 
+    /* Delivery Section Styles */
+    .delivery-section {
+        border-top: 1px dashed #ccc;
+        margin-top: 16px;
+        padding-top: 12px;
+    }
+
+    .delivery-title {
+        font-size: 1rem;
+        margin-bottom: 12px;
+        color: #1a5a2d;
+        font-weight: 600;
+    }
+
+    .delivery-section .form-group {
+        margin-bottom: 12px;
+        color: #374151;
+    }
+
+    .delivery-section label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        padding: 4px 0;
+        transition: color 0.3s ease;
+    }
+
+    .delivery-section label:hover {
+        color: #1a5a2d;
+    }
+
+    .delivery-section input[type="radio"] {
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+    }
+
+    #delivery-message {
+        margin-top: 8px;
+        color: #b83232;
+        font-size: 0.85rem;
+    }
+
+    #delivery-address-container {
+        display: none;
+        margin-top: 8px;
+        animation: slideDown 0.3s ease;
+    }
+
+    #delivery-address {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        transition: border-color 0.3s ease;
+    }
+
+    #delivery-address:focus {
+        outline: none;
+        border-color: #1a5a2d;
+        box-shadow: 0 0 0 2px rgba(26, 90, 45, 0.1);
+    }
+
     .card-top {
         display: flex;
         flex-direction: column;
@@ -950,8 +1016,68 @@
                 <div class="selected-products-title" data-translate="order.preview">Order Preview</div>
                 <div id="selectedProductsContent"></div>
             </div>
+            <!-- 🚚 Delivery Information -->
+            <div class="delivery-section">
+                <h3 class="delivery-title" data-translate="delivery.title">
+                    🚚 Delivery Information
+                </h3>
 
-            <form id="orderForm"></form>
+                <div class="form-group">
+                    <label>
+                        <input type="radio" name="delivery" value="0" data-label="Free delivery in Yerevan center" checked>
+                        <span data-translate="delivery.option.center">Free delivery in Yerevan center</span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="radio" name="delivery" value="2000" data-label="Outside Yerevan center - 2000 AMD">
+                        <span data-translate="delivery.option.outside">Delivery outside Yerevan center (2000 AMD)</span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="radio" name="delivery" value="0" data-label='Regions via "HayPost"'>
+                        <span data-translate="delivery.option.regions">Regions via "HayPost" (Delivery to all regions of Armenia)</span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="radio" name="delivery" value="custom" data-label="Your suggested delivery method">
+                        <span data-translate="delivery.option.custom">Your suggested delivery method (Throughout Armenia)</span>
+                    </label>
+                </div>
+
+                <div id="delivery-message" data-translate="delivery.message">
+                    Be sure to specify the delivery address.
+                </div>
+            </div>
+            
+            <form id="orderForm">
+                <!-- Dynamic form fields will be inserted here by JavaScript -->
+
+                <!-- Customer Contact Information -->
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.customer_name') : 'Ձեր անունը'} <span class="required">*</span></label>
+                    <input type="text" name="customer_name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.customer_phone') : 'Հեռախոս'} <span class="required">*</span></label>
+                    <input type="tel" name="customer_phone" class="form-input" placeholder="${window.t ? window.t('form.customer_phone.placeholder') : '+374 XX XXX XXX'}" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.customer_email') : 'Էլ․ փոստ'} <span class="required">*</span></label>
+                    <input type="email" name="customer_email" class="form-input" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.delivery_date') : 'Ակնկալվող առաքման ամսաթիվ'}</label>
+                    <input type="date" name="delivery_date" class="form-input">
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">${window.t ? window.t('form.submit') : '🎁 Ուղարկել պատվերը'}</button>
+            </form>
         </div>
     </div>
 </div>
@@ -1047,9 +1173,8 @@
                     4: "Тепло дома",
                     5: "Наше великое чудо"
                 }
-            }
+            },
 
-            ,
             translations: {
                 hy: {
                     title: '🏡 Ամանորը միասին',
@@ -1096,7 +1221,7 @@
                     10: "Winter Secret"
                 },
                 "ru": {
-                    1: "Зимние улыбки",
+                    1: "Зимные улыбки",
                     2: "Праздничное чудо",
                     3: "Волшебный Новый год",
                     4: "Чудо года",
@@ -1177,11 +1302,14 @@
                 }
             }
         }
-
     };
 
     const offerType = '{{ offer_type }}' || 'my_classroom';
     const offer = offerData[offerType];
+    let selectedProducts = [];
+    let selectedImages = [];
+    let selectedDeliveryPrice = 0;
+    let selectedDeliveryMethod = 'Free delivery in Yerevan center';
 
     // Flag to prevent recursive updates
     let isUpdatingContent = false;
@@ -1235,7 +1363,6 @@
         isUpdatingContent = false;
     }
 
-
     // Render example images gallery for special_for_you offers
     function renderExampleGallery() {
         const galleryGrid = document.getElementById('exampleGalleryGrid');
@@ -1270,16 +1397,13 @@
         });
     }
 
-    let selectedProducts = [];
-    let selectedImages = [];
-
     // Load products or images based on offer type
     async function loadCatalog() {
         if (offer.type === 'products') {
             try {
                 const response = await fetch(`${BASE_PREFIX}/api/products?lang=${currentLang}&type=all`);
-                products = await response.json();
-                renderProducts();
+                const products = await response.json();
+                renderProducts(products);
             } catch (error) {
                 console.error('Error loading products:', error);
             }
@@ -1288,7 +1412,7 @@
         }
     }
 
-    function renderProducts() {
+    function renderProducts(products) {
         const grid = document.getElementById('productGrid');
         grid.innerHTML = '';
 
@@ -1297,15 +1421,15 @@
             card.className = 'product-card';
             card.setAttribute('data-product-id', product.id);
             card.innerHTML = `
-            <div class="select-indicator">✓</div>
-            <div class="card-top">
-                <img src="${BASE_PREFIX}${product.images_url_list[0]}" alt="${product.name}" class="product-image">
-                <div class="product-info">
-                    <div class="product-name">${product.name}</div>
-                    <div class="product-price">${product.price} ֏</div>
+                <div class="select-indicator">✓</div>
+                <div class="card-top">
+                    <img src="${BASE_PREFIX}${product.images_url_list[0]}" alt="${product.name}" class="product-image">
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">${product.price} ֏</div>
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
 
             card.addEventListener('click', () => toggleProductSelection(product, card));
             grid.appendChild(card);
@@ -1326,25 +1450,74 @@
         updateSelectedProductsList();
     }
 
+    // Update delivery price dynamically
+    function setupDeliveryHandlers() {
+        const deliveryRadios = document.querySelectorAll('input[name="delivery"]');
+        const addressInput = document.getElementById('delivery-address');
+
+        deliveryRadios.forEach(radio => {
+            radio.addEventListener('change', (event) => {
+                const value = event.target.value;
+                selectedDeliveryMethod = event.target.getAttribute('data-label');
+
+                if (value === 'custom') {
+                    selectedDeliveryPrice = 0;
+                    addressInput.required = true;
+                } else {
+                    selectedDeliveryPrice = Number(value);
+                    addressInput.required = false;
+                    addressInput.value = '';
+                }
+
+                // Update the selected products list to reflect delivery cost
+                if (offer.type === 'products') {
+                    updateSelectedProductsList();
+                } else if (offer.type === 'images') {
+                    updateSelectedImagesList();
+                }
+            });
+        });
+    }
+
+    // Call this function after rendering the form
+    function initializeDelivery() {
+        setupDeliveryHandlers();
+
+        // Set initial delivery method
+        const initialDelivery = document.querySelector('input[name="delivery"]:checked');
+        if (initialDelivery) {
+            selectedDeliveryMethod = initialDelivery.getAttribute('data-label');
+            selectedDeliveryPrice = Number(initialDelivery.value);
+        }
+    }
+
+    // Override total update to include delivery
     function updateSelectedProductsList() {
         const list = document.getElementById('selectedProductsList');
         const content = document.getElementById('selectedProductsContent');
 
         if (selectedProducts.length > 0) {
             list.style.display = 'block';
-            const totalPrice = selectedProducts.reduce((sum, p) => sum + p.price, 0);
+            const baseTotal = selectedProducts.reduce((sum, p) => sum + p.price, 0);
+            const totalPrice = baseTotal + selectedDeliveryPrice;
 
             content.innerHTML = selectedProducts.map(p => `
-            <div class="selected-product-item">
-                <span>${p.name}</span>
-                <span>${p.price} ֏</span>
-            </div>
-        `).join('') + `
-          <div class="selected-product-item" style="font-weight: bold; border-top: 1px solid rgba(26, 90, 45, 0.3); padding-top: 10px; font-size: 0.7rem;">
-                <span>Ընդհանուր</span>
-                <span>${totalPrice} ֏</span>
-            </div>
-        `;
+                <div class="selected-product-item">
+                    <span>${p.name}</span>
+                    <span>${p.price} ֏</span>
+                </div>
+            `).join('') + `
+                ${selectedDeliveryPrice > 0 ? `
+                <div class="selected-product-item">
+                    <span>${selectedDeliveryMethod}</span>
+                    <span>${selectedDeliveryPrice} ֏</span>
+                </div>
+                ` : ''}
+                <div class="selected-product-item" style="font-weight:bold; border-top:1px solid rgba(26,90,45,0.3); padding-top:10px;">
+                    <span>Ընդհանուր</span>
+                    <span>${totalPrice} ֏</span>
+                </div>
+            `;
         } else {
             list.style.display = 'none';
         }
@@ -1367,13 +1540,13 @@
             const imagePrice = offer.prices[i - 1] ? `${offer.prices[i - 1]} ֏` : 'Price not set';
 
             card.innerHTML = `
-            <div class="select-indicator">✓</div>
-            <img src="${BASE_PREFIX}/static/images/${offer.folder}/${i}.jpg" alt="${imageName}" class="gallery-image">
-            <div class="gallery-info">
-                <div class="gallery-name">${imageName}</div>
-                <div class="gallery-price">${imagePrice}</div>
-            </div>
-        `;
+                <div class="select-indicator">✓</div>
+                <img src="${BASE_PREFIX}/static/images/${offer.folder}/${i}.jpg" alt="${imageName}" class="gallery-image">
+                <div class="gallery-info">
+                    <div class="gallery-name">${imageName}</div>
+                    <div class="gallery-price">${imagePrice}</div>
+                </div>
+            `;
 
             card.addEventListener('click', () => toggleImageSelection(i, card));
             gallery.appendChild(card);
@@ -1408,19 +1581,26 @@
 
         if (selectedImages.length > 0) {
             list.style.display = 'block';
-            const totalPrice = selectedImages.reduce((sum, img) => sum + img.price, 0);
+            const baseTotal = selectedImages.reduce((sum, img) => sum + img.price, 0);
+            const totalPrice = baseTotal + selectedDeliveryPrice;
 
             content.innerHTML = selectedImages.map(img => `
-            <div class="selected-product-item">
-                <span>${img.name}</span>
-                <span>${img.price} ֏</span>
-            </div>
-        `).join('') + `
-         <div class="selected-product-item" style="font-weight: bold; border-top: 1px solid rgba(26, 90, 45, 0.3); padding-top: 10px; font-size: 0.7rem;">
-                <span>Ընդհանուր</span>
-                <span>${totalPrice} ֏</span>
-            </div>
-        `;
+                <div class="selected-product-item">
+                    <span>${img.name}</span>
+                    <span>${img.price} ֏</span>
+                </div>
+            `).join('') + `
+                ${selectedDeliveryPrice > 0 ? `
+                <div class="selected-product-item">
+                    <span>${selectedDeliveryMethod}</span>
+                    <span>${selectedDeliveryPrice} ֏</span>
+                </div>
+                ` : ''}
+                <div class="selected-product-item" style="font-weight: bold; border-top: 1px solid rgba(26, 90, 45, 0.3); padding-top: 10px;">
+                    <span>Ընդհանուր</span>
+                    <span>${totalPrice} ֏</span>
+                </div>
+            `;
         } else {
             list.style.display = 'none';
         }
@@ -1435,194 +1615,140 @@
 
         if (offer.fields === 'my_classroom') {
             formHTML = `
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.school_name') : 'Դպրոցի անուն'} <span class="required">*</span></label>
-                <input type="text" name="school_name" class="form-input" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.class_number') : 'Դասարանի համար'} <span class="required">*</span></label>
-                <input type="text" name="class_number" class="form-input" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.student_count') : 'Աշակերտների քանակ'} <span class="required">*</span></label>
-                <input type="number" name="student_count" class="form-input" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.boys_girls') : 'Տղաների/աղջիկների քանակ'}</label>
-                <input type="text" name="boys_girls" class="form-input" placeholder="${window.t ? window.t('form.boys_girls.placeholder') : 'Օրինակ: 15 տղա / 12 աղջիկ'}">
-            </div>
-            <div class="form-checkbox">
-                <input type="checkbox" id="nominal" name="nominal">
-                <label for="nominal">${window.t ? window.t('form.nominal') : 'Անվանական (անունների հետ)'}</label>
-            </div>
-            <div id="namesContainer" class="names-container">
-                <label class="form-label">${window.t ? window.t('form.names') : 'Անուններ'}</label>
-                <div id="namesList"></div>
-                <button type="button" class="add-name-btn" onclick="addNameField()">+ ${window.t ? window.t('form.add_name') : 'Ավելացնել անուն'}</button>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.packaging') : 'Փաթեթավորման տեսակ'} <span class="required">*</span></label>
-                <select name="packaging" class="form-select" required>
-
-                    <option value="bag">${window.t ? window.t('form.packaging.bag') : 'Տոպրակում'}</option>
-                    <option value="box">${window.t ? window.t('form.packaging.box') : 'Տուփում'}</option>
-                    <option value="none">${window.t ? window.t('form.packaging.none') : 'Առանց փաթեթավորման'}</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.notes') : 'Այլ նշումներ'}</label>
-                <textarea name="notes" class="form-textarea" placeholder="${window.t ? window.t('form.notes.placeholder') : 'Նկարագրեք ձեր ցանկությունները մանրամասն...'}"></textarea>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.customer_name') : 'Ձեր անունը'} <span class="required">*</span></label>
-                <input type="text" name="customer_name" class="form-input" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.customer_phone') : 'Հեռախոս'} <span class="required">*</span></label>
-                <input type="tel" name="customer_phone" class="form-input" placeholder="${window.t ? window.t('form.customer_phone.placeholder') : '+374 XX XXX XXX'}" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.delivery_date') : 'Ակնկալվող առաքման ամսաթիվ'}</label>
-                <input type="date" name="delivery_date" class="form-input">
-            </div>
-        `;
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.school_name') : 'Դպրոցի անուն'} <span class="required">*</span></label>
+                    <input type="text" name="school_name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.class_number') : 'Դասարանի համար'} <span class="required">*</span></label>
+                    <input type="text" name="class_number" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.student_count') : 'Աշակերտների քանակ'} <span class="required">*</span></label>
+                    <input type="number" name="student_count" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.boys_girls') : 'Տղաների/աղջիկների քանակ'}</label>
+                    <input type="text" name="boys_girls" class="form-input" placeholder="${window.t ? window.t('form.boys_girls.placeholder') : 'Օրինակ: 15 տղա / 12 աղջիկ'}">
+                </div>
+                <div class="form-checkbox">
+                    <input type="checkbox" id="nominal" name="nominal">
+                    <label for="nominal">${window.t ? window.t('form.nominal') : 'Անվանական (անունների հետ)'}</label>
+                </div>
+                <div id="namesContainer" class="names-container">
+                    <label class="form-label">${window.t ? window.t('form.names') : 'Անուններ'}</label>
+                    <div id="namesList"></div>
+                    <button type="button" class="add-name-btn" onclick="addNameField()">+ ${window.t ? window.t('form.add_name') : 'Ավելացնել անուն'}</button>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.packaging') : 'Փաթեթավորման տեսակ'} <span class="required">*</span></label>
+                    <select name="packaging" class="form-select" required>
+                        <option value="bag">${window.t ? window.t('form.packaging.bag') : 'Տոպրակում'}</option>
+                        <option value="box">${window.t ? window.t('form.packaging.box') : 'Տուփում'}</option>
+                        <option value="none">${window.t ? window.t('form.packaging.none') : 'Առանց փաթեթավորման'}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.notes') : 'Այլ նշումներ'}</label>
+                    <textarea name="notes" class="form-textarea" placeholder="${window.t ? window.t('form.notes.placeholder') : 'Նկարագրեք ձեր ցանկությունները մանրամասն...'}"></textarea>
+                </div>
+            `;
         } else if (offer.fields === 'corporate') {
             formHTML = `
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.brand_name') : 'Բրենդի անուն'} <span class="required">*</span></label>
-                <input type="text" name="brand_name" class="form-input" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.toy_type') : 'Խաղալիքի տեսակ'} <span class="required">*</span></label>
-                <select name="toy_type" class="form-select" required>
-
-                    <option value="your_brand">${window.t ? window.t('form.toy_type.your_brand') : 'Ձեր բրենդով'}</option>
-                    <option value="our_range">${window.t ? window.t('form.toy_type.our_range') : 'Մեր տեսականուց'}</option>
-                    <option value="mixed">${window.t ? window.t('form.toy_type.mixed') : 'Մեր տեսականուց ձեր բրենդով'}</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.count') : 'Քանակ'} <span class="required">*</span></label>
-                <input type="number" name="count" class="form-input" required>
-            </div>
-            <div class="form-checkbox">
-                <input type="checkbox" id="nominal" name="nominal">
-                <label for="nominal">${window.t ? window.t('form.nominal') : 'Անվանական (անունների հետ)'}</label>
-            </div>
-            <div id="namesContainer" class="names-container">
-                <label class="form-label">${window.t ? window.t('form.names') : 'Անուններ'}</label>
-                <div id="namesList"></div>
-                <button type="button" class="add-name-btn" onclick="addNameField()">+ ${window.t ? window.t('form.add_name') : 'Ավելացնել անուն'}</button>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.packaging') : 'Փաթեթավորման տեսակ'} <span class="required">*</span></label>
-                <select name="packaging" class="form-select" required>
-
-                    <option value="bag">${window.t ? window.t('form.packaging.bag') : 'Տոպրակում'}</option>
-                    <option value="box">${window.t ? window.t('form.packaging.box') : 'Տուփում'}</option>
-                    <option value="none">${window.t ? window.t('form.packaging.none') : 'Առանց փաթեթավորման'}</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.notes') : 'Այլ նշումներ'}</label>
-                <textarea name="notes" class="form-textarea" placeholder="${window.t ? window.t('form.notes.placeholder') : 'Նկարագրեք ձեր ցանկությունները մանրամասն...'}"></textarea>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.customer_name') : 'Ձեր անունը'} <span class="required">*</span></label>
-                <input type="text" name="customer_name" class="form-input" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.customer_phone') : 'Հեռախոս'} <span class="required">*</span></label>
-                <input type="tel" name="customer_phone" class="form-input" placeholder="${window.t ? window.t('form.customer_phone.placeholder') : '+374 XX XXX XXX'}" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.delivery_date') : 'Ակնկալվող առաքման ամսաթիվ'}</label>
-                <input type="date" name="delivery_date" class="form-input">
-            </div>
-        `;
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.brand_name') : 'Բրենդի անուն'} <span class="required">*</span></label>
+                    <input type="text" name="brand_name" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.toy_type') : 'Խաղալիքի տեսակ'} <span class="required">*</span></label>
+                    <select name="toy_type" class="form-select" required>
+                        <option value="your_brand">${window.t ? window.t('form.toy_type.your_brand') : 'Ձեր բրենդով'}</option>
+                        <option value="our_range">${window.t ? window.t('form.toy_type.our_range') : 'Մեր տեսականուց'}</option>
+                        <option value="mixed">${window.t ? window.t('form.toy_type.mixed') : 'Մեր տեսականուց ձեր բրենդով'}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.count') : 'Քանակ'} <span class="required">*</span></label>
+                    <input type="number" name="count" class="form-input" required>
+                </div>
+                <div class="form-checkbox">
+                    <input type="checkbox" id="nominal" name="nominal">
+                    <label for="nominal">${window.t ? window.t('form.nominal') : 'Անվանական (անունների հետ)'}</label>
+                </div>
+                <div id="namesContainer" class="names-container">
+                    <label class="form-label">${window.t ? window.t('form.names') : 'Անուններ'}</label>
+                    <div id="namesList"></div>
+                    <button type="button" class="add-name-btn" onclick="addNameField()">+ ${window.t ? window.t('form.add_name') : 'Ավելացնել անուն'}</button>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.packaging') : 'Փաթեթավորման տեսակ'} <span class="required">*</span></label>
+                    <select name="packaging" class="form-select" required>
+                        <option value="bag">${window.t ? window.t('form.packaging.bag') : 'Տոպրակում'}</option>
+                        <option value="box">${window.t ? window.t('form.packaging.box') : 'Տուփում'}</option>
+                        <option value="none">${window.t ? window.t('form.packaging.none') : 'Առանց փաթեթավորման'}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.notes') : 'Այլ նշումներ'}</label>
+                    <textarea name="notes" class="form-textarea" placeholder="${window.t ? window.t('form.notes.placeholder') : 'Նկարագրեք ձեր ցանկությունները մանրամասն...'}"></textarea>
+                </div>
+            `;
         } else if (offer.fields === 'special_for_you') {
             formHTML = `
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.count') : 'Քանակ'} <span class="required">*</span></label>
-                <input type="number" name="count" class="form-input" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.names') : 'Անուններ'} <span class="required">*</span></label>
-                <div id="namesList"></div>
-                <button type="button" class="add-name-btn" onclick="addNameField()">+ ${window.t ? window.t('form.add_name') : 'Ավելացնել անուն'}</button>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.packaging') : 'Փաթեթավորման տեսակ'} <span class="required">*</span></label>
-                <select name="packaging" class="form-select" required>
-
-                    <option value="bag">${window.t ? window.t('form.packaging.bag') : 'Տոպրակում'}</option>
-                    <option value="box">${window.t ? window.t('form.packaging.box') : 'Տուփում'}</option>
-                    <option value="none">${window.t ? window.t('form.packaging.none') : 'Առանց փաթեթավորման'}</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.notes') : 'Այլ նշումներ'}</label>
-                <textarea name="notes" class="form-textarea" placeholder="${window.t ? window.t('form.notes.placeholder') : 'Նկարագրեք ձեր ցանկությունները մանրամասն...'}"></textarea>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.customer_name') : 'Ձեր անունը'} <span class="required">*</span></label>
-                <input type="text" name="customer_name" class="form-input" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.customer_phone') : 'Հեռախոս'} <span class="required">*</span></label>
-                <input type="tel" name="customer_phone" class="form-input" placeholder="${window.t ? window.t('form.customer_phone.placeholder') : '+374 XX XXX XXX'}" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.delivery_date') : 'Ակնկալվող առաքման ամսաթիվ'}</label>
-                <input type="date" name="delivery_date" class="form-input">
-            </div>
-        `;
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.count') : 'Քանակ'} <span class="required">*</span></label>
+                    <input type="number" name="count" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.names') : 'Անուններ'} <span class="required">*</span></label>
+                    <div id="namesList"></div>
+                    <button type="button" class="add-name-btn" onclick="addNameField()">+ ${window.t ? window.t('form.add_name') : 'Ավելացնել անուն'}</button>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.packaging') : 'Փաթեթավորման տեսակ'} <span class="required">*</span></label>
+                    <select name="packaging" class="form-select" required>
+                        <option value="bag">${window.t ? window.t('form.packaging.bag') : 'Տոպրակում'}</option>
+                        <option value="box">${window.t ? window.t('form.packaging.box') : 'Տուփում'}</option>
+                        <option value="none">${window.t ? window.t('form.packaging.none') : 'Առանց փաթեթավորման'}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.notes') : 'Այլ նշումներ'}</label>
+                    <textarea name="notes" class="form-textarea" placeholder="${window.t ? window.t('form.notes.placeholder') : 'Նկարագրեք ձեր ցանկությունները մանրամասն...'}"></textarea>
+                </div>
+            `;
         } else if (offer.fields === 'christmas_together' || offer.fields === 'seasons_best' || offer.fields === 'collections') {
             formHTML = `
-            <div class="form-checkbox">
-                <input type="checkbox" id="nominal" name="nominal">
-                <label for="nominal">${window.t ? window.t('form.nominal') : 'Անվանական (անունների հետ)'}</label>
-            </div>
-            <div id="namesContainer" class="names-container">
-                <label class="form-label">${window.t ? window.t('form.names') : 'Անուններ'}</label>
-                <div id="namesList"></div>
-                <button type="button" class="add-name-btn" onclick="addNameField()">+ ${window.t ? window.t('form.add_name') : 'Ավելացնել անուն'}</button>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.packaging') : 'Փաթեթավորման տեսակ'} <span class="required">*</span></label>
-                <select name="packaging" class="form-select" required>
-
-                    <option value="bag">${window.t ? window.t('form.packaging.bag') : 'Տոպրակում'}</option>
-                    <option value="box">${window.t ? window.t('form.packaging.box') : 'Տուփում'}</option>
-                    <option value="none">${window.t ? window.t('form.packaging.none') : 'Առանց փաթեթավորման'}</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.notes') : 'Այլ նշումներ'}</label>
-                <textarea name="notes" class="form-textarea" placeholder="${window.t ? window.t('form.notes.placeholder') : 'Նկարագրեք ձեր ցանկությունները մանրամասն...'}"></textarea>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.customer_name') : 'Ձեր անունը'} <span class="required">*</span></label>
-                <input type="text" name="customer_name" class="form-input" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.customer_phone') : 'Հեռախոս'} <span class="required">*</span></label>
-                <input type="tel" name="customer_phone" class="form-input" placeholder="${window.t ? window.t('form.customer_phone.placeholder') : '+374 XX XXX XXX'}" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">${window.t ? window.t('form.delivery_date') : 'Ակնկալվող առաքման ամսաթիվ'}</label>
-                <input type="date" name="delivery_date" class="form-input">
-            </div>
-        `;
+                <div class="form-checkbox">
+                    <input type="checkbox" id="nominal" name="nominal">
+                    <label for="nominal">${window.t ? window.t('form.nominal') : 'Անվանական (անունների հետ)'}</label>
+                </div>
+                <div id="namesContainer" class="names-container">
+                    <label class="form-label">${window.t ? window.t('form.names') : 'Անուններ'}</label>
+                    <div id="namesList"></div>
+                    <button type="button" class="add-name-btn" onclick="addNameField()">+ ${window.t ? window.t('form.add_name') : 'Ավելացնել անուն'}</button>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.packaging') : 'Փաթեթավորման տեսակ'} <span class="required">*</span></label>
+                    <select name="packaging" class="form-select" required>
+                        <option value="bag">${window.t ? window.t('form.packaging.bag') : 'Տոպրակում'}</option>
+                        <option value="box">${window.t ? window.t('form.packaging.box') : 'Տուփում'}</option>
+                        <option value="none">${window.t ? window.t('form.packaging.none') : 'Առանց փաթեթավորման'}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">${window.t ? window.t('form.notes') : 'Այլ նշումներ'}</label>
+                    <textarea name="notes" class="form-textarea" placeholder="${window.t ? window.t('form.notes.placeholder') : 'Նկարագրեք ձեր ցանկությունները մանրամասն...'}"></textarea>
+                </div>
+            `;
         }
-        formHTML += `
-        <div class="form-group">
-            <label class="form-label">${window.t ? window.t('form.customer_email') : 'Էլ․ փոստ'} <span class="required">*</span></label>
-            <input type="email" name="customer_email" class="form-input" placeholder="${window.t ? window.t('form.customer_email.placeholder') : 'your@email.com'}" required>
-        </div>`;
 
-        formHTML += `<button type="submit" class="submit-btn" id="submitBtn">${window.t ? window.t('form.submit') : '🎁 Ուղարկել պատվերը'}</button>`;
         form.innerHTML = formHTML;
+
+        // Initialize delivery handlers after form is rendered
+        setTimeout(() => {
+            initializeDelivery();
+        }, 0);
 
         // Setup nominal checkbox handler
         const nominalCheckbox = document.getElementById('nominal');
@@ -1656,9 +1782,9 @@
         const nameGroup = document.createElement('div');
         nameGroup.className = 'name-input-group';
         nameGroup.innerHTML = `
-        <input type="text" name="names[]" class="form-input" placeholder="${window.t ? window.t('form.names') : 'Անուն'}" required>
-        <button type="button" class="remove-name-btn" onclick="removeNameField(this)">${window.t ? window.t('form.remove_name') : '✕'}</button>
-    `;
+            <input type="text" name="names[]" class="form-input" placeholder="${window.t ? window.t('form.names') : 'Անուն'}" required>
+            <button type="button" class="remove-name-btn" onclick="removeNameField(this)">${window.t ? window.t('form.remove_name') : '✕'}</button>
+        `;
         namesList.appendChild(nameGroup);
         nameCounter++;
     }
@@ -1696,6 +1822,9 @@
                 name: p.name,
                 price: p.price
             })) : selectedImages,
+            delivery_method: selectedDeliveryMethod,
+            delivery_price: selectedDeliveryPrice,
+            delivery_address: document.getElementById('delivery-address').value || ''
         };
 
         // Collect form fields
@@ -1727,6 +1856,9 @@
             offer_type: data.offer_type,
             selected_products: data.selected_products,
             selected_images: data.selected_images,
+            delivery_method: data.delivery_method,
+            delivery_price: data.delivery_price,
+            delivery_address: data.delivery_address,
             form_data: {
                 school_name: data.school_name,
                 class_number: data.class_number,
@@ -1789,16 +1921,16 @@
     function createSnowflake() {
         const snowflake = document.createElement('div');
         snowflake.style.cssText = `
-        position: fixed;
-        top: -10px;
-        left: ${Math.random() * 100}%;
-        color: white;
-        font-size: 1.5em;
-        opacity: 0.8;
-        pointer-events: none;
-        z-index: 1;
-        animation: snowfall ${5 + Math.random() * 5}s linear forwards;
-    `;
+            position: fixed;
+            top: -10px;
+            left: ${Math.random() * 100}%;
+            color: white;
+            font-size: 1.5em;
+            opacity: 0.8;
+            pointer-events: none;
+            z-index: 1;
+            animation: snowfall ${5 + Math.random() * 5}s linear forwards;
+        `;
         snowflake.textContent = ['❄️', '✨', '⛄'][Math.floor(Math.random() * 3)];
         document.getElementById('snowflakes-container').appendChild(snowflake);
         setTimeout(() => snowflake.remove(), 10000);
@@ -1806,11 +1938,11 @@
 
     const style = document.createElement('style');
     style.textContent = `
-    @keyframes snowfall {
-        0% { transform: translateY(-10vh); opacity: 1; }
-        100% { transform: translateY(100vh); opacity: 0; }
-    }
-`;
+        @keyframes snowfall {
+            0% { transform: translateY(-10vh); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+    `;
     document.head.appendChild(style);
 
     setInterval(createSnowflake, 400);
@@ -1820,19 +1952,11 @@
         console.log('Language listener set up');
         window.addEventListener('languageChanged', function (event) {
             updateOfferContent();
-            loadCatalog()
+            loadCatalog();
             renderForm();
         });
     }
 
-    // Initialize
-    document.addEventListener('DOMContentLoaded', function () {
-        updateOfferContent();
-        loadCatalog();
-        renderForm();
-        setupLanguageListener();
-    });
-</script>
     // Initialize
     document.addEventListener('DOMContentLoaded', function () {
         updateOfferContent();
