@@ -60,7 +60,6 @@ const translations = {
         'order.buttons.back': 'Back to Shop 🛒',
         'order.buttons.send': 'Send to Santa ✨',
         'order.sending': 'Sending...',
-
         // Success Modal
         'success.title': '💌 Letter Sent to Santa!',
         'success.message': 'Your heartfelt Christmas wish has just fluttered across the snowy skies to the North Pole! 🎄 Santa\'s elves are already wrapping your chosen toys with ribbons and magic dust. Thank you for keeping the Christmas spirit alive! 🌟',
@@ -813,7 +812,6 @@ const translations = {
         'order.subtitle': 'Давайте убедимся, что Санта получит ваши любимые игрушки!',
         'order.preview': 'Предварительный Просмотр Заказа',
         'order.items': '{count} товаров',
-        'order.total': 'Итого:',
         'order.empty': 'Ваше письмо Санте пустое!',
         'order.form.name': 'Ваше Имя',
         'order.form.email': 'Ваш Email',
@@ -822,6 +820,7 @@ const translations = {
         'order.buttons.back': 'Вернуться в Магазин 🛒',
         'order.buttons.send': 'Отправить Санте ✨',
         'order.sending': 'Отправляется...',
+        'order.total': 'Итого: ',
 
         // Success Modal
         'success.title': '💌 Письмо Отправлено Санте!',

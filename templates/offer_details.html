@@ -1453,7 +1453,6 @@
     // Update delivery price dynamically
     function setupDeliveryHandlers() {
         const deliveryRadios = document.querySelectorAll('input[name="delivery"]');
-        const addressInput = document.getElementById('delivery-address');
 
         deliveryRadios.forEach(radio => {
             radio.addEventListener('change', (event) => {
@@ -1465,8 +1464,6 @@
                     addressInput.required = true;
                 } else {
                     selectedDeliveryPrice = Number(value);
-                    addressInput.required = false;
-                    addressInput.value = '';
                 }
 
                 // Update the selected products list to reflect delivery cost
@@ -1514,7 +1511,7 @@
                 </div>
                 ` : ''}
                 <div class="selected-product-item" style="font-weight:bold; border-top:1px solid rgba(26,90,45,0.3); padding-top:10px;">
-                    <span>Ընդհանուր</span>
+                    <span data-translate="order.total">Total:</span>
                     <span>${totalPrice} ֏</span>
                 </div>
             `;
@@ -1597,7 +1594,7 @@
                 </div>
                 ` : ''}
                 <div class="selected-product-item" style="font-weight: bold; border-top: 1px solid rgba(26, 90, 45, 0.3); padding-top: 10px;">
-                    <span>Ընդհանուր</span>
+                    <span data-translate="order.total">Total:</span>
                     <span>${totalPrice} ֏</span>
                 </div>
             `;
