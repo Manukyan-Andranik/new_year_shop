@@ -264,7 +264,7 @@
         font-size: 1.05rem;
     }
 
-    /* Example Gallery Styles */
+    /* Example Gallery Styles - FIXED FOR RESPONSIVE IMAGES */
     .example-gallery-section {
         background: rgba(255, 255, 255, 0.97);
         border-radius: 20px;
@@ -309,8 +309,9 @@
 
     .example-gallery-image {
         width: 100%;
-        max-width: 280px;
-        height: 240px;
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 1/1;
         object-fit: contain;
         border-radius: 12px;
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 1));
@@ -363,6 +364,7 @@
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
         max-height: 900px;
         overflow-y: auto;
+        display: grid;
     }
 
     .catalog-title {
@@ -376,7 +378,7 @@
     .product-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
+        gap: 8px;
         width: 100%;
     }
 
@@ -483,8 +485,9 @@
 
     .product-image {
         width: 100%;
-        max-width: 280px;
-        height: 240px;
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 1/1;
         object-fit: contain;
         border-radius: 12px;
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 1));
@@ -580,8 +583,9 @@
 
     .gallery-image {
         width: 100%;
-        max-width: 280px;
-        height: 240px;
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 1/1;
         object-fit: contain;
         border-radius: 12px;
         background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 1));
@@ -600,7 +604,7 @@
         display: flex;
         flex-direction: column;
         gap: 8px;
-        width: 100%;
+        width:  100%;
         padding: 0 10px;
     }
 
@@ -859,6 +863,22 @@
         color: var(--festive-green);
     }
 
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+        .offer-details-container {
+            margin: 100px auto 40px;
+            padding: 30px 15px;
+        }
+
+        .corporate-header-section {
+            padding: 40px 30px;
+        }
+
+        .corporate-example-main-image {
+            min-height: 280px;
+        }
+    }
+
     @media (max-width: 1024px) {
         .content-grid {
             grid-template-columns: 1fr;
@@ -869,11 +889,6 @@
             max-height: none;
         }
 
-        .example-gallery-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
         .corporate-header-content {
             flex-direction: column;
         }
@@ -881,78 +896,396 @@
         .corporate-header-section {
             padding: 35px 25px;
         }
+
+        .corporate-header-showcase {
+            max-width: 100%;
+        }
+
+        .offer-details-container {
+            margin: 90px auto 40px;
+        }
     }
 
+    /* Tablet - 2 columns for example gallery */
     @media (max-width: 768px) {
+        .offer-details-container {
+            margin: 80px auto 30px;
+            padding: 20px 12px;
+        }
 
-        .product-grid,
-        .image-gallery {
-            grid-template-columns: 1fr;
+        .back-btn {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Force 2 columns for example gallery on mobile */
+        .example-gallery-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
             gap: 15px;
         }
 
-        .example-gallery-grid {
-            grid-template-columns: 1fr;
-            gap: 15px;
+        .example-gallery-card {
+            min-height: auto;
+            padding: 12px;
+        }
+
+        .example-gallery-image {
+            aspect-ratio: 1/1;
+            height: auto;
+            max-height: 180px;
+            padding: 8px;
+        }
+
+        .example-gallery-name {
+            font-size: 13px;
+            white-space: normal;
+            line-height: 1.3;
+            max-height: 2.6em;
+            overflow: hidden;
+        }
+
+        .example-gallery-description {
+            font-size: 12px;
+            line-height: 1.3;
+        }
+
+        .example-gallery-info {
+            padding: 0 5px;
+        }
+
+        /* Product and image grids */
+        .product-grid,
+        .image-gallery {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
         }
 
         .gallery-card,
-        .product-card,
-        .example-gallery-card {
-            min-height: 280px;
-            padding: 15px;
+        .product-card {
+            min-height: auto;
+            padding: 12px;
         }
 
         .gallery-image,
-        .product-image,
-        .example-gallery-image {
-            max-width: 220px;
-            height: 180px;
+        .product-image {
+            aspect-ratio: 1/1;
+            height: auto;
+            max-height: 180px;
+            padding: 8px;
         }
 
         .gallery-name,
-        .product-name,
-        .example-gallery-name {
-            font-size: 15px;
+        .product-name {
+            font-size: 13px;
+            white-space: normal;
+            line-height: 1.3;
+            max-height: 2.6em;
+            overflow: hidden;
         }
 
         .gallery-price,
         .product-price {
-            font-size: 14px;
+            font-size: 13px;
+        }
+
+        .gallery-info,
+        .product-info {
+            padding: 0 5px;
         }
 
         .corporate-header-title {
             font-size: 1.5rem;
         }
 
+        .corporate-header-description {
+            font-size: 0.95rem;
+        }
+
         .corporate-example-badge {
-            font-size: 0.8rem;
-            padding: 8px 16px;
+            font-size: 0.75rem;
+            padding: 6px 12px;
+            top: -8px;
+            right: -8px;
+        }
+
+        .corporate-example-main-image {
+            min-height: 240px;
+            padding: 20px;
         }
 
         .corporate-features-grid {
             grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .offer-header {
+            padding: 20px;
+        }
+
+        .offer-title {
+            font-size: 1.5rem;
+        }
+
+        .offer-description {
+            font-size: 0.95rem;
+        }
+
+        .example-gallery-section {
+            padding: 20px;
+        }
+
+        .example-gallery-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+
+        .catalog-section,
+        .form-section {
+            padding: 20px;
+        }
+
+        .catalog-title,
+        .form-title {
+            font-size: 1.3rem;
+        }
+
+        .select-indicator {
+            width: 24px;
+            height: 24px;
+            font-size: 14px;
+            top: 8px;
+            right: 8px;
         }
     }
 
+    /* Small mobile devices */
     @media (max-width: 480px) {
+        .offer-details-container {
+            margin: 70px auto 20px;
+            padding: 15px 10px;
+        }
+
+        .back-btn {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+        }
+
+        /* Keep 2 columns for example gallery */
+        .example-gallery-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 10px;
+        }
+
+        .example-gallery-card {
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        .example-gallery-image {
+            max-height: 150px;
+            padding: 6px;
+            margin-bottom: 10px;
+        }
+
+        .example-gallery-name {
+            font-size: 12px;
+        }
+
+        .example-gallery-description {
+            font-size: 11px;
+        }
+
+        /* Product and image grids */
+        .product-grid,
+        .image-gallery {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
 
         .gallery-card,
-        .product-card,
-        .example-gallery-card {
-            min-height: 260px;
-            padding: 12px;
+        .product-card {
+            padding: 10px;
+            border-radius: 12px;
         }
 
         .gallery-image,
-        .product-image,
-        .example-gallery-image {
-            max-width: 200px;
-            height: 160px;
+        .product-image {
+            max-height: 150px;
+            padding: 6px;
+            margin-bottom: 10px;
+        }
+
+        .gallery-name,
+        .product-name {
+            font-size: 12px;
+        }
+
+        .gallery-price,
+        .product-price {
+            font-size: 12px;
         }
 
         .corporate-header-section {
-            padding: 25px 20px;
+            padding: 20px 15px;
+            border-radius: 16px;
+        }
+
+        .corporate-header-title {
+            font-size: 1.3rem;
+            gap: 10px;
+        }
+
+        .corporate-header-description {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .corporate-example-badge {
+            font-size: 0.7rem;
+            padding: 5px 10px;
+        }
+
+        .corporate-example-main-image {
+            min-height: 200px;
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .offer-header {
+            padding: 15px;
+            border-radius: 16px;
+        }
+
+        .offer-title {
+            font-size: 1.3rem;
+        }
+
+        .offer-description {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .example-gallery-section {
+            padding: 15px;
+            border-radius: 16px;
+        }
+
+        .example-gallery-title {
+            font-size: 1.2rem;
+        }
+
+        .catalog-section,
+        .form-section {
+            padding: 15px;
+            border-radius: 16px;
+        }
+
+        .catalog-title,
+        .form-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            padding: 10px 12px;
+            font-size: 0.9rem;
+        }
+
+        .form-label {
+            font-size: 0.9rem;
+        }
+
+        .delivery-section label {
+            font-size: 0.85rem;
+        }
+
+        .delivery-title {
+            font-size: 0.95rem;
+        }
+
+        .submit-btn {
+            padding: 14px;
+            font-size: 1rem;
+        }
+
+        .select-indicator {
+            width: 22px;
+            height: 22px;
+            font-size: 12px;
+        }
+    }
+
+    /* Extra small screens - maintain 2 columns */
+    @media (max-width: 360px) {
+        .offer-details-container {
+            padding: 12px 8px;
+        }
+
+        /* Still keep 2 columns for all grids */
+        .example-gallery-grid,
+        .product-grid,
+        .image-gallery {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 8px;
+        }
+
+        .example-gallery-card,
+        .gallery-card,
+        .product-card {
+            padding: 8px;
+        }
+
+        .example-gallery-image,
+        .gallery-image,
+        .product-image {
+            max-height: 120px;
+            padding: 5px;
+        }
+
+        .example-gallery-name,
+        .gallery-name,
+        .product-name {
+            font-size: 11px;
+        }
+
+        .example-gallery-description {
+            font-size: 10px;
+        }
+
+        .example-gallery-price,
+        .gallery-price,
+        .product-price {
+            font-size: 11px;
+        }
+
+        .corporate-header-title,
+        .offer-title {
+            font-size: 1.2rem;
+        }
+
+        .catalog-title,
+        .form-title {
+            font-size: 1.1rem;
+        }
+    }
+
+    /* Landscape orientation adjustments */
+    @media (max-width: 768px) and (orientation: landscape) {
+        .offer-details-container {
+            margin: 60px auto 20px;
+        }
+
+        .example-gallery-image,
+        .gallery-image,
+        .product-image {
+            max-height: 140px;
+        }
+
+        .corporate-example-main-image {
+            min-height: 180px;
         }
     }
 </style>
@@ -1221,7 +1554,7 @@
                     10: "Winter Secret"
                 },
                 "ru": {
-                    1: "Зимные улыбки",
+                    1: "Зимние улыбки",
                     2: "Праздничное чудо",
                     3: "Волшебный Новый год",
                     4: "Чудо года",
@@ -1461,7 +1794,6 @@
 
                 if (value === 'custom') {
                     selectedDeliveryPrice = 0;
-                    addressInput.required = true;
                 } else {
                     selectedDeliveryPrice = Number(value);
                 }
@@ -1821,7 +2153,7 @@
             })) : selectedImages,
             delivery_method: selectedDeliveryMethod,
             delivery_price: selectedDeliveryPrice,
-            delivery_address: document.getElementById('delivery-address').value || ''
+            delivery_address: document.getElementById('delivery-address')?.value || ''
         };
 
         // Collect form fields

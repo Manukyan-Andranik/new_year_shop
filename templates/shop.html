@@ -9,6 +9,473 @@
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Merriweather:wght@400;500;700&display=swap"
   rel="stylesheet">
 
+<style>
+  /* Checkout Button Styling */
+  #checkout-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: linear-gradient(135deg, #b83232 0%, #8b1e1e 100%);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    padding: 0;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(184, 50, 50, 0.4);
+    transition: all 0.3s ease;
+    min-width: 180px;
+    left: 50%;
+transform: translateX(-50%);
+  }
+
+  #checkout-btn:hover:not(:disabled) {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 35px rgba(184, 50, 50, 0.5);
+  }
+
+  #checkout-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: linear-gradient(135deg, #999 0%, #777 100%);
+  }
+
+  .checkout-btn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding: 16px 20px;
+  }
+
+  /* Checkout Button Styling */
+#checkout-btn {
+  position: fixed;
+  bottom: 20px;
+  z-index: 1000;
+  background: linear-gradient(135deg, #b83232 0%, #8b1e1e 100%);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(184, 50, 50, 0.4);
+  transition: all 0.3s ease;
+  min-width: 180px;
+}
+
+/* Desktop - Stack buttons vertically on right side */
+@media (min-width: 1025px) {
+  #checkout-btn {
+    right: 20px;
+    left: auto;
+    transform: none;
+    bottom: 100px; /* Position above delivery button */
+  }
+  
+  .delivery-widget {
+    bottom: 20px;
+    right: 20px;
+  }
+}
+
+/* Tablet - Stack buttons with adjusted spacing */
+@media (min-width: 769px) and (max-width: 1024px) {
+  #checkout-btn {
+    right: 20px;
+    left: auto;
+    transform: none;
+    bottom: 90px; /* Position above delivery button */
+    min-width: 170px;
+  }
+  
+  .delivery-widget {
+    bottom: 15px;
+    right: 15px;
+  }
+}
+
+/* Mobile - Side by side at bottom */
+@media (max-width: 768px) {
+  #checkout-btn {
+    bottom: 15px;
+    right: 90px; /* Position left of delivery button */
+    left: auto;
+    transform: none;
+    min-width: 160px;
+  }
+  
+  .delivery-widget {
+    bottom: 15px;
+    right: 15px;
+  }
+  
+  .delivery-toggle {
+    padding: 10px;
+    width: 48px;
+    justify-content: center;
+  }
+  
+  .delivery-toggle span:not(.icon) {
+    display: none;
+  }
+}
+
+/* Small mobile devices - Adjust spacing */
+@media (max-width: 480px) {
+  #checkout-btn {
+    bottom: 12px;
+    right: 70px; /* Closer to delivery button */
+    min-width: 140px;
+  }
+  
+  .delivery-widget {
+    bottom: 12px;
+    right: 12px;
+  }
+  
+  .delivery-toggle {
+    padding: 8px;
+    width: 44px;
+  }
+}
+
+/* Very small screens - Stack vertically */
+@media (max-width: 360px) {
+  #checkout-btn {
+    right: 50%;
+    transform: translateX(50%);
+    bottom: 70px; /* Above delivery button */
+    min-width: 140px;
+  }
+  
+  .delivery-widget {
+    bottom: 12px;
+    right: 50%;
+    transform: translateX(50%);
+  }
+  
+  .delivery-toggle {
+    padding: 8px 16px;
+    width: auto;
+  }
+  
+  .delivery-toggle span:not(.icon) {
+    display: inline;
+  }
+}
+
+#checkout-btn:hover:not(:disabled) {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgba(184, 50, 50, 0.5);
+}
+
+#checkout-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: linear-gradient(135deg, #999 0%, #777 100%);
+}
+
+/* Ensure hover transform works correctly for different positions */
+@media (min-width: 769px) {
+  #checkout-btn:hover:not(:disabled) {
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 768px) and (min-width: 361px) {
+  #checkout-btn:hover:not(:disabled) {
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 360px) {
+  #checkout-btn:hover:not(:disabled) {
+    transform: translateX(50%) translateY(-4px);
+  }
+}
+
+.checkout-btn-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 16px 20px;
+}
+
+/* Tree Badge - Top Section */
+.tree-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+#cart-count {
+  font-size: 28px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.tree-badge span:last-child {
+  font-size: 11px;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+/* Checkout Text - Bottom Section */
+#checkout-btn > .checkout-btn-container > span:last-child {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+#checkout-btn .emoji {
+  font-size: 20px;
+}
+
+/* Responsive Design Updates */
+@media (max-width: 768px) {
+  .checkout-btn-container {
+    padding: 14px 18px;
+  }
+
+  #cart-count {
+    font-size: 24px;
+  }
+
+  .tree-badge span:last-child {
+    font-size: 10px;
+  }
+
+  #checkout-btn > .checkout-btn-container > span:last-child {
+    font-size: 14px;
+  }
+
+  #checkout-btn .emoji {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .checkout-btn-container {
+    padding: 12px 16px;
+    gap: 0;
+  }
+
+  .tree-badge {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+  }
+
+  #cart-count {
+    font-size: 22px;
+  }
+
+  .tree-badge span:last-child {
+    font-size: 9px;
+  }
+
+  #checkout-btn > .checkout-btn-container > span:last-child {
+    font-size: 13px;
+    gap: 6px;
+  }
+
+  #checkout-btn .emoji {
+    font-size: 16px;
+  }
+}
+
+/* Ensure delivery modal doesn't overlap with checkout button */
+@media (min-width: 769px) {
+  .delivery-modal {
+    bottom: 60px;
+    right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .delivery-modal {
+    bottom: 60px;
+    right: 0;
+  }
+}
+  /* Tree Badge - Top Section */
+  .tree-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    margin-bottom: 12px;
+    width: 100%;
+  }
+
+  #cart-count {
+    font-size: 28px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .tree-badge span:last-child {
+    font-size: 11px;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+  }
+
+  /* Checkout Text - Bottom Section */
+  #checkout-btn > .checkout-btn-container > span:last-child {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  #checkout-btn .emoji {
+    font-size: 20px;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    #checkout-btn {
+      bottom: 15px;
+      right: 15px;
+      min-width: 160px;
+    }
+
+    .checkout-btn-container {
+      padding: 14px 18px;
+    }
+
+    #cart-count {
+      font-size: 24px;
+    }
+
+    .tree-badge span:last-child {
+      font-size: 10px;
+    }
+
+    #checkout-btn > .checkout-btn-container > span:last-child {
+      font-size: 14px;
+    }
+
+    #checkout-btn .emoji {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    #checkout-btn {
+      bottom: 12px;
+      right: 50%;
+      transform: translateX(50%);
+      min-width: 140px;
+    }
+
+    .checkout-btn-container {
+      padding: 12px 16px;
+      gap: 0;
+    }
+
+    .tree-badge {
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+
+    #cart-count {
+      font-size: 22px;
+    }
+
+    .tree-badge span:last-child {
+      font-size: 9px;
+    }
+
+    #checkout-btn > .checkout-btn-container > span:last-child {
+      font-size: 13px;
+      gap: 6px;
+    }
+
+    #checkout-btn .emoji {
+      font-size: 16px;
+    }
+  }
+
+  /* Category Header Improvements */
+  .category-header {
+    margin-bottom: 20px;
+  }
+
+  .category-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-start;
+  }
+
+  .category-btn {
+    padding: 10px 18px;
+    border: 2px solid #e0c497;
+    background: white;
+    color: #5a3d1a;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .category-btn:hover {
+    background: #f5f0e8;
+    border-color: #b83232;
+    color: #b83232;
+    transform: translateY(-2px);
+  }
+
+  .category-btn.active {
+    background: linear-gradient(135deg, #b83232 0%, #8b1e1e 100%);
+    color: white;
+    border-color: #b83232;
+  }
+
+  @media (max-width: 768px) {
+    .category-menu {
+      gap: 6px;
+    }
+
+    .category-btn {
+      padding: 8px 14px;
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .category-menu {
+      gap: 5px;
+    }
+
+    .category-btn {
+      padding: 7px 12px;
+      font-size: 12px;
+    }
+  }
+</style>
+
 {% endblock %}
 
 <body>
@@ -16,7 +483,7 @@
     <aside id="catalog-panel" role="complementary" aria-label="Product catalog">
       <h2 data-translate="catalog.title">🎁 Toy Catalog - {{ product_type }}</h2>
 
-      <!-- Category header with buttons and tree badge side by side -->
+      <!-- Category header with buttons -->
       <div class="category-header">
         <div class="category-menu" role="navigation" aria-label="Product categories">
           <button class="category-btn active" data-category="all" data-translate="category.all">All Toys</button>
@@ -25,12 +492,6 @@
           <a href="{{ url_for('home') }}#offers" class="category-btn" data-translate="category.offers_section">
             Հատուկ առաջարկներ
           </a>
-        </div>
-
-        <!-- Tree badge now positioned to the right of category buttons -->
-        <div class="tree-badge" role="status" aria-live="polite" aria-atomic="true">
-          <span id="cart-count">0</span>
-          <span data-translate="cert.badge">toys on tree</span>
         </div>
       </div>
 
@@ -42,13 +503,23 @@
     </main>
   </div>
 
-
-
+  <!-- Fixed Checkout Button -->
   <button id="checkout-btn" disabled data-translate-aria="checkout.disabled">
-    <span class="emoji">🎅</span><span id="checkout-text" data-translate="checkout.button">Send to Santa</span>
+    <div class="checkout-btn-container">
+      <!-- Tree badge - Top section -->
+      <div class="tree-badge" role="status" aria-live="polite" aria-atomic="true">
+        <span id="cart-count">0</span>
+        <span data-translate="cert.badge">toys on tree</span>
+      </div>
+      <!-- Submit button text - Bottom section -->
+      <span>
+        <span class="emoji">🎅</span>
+        <span id="checkout-text" data-translate="checkout.button">Send to Santa</span>
+      </span>
+    </div>
   </button>
 
-
+  <!-- Success Overlay -->
   <div id="success-overlay" class="modal-overlay" role="dialog" aria-labelledby="success-title" aria-modal="true">
     <div class="order-paper-card"
       style="max-width:520px;text-align:center;background: #fffdf5; border: 2px solid #e0c497; border-radius: 16px; padding: 28px; box-shadow: 0 0 20px rgba(255,215,160,0.4); font-family: 'Great Vibes', cursive; color:#5a3d1a;">
@@ -72,6 +543,7 @@
     </div>
   </div>
 
+  <!-- Order Modal -->
   <div id="order-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="paper-title">
     <div class="order-paper-card" role="document">
       <!-- Fixed Header Section -->
@@ -165,6 +637,7 @@
     </div>
   </div>
 
+  <!-- Product Modal -->
   <div id="product-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="product-modal-title">
     <div class="paper-card" role="document">
       <div class="gallery">

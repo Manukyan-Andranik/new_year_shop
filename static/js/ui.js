@@ -14,6 +14,8 @@ const dom = {
     announcements: document.getElementById('announcements'),
     cartCount: document.getElementById('cart-count'),
     checkoutBtn: document.getElementById('checkout-btn'),
+    checkoutBtnConteiner: document.querySelector('.checkout-btn-container'),
+
     // Order Modal
     orderModal: document.getElementById('order-modal'),
     orderList: document.getElementById('order-list'),
@@ -74,6 +76,7 @@ function addEventListeners() {
             renderOrderModal();
             if (dom.orderModal) dom.orderModal.style.display = 'flex';
             if (dom.paperConfirm) dom.paperConfirm.focus();
+            dom.checkoutBtnConteiner.style.display = 'none';
         });
     }
 
@@ -81,6 +84,8 @@ function addEventListeners() {
     if (dom.paperCancel) {
         dom.paperCancel.addEventListener('click', () => {
             if (dom.orderModal) dom.orderModal.style.display = 'none';
+            dom.checkoutBtnConteiner.style.display = 'block';
+
         });
     }
     if (dom.orderForm) {
@@ -89,8 +94,10 @@ function addEventListeners() {
 
     // Success Modal
     if (dom.closeSuccessBtn) {
+        
         dom.closeSuccessBtn.addEventListener('click', () => {
             if (dom.successOverlay) dom.successOverlay.style.display = 'none';
+            dom.checkoutBtnConteiner.style.display = 'block';
         });
     }
 
