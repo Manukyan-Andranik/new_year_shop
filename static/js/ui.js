@@ -42,6 +42,7 @@ const dom = {
 
     modalSpecs: document.getElementById('product-modal-specs'),
     modalAddBtn: document.getElementById('modal-add-btn'),
+    selectIndicator: document.getElementById('select-indicator'),
     modalClose: document.getElementById('modal-close'),
 };
 
@@ -115,6 +116,14 @@ function addEventListeners() {
             if (!modalProduct) return;
             const card = document.querySelector(`.product-card[data-product-id="${modalProduct.id}"]`);
             handleAdd(modalProduct, card || document.querySelector('.product-card'));
+            
+            // Update modal button state
+            dom.modalAddBtn.classList.add('added');
+            dom.modalAddBtn.innerHTML = '<span class="icon">✓</span>Added to Tree';
+            setTimeout(() => {
+                dom.modalAddBtn.classList.remove('added');
+                dom.modalAddBtn.innerHTML = '<span class="icon">🎁</span>Add to Tree';
+            }, 2000);
         });
     }
     if (dom.galleryPrev) {
@@ -189,14 +198,22 @@ function initCategoryFilter() {
         const filteredProducts = category === 'all'
             ? products
             : products.filter(p => p.category === category);
-
+    
         filteredProducts.forEach(product => {
             const card = document.createElement('div');
             card.className = 'product-card';
             card.setAttribute('data-product-id', product.id);
             card.setAttribute('draggable', 'true');
+            
+            // Check if product is already in cart and add selected class
+            const inCart = cart.find(item => item.productId === product.id);
+            if (inCart) {
+                card.classList.add('selected');
+            }
+            
             card.innerHTML = `
                 <div class="card-top">
+                    <div class="select-indicator">✓</div>
                     <img src="${product.images_url_list[0]}" alt="${product.name}" class="product-image" draggable="false">
                     <div class="product-info">
                         <div class="product-name">${product.name}</div>
@@ -206,16 +223,16 @@ function initCategoryFilter() {
                 <div class="card-bottom">
                     <button class="add-btn" aria-label="${window.t ? window.t('product.add.aria', { name: product.name }) : `Add ${product.name} to cart`}"><span class="icon">🎁</span>${window.t ? window.t('product.add') : 'Add to Tree'}</button>
                 </div>`;
-
+    
             card.querySelector('.add-btn').addEventListener('click', e => { e.stopPropagation(); handleAdd(product, card); });
             card.querySelector('.product-image').addEventListener('click', e => { e.stopPropagation(); openProductModal(product); });
-
+    
             card.addEventListener('dragstart', e => {
                 e.dataTransfer.setData('application/json', JSON.stringify(product));
                 card.classList.add('dragging');
             });
             card.addEventListener('dragend', () => card.classList.remove('dragging'));
-
+    
             dom.productGrid.appendChild(card);
         });
     }
@@ -239,7 +256,8 @@ function renderProducts() {
         card.draggable = true;
 
         card.innerHTML = `
-              <img src="${product.images_url_list[0]}" alt="${product.name}" class="product-image" draggable="false">
+            <div class="select-indicator">✓</div>
+            <img src="${product.images_url_list[0]}" alt="${product.name}" class="product-image" draggable="false">
               <div class="product-info">
                 <div class="product-name">${product.name}</div>
                 <div class="product-price">${product.price}  ֏</div>
@@ -276,6 +294,12 @@ function handleAdd(product, cardElement) {
         cart.push({ productId: product.id, name: product.name, price: product.price, image: product.images_url_list[0], qty: 1 });
     }
     updateCartUI();
+    
+    // Add selected class to the product card
+    if (cardElement) {
+        cardElement.classList.add('selected');
+    }
+    
     animateToyToTree(product, cardElement);
     announce(window.t ? window.t('announcement.added', { name: product.name }) : `${product.name} added to the tree`);
 }
@@ -286,8 +310,18 @@ function handleDropOnTree(e) {
     try {
         const product = JSON.parse(e.dataTransfer.getData('application/json'));
         const existing = cart.find(it => it.productId === product.id);
-        if (existing) existing.qty += 1;
-        else cart.push({ productId: product.id, name: product.name, price: product.price, image: product.images_url_list[0], qty: 1 });
+        if (existing) {
+            existing.qty += 1;
+        } else {
+            cart.push({ productId: product.id, name: product.name, price: product.price, image: product.images_url_list[0], qty: 1 });
+        }
+        
+        // Add selected class to the dragged product card
+        const card = document.querySelector(`.product-card[data-product-id="${product.id}"]`);
+        if (card) {
+            card.classList.add('selected');
+        }
+        
         updateCartUI();
         sceneFunctions.add3DToyToTree(product);
         announce(window.t ? window.t('announcement.added', { name: product.name }) : `${product.name} added to the tree`);
@@ -443,11 +477,22 @@ function setQuantity(productId, newQty) {
 
     if (newQty === 0) {
         cart.splice(itemIndex, 1);
+        // Remove selected class when quantity becomes 0
+        const card = document.querySelector(`.product-card[data-product-id="${productId}"]`);
+        if (card) {
+            card.classList.remove('selected');
+        }
     } else {
         item.qty = newQty;
+        // Ensure selected class is added when quantity > 0
+        const card = document.querySelector(`.product-card[data-product-id="${productId}"]`);
+        if (card) {
+            card.classList.add('selected');
+        }
     }
 
     renderOrderModal();
+    updateCartUI();
 }
 
 function updateModalTotals() {
