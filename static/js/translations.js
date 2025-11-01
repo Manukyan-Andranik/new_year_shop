@@ -1166,7 +1166,7 @@ const translations = {
         'delivery.address': 'Адрес доставки'
     }
 };
-
+BASE_PREFIX="https://logiclab.am/mandarin/"
 async function loadProducts(lang = 'en') {
     const response = await fetch(`${BASE_PREFIX}api/products?lang=${lang}`);
 
@@ -1223,7 +1223,10 @@ class TranslationManager {
         document.documentElement.lang = this.currentLanguage;
         document.documentElement.dir = 'ltr';
     }
-
+    getOtherLanguages() {
+        return Object.keys(translations)
+            .filter(lang => lang !== this.currentLanguage);
+    }
     createLanguageSwitcher() {
         if (document.getElementById('language-switcher')) return;
         const switcher = document.createElement('div');
@@ -1239,23 +1242,89 @@ class TranslationManager {
                 .join('')}
             </div>
         `;
-
+    
+        
         const style = document.createElement('style');
         style.textContent = `
-            .language-switcher {  top: 20px; right: 20px; z-index: 1000;
-                background: rgba(255,255,255,0.9); padding: 5px 10px; border-radius: 20px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15); backdrop-filter: blur(8px); }
-            .lang-btn { border: none; background: transparent; cursor: pointer;
-                font-size: 12px; font-weight: 600; color: #444; padding: 6px 10px;
-                width: 100%; text-align: left; transition: background 0.2s ease; }
-            .lang-btn:hover { background: rgba(45,138,67,0.1); color: var(--festive-green); }
-            .main-btn { font-size: 13px; font-weight: 700; border-radius: 15px;
-                background: var(--festive-green); color: #fff; }
-            .lang-menu { display: none; position: absolute; top: 40px; right: 0;
-                background: white; border-radius: 12px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-                padding: 4px 0; min-width: 90px; }
-            .lang-menu.show { display: block; }
+        .language-switcher {
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin-left: 12px;
+        }
+        
+        /* Main button (current lang) */
+        .lang-btn.main-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: transparent;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.4);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--snow-white);
+            cursor: pointer;
+            transition: all .25s ease;
+        }
+        
+        .lang-btn.main-btn:hover {
+            background: rgba(0,0,0,0.07);
+        }
+        
+        /* Dropdown menu */
+        .lang-menu {
+            display: none;
+            position: absolute;
+            top: 38px;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            padding: 6px 0;
+            min-width: 120px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border: 1px solid rgba(0,0,0,0.08);
+            z-index: 100;
+        }
+        
+        .lang-menu.show { display: block; }
+        
+        /* Dropdown items */
+        .lang-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            width: 100%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            transition: all .2s ease;
+        }
+        
+        .lang-btn img {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+        
+        .lang-btn:hover {
+            background: rgba(45,138,67,0.15);
+            color: var(--festive-green);
+        }
+        
+        /* Smooth dropdown fade */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
         `;
+        
+        
         document.head.appendChild(style);
         document.getElementById('language-container').appendChild(switcher);
 
@@ -1310,12 +1379,24 @@ class TranslationManager {
     }
 
     getLangLabel(lang) {
-        return { en: '🇺🇸 EN', hy: '🇦🇲 HY', ru: '🇷🇺 RU' }[lang] || lang.toUpperCase();
+        const flags = {
+            en: 'static/images/flags/en.webp',
+            hy: 'static/images/flags/am.webp',
+            ru: 'static/images/flags/ru.webp'
+        };
+    
+        const src = flags[lang];
+        if (src) {
+            return `<img src="${src}" alt="${lang}"> ${lang.toUpperCase()}`;
+
+        }
+        return lang.toUpperCase();
     }
 
-    getOtherLanguages() {
-        return ['en', 'hy', 'ru'].filter(l => l !== this.currentLanguage);
-    }
+
+    // getOtherLanguages() {
+    //     return ['en', 'hy', 'ru'].filter(l => l !== this.currentLanguage);
+    // }
 
     updatePageContent() {
         document.querySelectorAll('[data-translate]').forEach(el => {
