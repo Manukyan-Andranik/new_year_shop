@@ -22,6 +22,7 @@ from sqlalchemy.engine import Engine
 from models import db, Product, Order, ProductType, ProductTypesSamples, OfferOrder
 from admin_auth import login_manager, init_admin_user, verify_admin
 from data.toys import get_toys_by_category
+from bot import TelegramBot
 
 load_dotenv()
 # Configure logging
@@ -67,6 +68,10 @@ migrate = Migrate(app, db)
 login_manager.init_app(app)
 login_manager.login_view = 'admin_login'
 
+BOT_TOKEN = os.getenv('BOT_TOKEN')
+ADMIN_CHAT_ID = os.getenv('ADMIN_CHAT_ID')
+bot = TelegramBot(BOT_TOKEN, ADMIN_CHAT_ID)
+
 # ===============================
 # Email Utility
 # ===============================
@@ -92,7 +97,6 @@ def send_email(to_address: str, subject: str, body: str):
         app.logger.info("SMTP not configured — email output below:\n" + "-" * 40 +
                         f"\nTo: {to_address}\nSubject: {subject}\n\n{body}\n" + "-" * 40)
         return False
-
 
 # ===============================
 # CORS + Schema setup
@@ -325,7 +329,7 @@ def create_order():
             return jsonify({'error': 'Valid email is required'}), 400
         if not items:
             return jsonify({'error': 'Order must contain at least one item'}), 400
-
+        print(items)
         order = Order(
             customer_name=customer_name,
             phone=phone,
@@ -336,6 +340,8 @@ def create_order():
         )
         db.session.add(order)
         db.session.commit()
+        bot.send_order_to_admin(order)
+        
 
         total = sum([(float(it.get('price', 0)) * int(it.get('qty', 1))) for it in items])
         items_text = "\n".join([f"- {it.get('name')} x{int(it.get('qty',1))} @  ֏{float(it.get('price',0)):.2f}" for it in items])
@@ -403,6 +409,7 @@ def create_offer_order():
 
         db.session.add(order)
         db.session.commit()
+        bot.send_offer_order_to_admin(order)
 
         # Send confirmation
         subject = "🎁 Offer Order Received"

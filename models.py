@@ -2,11 +2,16 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from sqlalchemy.dialects.postgresql import JSONB
 
+
+
 from datetime import datetime, timezone
+from zoneinfo import ZoneInfo  # built-in, no need to install
 import json
 import random
 
 db = SQLAlchemy()
+
+ARMENIA_TZ = ZoneInfo("Asia/Yerevan")
 
 class Product(db.Model):
     __tablename__ = 'products'
@@ -177,9 +182,14 @@ class Order(db.Model):
     items = db.Column(db.Text)
     status = db.Column(db.String(20), default='new', nullable=False, index=True)
     total_amount = db.Column(db.Numeric(10, 2), default=0.00)
-    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
-    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc),
-                           onupdate=lambda: datetime.now(timezone.utc))
+    created_at = db.Column(
+    db.DateTime,
+    default=lambda: datetime.now(ARMENIA_TZ))
+    updated_at = db.Column(
+        db.DateTime,
+        default=lambda: datetime.now(ARMENIA_TZ),
+        onupdate=lambda: datetime.now(ARMENIA_TZ)
+    )
     
     def __repr__(self):
         return f'<Order {self.id} - {self.customer_name}>'
@@ -215,9 +225,14 @@ class OfferOrder(db.Model):
     form_data = db.Column(JSONB, nullable=True)
 
     status = db.Column(db.String(50), default="new")  # new, in_progress, done, canceled
-    created_at = db.Column(db.DateTime(timezone=True), default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow)
-
+    created_at = db.Column(
+    db.DateTime,
+    default=lambda: datetime.now(ARMENIA_TZ))
+    updated_at = db.Column(
+        db.DateTime,
+        default=lambda: datetime.now(ARMENIA_TZ),
+        onupdate=lambda: datetime.now(ARMENIA_TZ)
+    )
     # Helper setters
     def set_selected_products(self, products):
         self.selected_products = products or []
