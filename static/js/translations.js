@@ -4,6 +4,7 @@
  * Languages: English, Armenian, Russian
  */
 
+
 const translations = {
     en: {
         // Navigation & Header
@@ -1166,6 +1167,7 @@ const translations = {
         'delivery.address': 'Адрес доставки'
     }
 };
+
 async function loadProducts(lang = 'en') {
     const response = await fetch(`${BASE_PREFIX}api/products?lang=${lang}`);
 
@@ -1433,24 +1435,10 @@ class TranslationManager {
     }
 
     getLangLabel(lang) {
-        const flags = {
-            en: '/static/images/flags/en.webp',
-            hy: '/static/images/flags/am.webp',
-            ru: '/static/images/flags/ru.webp'
-        };
-
-        const src = flags[lang];
-        if (src) {
-            return `<img src="${src}" alt="${lang}"> ${lang.toUpperCase()}`;
-
-        }
-        return lang.toUpperCase();
+        const src = window.FLAG_PATHS[lang];
+        return `<img src="${src}" alt="${lang}"> ${lang.toUpperCase()}`;
     }
-
-
-    // getOtherLanguages() {
-    //     return ['en', 'hy', 'ru'].filter(l => l !== this.currentLanguage);
-    // }
+    
 
     updatePageContent() {
         document.querySelectorAll('[data-translate]').forEach(el => {
