@@ -1288,6 +1288,32 @@
             min-height: 180px;
         }
     }
+
+    .submit-btn {
+        background: linear-gradient(135deg, #1a5a2d 0%, #0f3d1f 100%);
+        color: white;
+        border: none;
+        padding: 16px;
+        width: 100%;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(26, 90, 45, 0.3);
+        margin-top: 20px;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 25px rgba(26, 90, 45, 0.4);
+    }
+
+    .submit-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
 </style>
 
 <div class="global-animated-bg">
@@ -2072,6 +2098,9 @@
             `;
         }
 
+
+
+        formHTML += `<button type="submit" class="submit-btn" id="submitBtn">${window.t ? window.t('form.submit') : '🎁 Ուղարկել պատվերը'}</button>`;
         form.innerHTML = formHTML;
 
         // Initialize delivery handlers after form is rendered
