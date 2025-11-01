@@ -329,7 +329,6 @@ def create_order():
             return jsonify({'error': 'Valid email is required'}), 400
         if not items:
             return jsonify({'error': 'Order must contain at least one item'}), 400
-        print(items)
         order = Order(
             customer_name=customer_name,
             phone=phone,
@@ -341,6 +340,7 @@ def create_order():
         db.session.add(order)
         db.session.commit()
         bot.send_order_to_admin(order)
+        bot.send_message()
         
 
         total = sum([(float(it.get('price', 0)) * int(it.get('qty', 1))) for it in items])
@@ -385,7 +385,6 @@ def create_order():
 def create_offer_order():
     try:
         data = request.get_json(force=True)
-        print(data)
         # Validate fields
         required_fields = ['offer_type', 'customer_name', 'phone', 'email']
         missing = [f for f in required_fields if not data.get(f)]
@@ -406,10 +405,10 @@ def create_offer_order():
         order.set_selected_products(data.get('selected_products'))
         order.set_selected_images([])
         order.set_form_data(data.get('form_data'))
-
         db.session.add(order)
         db.session.commit()
         bot.send_offer_order_to_admin(order)
+        bot.send_message()
 
         # Send confirmation
         subject = "🎁 Offer Order Received"

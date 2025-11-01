@@ -1,161 +1,135 @@
 import requests
-import os
 import json
+import html
 
 
 class TelegramBot:
     def __init__(self, bot_token, chat_id):
-        """
-        Initialize the bot.
-        :param bot_token: Telegram bot token from BotFather
-        :param chat_id: Chat ID to send messages to
-        """
         self.bot_token = bot_token
         self.chat_id = chat_id
         self.api_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
 
-    def format_message(self, form_data):
-        """
-        Format the form data into a message string.
-        :param form_data: dict containing all submitted form fields
-        :return: str
-        """
-        lines = []
+    def escape(self, value):
+        if value is None:
+            return "—"
+        if isinstance(value, str):
+            return html.escape(value)
+        return value
 
-        # Offer type
-        offer_type = form_data.get('offer_type', 'Unknown')
-        lines.append(f"🎁 Offer Type: {offer_type}")
-
-        # Handle common fields
-        common_fields = ['customer_name', 'customer_phone', 'delivery_date', 'notes', 'packaging']
-        for field in common_fields:
-            value = form_data.get(field)
-            if value:
-                lines.append(f"{field.replace('_', ' ').title()}: {value}")
-
-        # Offer-specific fields
-        for key, value in form_data.items():
-            if key not in common_fields and key != 'offer_type':
-                if isinstance(value, list):
-                    # Join list of names or multiple values
-                    value = ", ".join(value)
-                lines.append(f"{key.replace('_', ' ').title()}: {value}")
-
-        return "\n".join(lines)
-
-    def send_message(self, form_data):
-        """
-        Send the formatted message to Telegram.
-        :param form_data: dict containing form submission data
-        """
-        message = self.format_message(form_data)
+    def send_message(self, text="━━━━━━━━━━━━━━━━"):
         payload = {
-            'chat_id': self.chat_id,
-            'text': message
+            "chat_id": self.chat_id,
+            "text": text,  # ✅ plain text, no parse_mode issues
         }
-        response = requests.post(self.api_url, data=payload)
-        if response.status_code == 200:
-            print("✅ Message sent successfully!")
+        response = requests.post(self.api_url, json=payload)
+
+        if response.status_code != 200:
+            print(f"❌ Telegram error: {response.text}")
         else:
-            print(f"❌ Failed to send message: {response.status_code}")
-            print(response.text)
+            print("✅ Message sent to Telegram Admin")
+
+    # ---------------- SHOP ORDER ----------------
 
     def send_order_to_admin(self, order):
         try:
             items = json.loads(order.items) if order.items else []
-
-            formatted_items = "—"
             total_amount = 0
+            lines = []
+
+            lines.append("✅ NEW SHOP ORDER")
+            lines.append(f"🆔 Order ID: {self.escape(order.id)}")
+            lines.append(f"👤 Name: {self.escape(order.customer_name)}")
+            lines.append(f"📞 Phone: {self.escape(order.phone)}")
+            lines.append(f"📧 Email: {self.escape(order.email)}")
+            lines.append(f"💬 Comment: {self.escape(order.comment) or '—'}")
+            lines.append("")
+
+            lines.append("🛍 Items:")
+
             if items:
-                formatted_items_list = []
                 for i in items:
-                    name = i.get("name", "-")
-                    qty = i.get("qty", 1)
-                    price = i.get("price", 0)
-                    total = price * qty
+                    name = self.escape(i.get("name", "-"))
+                    qty = int(i.get("qty", 1))
+                    price = int(i.get("price", 0))
+                    total = qty * price
                     total_amount += total
-                    formatted_items_list.append(
-                        f"• {name} — {qty} x {price} AMD = {total} AMD"
-                    )
-                formatted_items = "\n".join(formatted_items_list)
-
-            message = (
-                f"🆕 New Order #{order.id}\n"
-                f"👤 Name: {order.customer_name}\n"
-                f"📞 Phone: {order.phone}\n"
-                f"📧 Email: {order.email}\n"
-                f"💬 Comment: {order.comment or '—'}\n\n"
-                f"🛍 Items:\n{formatted_items}\n\n"
-                f"💰 Total: {total_amount} AMD\n"
-                f"📅 Date: {order.created_at.strftime('%Y-%m-%d %H:%M')}\n"
-                f"📦 Status: {order.status}"
-            )
-
-            payload = {'chat_id': self.chat_id, 'text': message}
-            response = requests.post(self.api_url, data=payload)
-
-            if response.status_code == 200:
-                print("✅ Order sent to admin")
+                    lines.append(f"• {name}: {qty} × {price} AMD = {total} AMD")
             else:
-                print("❌ Telegram send error:", response.text)
+                lines.append("—")
+
+            lines.append("")
+            lines.append(f"💰 Total: {total_amount} AMD")
+            lines.append(f"📅 Date: {order.created_at.strftime('%Y-%m-%d %H:%M')}")
+            lines.append(f"📦 Status: {self.escape(order.status)}")
+
+
+            self.send_message("\n".join(lines))
 
         except Exception as e:
             print("❌ Error sending order:", e)
 
+    # ---------------- OFFER ORDER ----------------
 
-        def send_offer_order_to_admin(self, offer):
-            """
-            Send custom offer order details to Telegram admin
-            :param offer: OfferOrder SQLAlchemy object
-            """
-            try:
-                # Products and images
-                products = offer.selected_products or []
-                images = offer.selected_images or []
-                form_data = offer.form_data or {}
+    def send_offer_order_to_admin(self, offer):
+        try:
+            products = offer.selected_products or []
+            images = offer.selected_images or []
+            form_data = offer.form_data or {}
 
-                formatted_products = "\n".join([f"• {p.get('name')}" for p in products]) or "—"
-                formatted_images = "\n".join(images) if images else "—"
+            lines = []
+            total_amount = 0
 
-                # Format dynamic form fields
-                form_info = "\n".join([f"{k.replace('_',' ').title()}: {v}" for k, v in form_data.items()])
+            lines.append("🎁 NEW OFFER REQUEST")
+            lines.append(f"📦 Type: {self.escape(offer.offer_type).title()}")
+            lines.append("")
+            lines.append(f"👤 Name: {self.escape(offer.customer_name)}")
+            lines.append(f"📞 Phone: {self.escape(offer.phone)}")
+            lines.append(f"📧 Email: {self.escape(offer.email)}")
+            lines.append(f"💬 Comment: {self.escape(offer.comment) or '—'}")
+            lines.append("")
 
-                message = (
-                    f"🎁 New Offer Request #{offer.id}\n"
-                    f"📦 Type: {offer.offer_type}\n\n"
-                    f"👤 Name: {offer.customer_name}\n"
-                    f"📞 Phone: {offer.phone}\n"
-                    f"📧 Email: {offer.email}\n"
-                    f"💬 Comment: {offer.comment or '—'}\n\n"
-                    f"🛍 Selected Products:\n{formatted_products}\n\n"
-                    f"🖼 Selected Images:\n{formatted_images}\n\n"
-                    f"📑 Extra Form Data:\n{form_info or '—'}\n\n"
-                    f"📅 Date: {offer.created_at.strftime('%Y-%m-%d %H:%M')}\n"
-                    f"📌 Status: {offer.status}"
-                )
+            # Products
+            lines.append("🛍 Selected Products:")
 
-                payload = {'chat_id': self.chat_id, 'text': message}
-                response = requests.post(self.api_url, data=payload)
+            if products:
+                for p in products:
+                    name = self.escape(p.get("name", "-"))
+                    price = int(p.get("price", 0))
+                    qty = int(p.get("qty", 1))
+                    item_total = price * qty
+                    total_amount += item_total
+                    lines.append(f"• {name}: {qty} × {price} AMD = {item_total} AMD")
+            else:
+                lines.append("—")
 
-                if response.status_code == 200:
-                    print("✅ Offer order sent to admin")
-                else:
-                    print("❌ Telegram send error:", response.text)
+            lines.append("")
+            lines.append(f"💰 Total Price: {total_amount} AMD")
+            lines.append("")
 
-            except Exception as e:
-                print("❌ Error sending offer order:", e)
+            # Images
+            lines.append("🖼 Images:")
+            lines.extend(images if images else ["—"])
+            lines.append("")
 
+            # Form data
+            lines.append("📄 Form Data:")
+            if form_data:
+                for key, value in form_data.items():
+                    if isinstance(value, bool):
+                        value = "Yes" if value else "No"
+                    if isinstance(value, list):
+                        value = ", ".join(str(v) for v in value) if value else "—"
+                    lines.append(f"{key.replace('_', ' ').title()}: {self.escape(value)}")
+            else:
+                lines.append("—")
 
+            lines.append("")
+            lines.append(
+                f"📅 Date: {offer.created_at.strftime('%Y-%m-%d %H:%M') if offer.created_at else '—'}"
+            )
+            lines.append(f"📌 Status: {self.escape(offer.status) or 'new'}")
 
+            self.send_message("\n".join(lines))
 
-# Example usage
-if __name__ == "__main__":
-    BOT_TOKEN = os.getenv('BOT_TOKEN')
-    ADMIN_CHAT_ID = os.getenv('CHAT_ID')
-    bot = TelegramBot(BOT_TOKEN, ADMIN_CHAT_ID)
-
-    order = Order.query.get(order_id)
-    bot.send_order_to_admin(order)
-
-    offer_order = OfferOrder.query.get(offer_id)
-    bot.send_offer_order_to_admin(offer_order)
+        except Exception as e:
+            print("❌ Error sending offer order:", e)

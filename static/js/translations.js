@@ -330,6 +330,7 @@ const translations = {
         'form.toy_type': 'Toy Type',
         'form.submit': '🎁 Submit Order',
         'form.customer_email': 'Email',
+        'form.customer_email.placeholder': 'i.love@mandarin.am',
 
         'message.select_product': 'Please select at least one product',
         'message.select_image': 'Please select at least one image',
@@ -738,6 +739,8 @@ const translations = {
         'form.remove_name': 'Հեռացնել',
         'form.submit': '🎁 Ուղարկել պատվերը',
         'form.customer_email': 'Էլ. փոստ',
+        'form.customer_email.placeholder': 'i.love@mandarin.am',
+
         'form.submit.sending': '⏳ Ուղարկվում է...',
         'message.select_product': 'Խնդրում ենք ընտրել առնվազն մեկ ապրանք',
         'message.select_image': 'Խնդրում ենք ընտրել առնվազն մեկ նկար',
@@ -1133,6 +1136,8 @@ const translations = {
         'form.remove_name': 'Удалить',
         'form.submit.sending': '⏳ Отправляется...',
         'form.customer_email': 'Ваш Email',
+        'form.customer_email.placeholder': 'i.love@mandarin.am',
+
         'message.select_product': 'Пожалуйста, выберите хотя бы один товар',
         'message.select_image': 'Пожалуйста, выберите хотя бы одно изображение',
         'message.success': '✅ Спасибо! Ваш заказ успешно отправлен. Мы свяжемся с вами в ближайшее время.',

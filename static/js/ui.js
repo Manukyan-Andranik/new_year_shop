@@ -529,6 +529,10 @@ async function handleOrderSubmit(event) {
         cart = [];
         updateCartUI();
         sceneFunctions.clearAllToysFromScene();
+        // Remove "selected" class from all product cards
+    document.querySelectorAll('.product-card.selected').forEach(card => {
+        card.classList.remove('selected');
+    });
         dom.orderModal.style.display = 'none';
         dom.orderForm.reset();
     } catch (err) {

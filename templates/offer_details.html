@@ -2003,10 +2003,6 @@
                         <option value="none">${window.t ? window.t('form.packaging.none') : 'Առանց փաթեթավորման'}</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">${window.t ? window.t('form.notes') : 'Այլ նշումներ'}</label>
-                    <textarea name="notes" class="form-textarea" placeholder="${window.t ? window.t('form.notes.placeholder') : 'Նկարագրեք ձեր ցանկությունները մանրամասն...'}"></textarea>
-                </div>
             `;
         } else if (offer.fields === 'corporate') {
             formHTML = `
@@ -2043,10 +2039,6 @@
                         <option value="none">${window.t ? window.t('form.packaging.none') : 'Առանց փաթեթավորման'}</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">${window.t ? window.t('form.notes') : 'Այլ նշումներ'}</label>
-                    <textarea name="notes" class="form-textarea" placeholder="${window.t ? window.t('form.notes.placeholder') : 'Նկարագրեք ձեր ցանկությունները մանրամասն...'}"></textarea>
-                </div>
             `;
         } else if (offer.fields === 'special_for_you') {
             formHTML = `
@@ -2066,10 +2058,6 @@
                         <option value="box">${window.t ? window.t('form.packaging.box') : 'Տուփում'}</option>
                         <option value="none">${window.t ? window.t('form.packaging.none') : 'Առանց փաթեթավորման'}</option>
                     </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">${window.t ? window.t('form.notes') : 'Այլ նշումներ'}</label>
-                    <textarea name="notes" class="form-textarea" placeholder="${window.t ? window.t('form.notes.placeholder') : 'Նկարագրեք ձեր ցանկությունները մանրամասն...'}"></textarea>
                 </div>
             `;
         } else if (offer.fields === 'christmas_together' || offer.fields === 'seasons_best' || offer.fields === 'collections') {
@@ -2091,13 +2079,29 @@
                         <option value="none">${window.t ? window.t('form.packaging.none') : 'Առանց փաթեթավորման'}</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">${window.t ? window.t('form.notes') : 'Այլ նշումներ'}</label>
-                    <textarea name="notes" class="form-textarea" placeholder="${window.t ? window.t('form.notes.placeholder') : 'Նկարագրեք ձեր ցանկությունները մանրամասն...'}"></textarea>
-                </div>
             `;
         }
 
+        formHTML += `
+        <div class="form-group">
+            <label class="form-label">${window.t ? window.t('form.notes') : 'Այլ նշումներ'}</label>
+            <textarea name="notes" class="form-textarea" placeholder="${window.t ? window.t('form.notes.placeholder') : 'Նկարագրեք ձեր ցանկությունները մանրամասն...'}"></textarea>
+        </div>
+        <div class="form-group">
+            <label class="form-label">${window.t ? window.t('form.customer_name') : 'Ձեր անունը'} <span class="required">*</span></label>
+            <input type="text" name="customer_name" class="form-input" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label">${window.t ? window.t('form.customer_phone') : 'Հեռախոս'} <span class="required">*</span></label>
+            <input type="tel" name="customer_phone" class="form-input" placeholder="${window.t ? window.t('form.customer_phone.placeholder') : '+374 XX XXX XXX'}" required>
+        </div>
+        <div class="form-group">
+            <label class="form-label">${window.t ? window.t('form.delivery_date') : 'Ակնկալվող առաքման ամսաթիվ'}</label>
+            <input type="date" name="delivery_date" class="form-input">
+        <div class="form-group">
+            <label class="form-label">${window.t ? window.t('form.customer_email') : 'Էլ․ փոստ'} <span class="required">*</span></label>
+            <input type="email" name="customer_email" class="form-input" placeholder="${window.t ? window.t('form.customer_email.placeholder') : 'your@email.com'}" required>
+        </div>`;
 
 
         formHTML += `<button type="submit" class="submit-btn" id="submitBtn">${window.t ? window.t('form.submit') : '🎁 Ուղարկել պատվերը'}</button>`;
