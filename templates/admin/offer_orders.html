@@ -268,9 +268,9 @@
           // ✅ Updated image logic
           let imgSrc = ''
           if(order.offer_type && OFFER_IMAGE_TYPES.includes(order.offer_type) && it.id){
-            imgSrc = `/static/images/offers/${order.offer_type}/${it.id}.jpg`
+            imgSrc = `/static/images/offers/${order.offer_type}/${it.id}.webp`
           } else if(it.id){
-            imgSrc = `/static/images/products/all/${it.id}.jpg`
+            imgSrc = `/static/images/products/all/${it.id}.webp`
           }
 
           const subtotal = (Number(it.price)||0) * (Number(it.qty)||1)

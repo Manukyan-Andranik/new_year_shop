@@ -829,7 +829,7 @@
 
             <div class="story-image">
                 <div class="image-placeholder">
-                    <img src="{{ url_for('static', filename='images/placeholder_workshop.jpg') }}" alt="Our Workshop" data-translate="about.image.workshop" data-translate-attr="alt">
+                    <img src="{{ url_for('static', filename='images/placeholder_workshop.webp') }}" alt="Our Workshop" data-translate="about.image.workshop" data-translate-attr="alt">
                 </div>
             </div>
         </div>
@@ -846,7 +846,7 @@
             <div class="work-process-grid" id="work-processGallery">
                 {% for i in range(1,6) %}
                 <div class="work-process-card" onclick="openModal(event, 'work-process', '{{ loop.index0 }}')">
-                    <img src="{{ url_for('static', filename='images/work_process/' ~ i ~ '.jpg') }}" alt="Process {{ i }}">
+                    <img src="{{ url_for('static', filename='images/work_process/' ~ i ~ '.webp') }}" alt="Process {{ i }}">
                     <div class="work-process-overlay">
                         <div class="quote-icon">❝</div>
                         <p class="work-process-text" data-translate="about.process.step" data-translate-params='{"number": "{{ i }}"}'>Քայլ {{ i }} — մեր աշխատանքը մանրամասնությամբ և սիրով 🧡</p>
@@ -871,35 +871,35 @@
 
             <div class="feedback-grid" id="feedbackGallery">
                 <div class="feedback-card" onclick="openModal(event, 'feedback', 0)">
-                    <img src="{{ url_for('static', filename='images/comments/1.jpg') }}" alt="Customer feedback 1">
+                    <img src="{{ url_for('static', filename='images/comments/1.webp') }}" alt="Customer feedback 1">
                     <div class="feedback-overlay">
                         <div class="quote-icon">❝</div>
                         <p class="feedback-text" data-translate="about.feedback.text1">Շատ գեղեցիկ ու հաճելի անակնկալներովփաթեթը մեզել հասավ: Անչափ շնորհակալ եմ...</p>
                     </div>
                 </div>
                 <div class="feedback-card" onclick="openModal(event, 'feedback', 1)">
-                    <img src="{{ url_for('static', filename='images/comments/2.jpg') }}" alt="Customer feedback 2">
+                    <img src="{{ url_for('static', filename='images/comments/2.webp') }}" alt="Customer feedback 2">
                     <div class="feedback-overlay">
                         <div class="quote-icon">❝</div>
                         <p class="feedback-text" data-translate="about.feedback.text2">Շատ լավ խաղալիքներ են, բոլորին խորհուրդ կտամ ❤️</p>
                     </div>
                 </div>
                 <div class="feedback-card" onclick="openModal(event, 'feedback', 2)">
-                    <img src="{{ url_for('static', filename='images/comments/3.jpg') }}" alt="Customer feedback 3">
+                    <img src="{{ url_for('static', filename='images/comments/3.webp') }}" alt="Customer feedback 3">
                     <div class="feedback-overlay">
                         <div class="quote-icon">❝</div>
                         <p class="feedback-text" data-translate="about.feedback.text3">Մատչելի, բայց շա՜տ գեղեցիկ խաղալիքներ ❤️</p>
                     </div>
                 </div>
                 <div class="feedback-card" onclick="openModal(event, 'feedback', 3)">
-                    <img src="{{ url_for('static', filename='images/comments/4.jpg') }}" alt="Customer feedback 4">
+                    <img src="{{ url_for('static', filename='images/comments/4.webp') }}" alt="Customer feedback 4">
                     <div class="feedback-overlay">
                         <div class="quote-icon">❝</div>
                         <p class="feedback-text" data-translate="about.feedback.text4">Շատ շնորհակալ եմ գեղեցիկ խաղալիքների համար ❤️👏</p>
                     </div>
                 </div>
                 <div class="feedback-card" onclick="openModal(event, 'feedback', 4)">
-                    <img src="{{ url_for('static', filename='images/comments/5.jpg') }}" alt="Customer feedback 4">
+                    <img src="{{ url_for('static', filename='images/comments/5.webp') }}" alt="Customer feedback 4">
                     <div class="feedback-overlay">
                         <div class="quote-icon">❝</div>
                         <p class="feedback-text" data-translate="about.feedback.text5">Շատ թույն ձեռքի աշխատանքներ ❤️👏</p>

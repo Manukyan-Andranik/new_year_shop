@@ -1,10 +1,3 @@
-/**
- * translations.js
- * Multi-language support for Christmas Magic Shop
- * Languages: English, Armenian, Russian
- */
-
-
 const translations = {
     en: {
         // Navigation & Header
