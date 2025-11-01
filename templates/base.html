@@ -4,20 +4,18 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title data-translate="logo.title">{% block title %}Mandarin{% endblock %}</title>
+    <title data-translate="logo.title">Mandarin</title>
 
     <!-- 🧩 Favicon (Fixed and Cross-Browser Compatible) -->
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
 
     <!-- Web Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <!-- SEO/OG Meta -->
     <meta name="description"
         content="{% block description %}Discover magical Christmas tree decorations and toys.{% endblock %}">
-    <meta property="og:title" content="{% block og_title %}Christmas Magic Shop{% endblock %}">
+    <meta property="og:title" content="{% block og_title %}Mandarin{% endblock %}">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 
