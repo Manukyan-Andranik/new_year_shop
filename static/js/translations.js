@@ -751,7 +751,7 @@ const translations = {
         'delivery.toggle': 'Առաքում',
         'delivery.title': 'Առաքման Պայմաններ',
         'delivery.item1.title': 'Երևանի կենտրոնում անվճար',
-        
+
         'delivery.option.center': 'Անվճար առաքում Երևանի կենտրոնում',
         'delivery.option.outside': 'Երևանի կենտրոնից դուրս 2000 դրամ',
         'delivery.item2.desc': 'Առաքում Երևանի կենտրոնից դուրս',
@@ -759,7 +759,7 @@ const translations = {
         'delivery.item3.desc': 'Առաքում Հայաստանի բոլոր մարզերում',
         'delivery.option.custom': 'Ձեր կողմից առաջարկվող առաքման եղանակ',
         'delivery.item4.desc': 'ՀՀ ամբողջ տարածքում',
-        
+
         'delivery.option.outside': 'Երևանի կենտրոնից դուրս՝ 2000 դրամ',
         'delivery.item2.desc': 'Առաքում Երևանի կենտրոնից դուրս',
         'delivery.option.regions': 'Մարզեր՝ «ՀայՓոստ»-ով',
@@ -1166,7 +1166,7 @@ const translations = {
         'delivery.address': 'Адрес доставки'
     }
 };
-BASE_PREFIX="https://logiclab.am/mandarin/"
+BASE_PREFIX = "https://logiclab.am/mandarin/"
 async function loadProducts(lang = 'en') {
     const response = await fetch(`${BASE_PREFIX}api/products?lang=${lang}`);
 
@@ -1242,8 +1242,8 @@ class TranslationManager {
                 .join('')}
             </div>
         `;
-    
-        
+
+
         const style = document.createElement('style');
         style.textContent = `
         .language-switcher {
@@ -1322,9 +1322,61 @@ class TranslationManager {
             from { opacity: 0; transform: translateY(5px); }
             to   { opacity: 1; transform: translateY(0); }
         }
+            /* Mobile: show flags side by side */
+@media (max-width: 640px) {
+  .language-switcher {
+    background: transparent !important;
+    border: none !important;
+            color: var(--festive-green);
+
+    padding: 0;
+  }
+
+  /* Hide dropdown behavior */
+  #lang-menu {
+    display: flex !important;
+    position: static !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+  }
+
+  .lang-btn.main-btn {
+    display: none; /* hide current language button */
+    color: var(--festive-green);
+
+  }
+
+  .lang-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 6px !important;
+    margin: 0 4px;
+    background: none !important;
+    border: none !important;
+  }
+
+  .lang-btn img {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: transform .2s, border-color .2s;
+  }
+
+  .lang-btn:hover img,
+  .lang-btn.active img {
+    transform: scale(1.12);
+    border-color: var(--festive-green);
+  }
+}
+
         `;
-        
-        
+
+
         document.head.appendChild(style);
         document.getElementById('language-container').appendChild(switcher);
 
@@ -1349,6 +1401,11 @@ class TranslationManager {
     updateLanguageSwitcherUI() {
         const currentBtn = document.getElementById('current-lang');
         const menu = document.getElementById('lang-menu');
+        // highlight current flag
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === this.currentLanguage);
+        });
+
         if (!currentBtn || !menu) return;
         currentBtn.innerHTML = this.getLangLabel(this.currentLanguage);
         menu.innerHTML = this.getOtherLanguages()
@@ -1384,7 +1441,7 @@ class TranslationManager {
             hy: 'static/images/flags/am.webp',
             ru: 'static/images/flags/ru.webp'
         };
-    
+
         const src = flags[lang];
         if (src) {
             return `<img src="${src}" alt="${lang}"> ${lang.toUpperCase()}`;
