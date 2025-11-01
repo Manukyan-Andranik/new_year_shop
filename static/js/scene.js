@@ -26,7 +26,7 @@ const CONFIG = {
     groundSnow: 0xffffff
   },
   pixelRatio: PERFORMANCE_LEVEL === 'low' ? 1 : Math.min(window.devicePixelRatio, 2),
-  snowParticleCount: PERFORMANCE_LEVEL === 'low' ? 150 : PERFORMANCE_LEVEL === 'medium' ? 250 : 500,
+  snowParticleCount: PERFORMANCE_LEVEL === 'low' ? 10 : PERFORMANCE_LEVEL === 'medium' ? 50 : 100,
   treeLightCount: PERFORMANCE_LEVEL === 'low' ? 25 : PERFORMANCE_LEVEL === 'medium' ? 30 : 50,
   enableShadows: PERFORMANCE_LEVEL === 'high',
   enableFog: PERFORMANCE_LEVEL !== 'low',
