@@ -1166,7 +1166,6 @@ const translations = {
         'delivery.address': 'Адрес доставки'
     }
 };
-BASE_PREFIX = "https://logiclab.am/mandarin/"
 async function loadProducts(lang = 'en') {
     const response = await fetch(`${BASE_PREFIX}api/products?lang=${lang}`);
 
@@ -1322,59 +1321,57 @@ class TranslationManager {
             from { opacity: 0; transform: translateY(5px); }
             to   { opacity: 1; transform: translateY(0); }
         }
-            /* Mobile: show flags side by side */
-@media (max-width: 640px) {
-  .language-switcher {
-    background: transparent !important;
-    border: none !important;
+        /* Mobile: show flags side by side */
+        @media (max-width: 640px) {
+        .language-switcher {
+            background: transparent !important;
+            border: none !important;
+                    color: var(--festive-green);
+
+            padding: 0;
+        }
+
+        /* Hide dropdown behavior */
+        #lang-menu {
+            display: flex !important;
+            position: static !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            background: transparent !important;
+            border: none !important;
+        }
+
+        .lang-btn.main-btn {
+            display: none; /* hide current language button */
             color: var(--festive-green);
 
-    padding: 0;
-  }
+        }
 
-  /* Hide dropdown behavior */
-  #lang-menu {
-    display: flex !important;
-    position: static !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    background: transparent !important;
-    border: none !important;
-  }
+        .lang-btn {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            padding: 6px !important;
+            margin: 0 4px;
+            background: none !important;
+            border: none !important;
+        }
 
-  .lang-btn.main-btn {
-    display: none; /* hide current language button */
-    color: var(--festive-green);
+        .lang-btn img {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            transition: transform .2s, border-color .2s;
+        }
 
-  }
-
-  .lang-btn {
-    display: inline-flex !important;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    padding: 6px !important;
-    margin: 0 4px;
-    background: none !important;
-    border: none !important;
-  }
-
-  .lang-btn img {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    border: 2px solid transparent;
-    transition: transform .2s, border-color .2s;
-  }
-
-  .lang-btn:hover img,
-  .lang-btn.active img {
-    transform: scale(1.12);
-    border-color: var(--festive-green);
-  }
-}
-
-        `;
+        .lang-btn:hover img,
+        .lang-btn.active img {
+            transform: scale(1.12);
+            border-color: var(--festive-green);
+        }
+        }`;
 
 
         document.head.appendChild(style);
@@ -1437,9 +1434,9 @@ class TranslationManager {
 
     getLangLabel(lang) {
         const flags = {
-            en: 'static/images/flags/en.webp',
-            hy: 'static/images/flags/am.webp',
-            ru: 'static/images/flags/ru.webp'
+            en: '/static/images/flags/en.webp',
+            hy: '/static/images/flags/am.webp',
+            ru: '/static/images/flags/ru.webp'
         };
 
         const src = flags[lang];
